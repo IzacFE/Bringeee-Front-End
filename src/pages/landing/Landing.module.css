@@ -1,0 +1,49 @@
+.bannerBox {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.boxContainer {
+  width: 100%;
+  margin: auto;
+  background-image: url("../../assets/box.png");
+  height: 350px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.boxText {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cardContainer {
+  /* width: 80%; */
+  margin: auto;
+}
+
+@media (max-width: 768px) {
+  .boxContainer {
+    height: 200px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .boxText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}

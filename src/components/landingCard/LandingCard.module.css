@@ -1,0 +1,11 @@
+.title {
+  color: white;
+  font-weight: 600;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.card {
+  max-height: 250px;
+  max-width: 250px;
+}
