@@ -1,7 +1,12 @@
 import React from "react";
+import SearchComps from "../../components/search/SearchComps";
 
 function Coba2() {
-  return <div>Coba2</div>;
+  return (
+    <>
+      <SearchComps />
+    </>
+  );
 }
 
 export default Coba2;
