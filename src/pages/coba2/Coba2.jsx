@@ -1,5 +1,6 @@
 import React from "react";
 import OrderCard from "../../components/orderCard/OrderCard";
+import PaginList from "../../components/pagination/PaginList";
 import SearchComps from "../../components/search/SearchComps";
 
 function Coba2() {
@@ -7,6 +8,7 @@ function Coba2() {
     <>
       <SearchComps />
       <OrderCard />
+      <PaginList />
     </>
   );
 }

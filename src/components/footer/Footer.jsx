@@ -126,7 +126,6 @@ function Footer() {
     <footer className={`${classes.footer} bg-stone-800 text-white`}>
       <Container className={classes.inner}>
         <div className={classes.logo}>
-          {/* <MantineLogo /> */}
           <div className={classes.footerLogo}>
             <TruckDelivery size={40} className="text-amber-500" />
             <Text
