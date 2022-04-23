@@ -22,6 +22,7 @@ function SearchComps(props) {
       placeholder="Cari Order"
       rightSectionWidth={42}
       onChange={props.onChange}
+      // onChange={(event) => setValue(event.currentTarget.value)}
     />
   );
 }

@@ -20,11 +20,13 @@ import {
   SwitchHorizontal,
   ChevronDown,
 } from "tabler-icons-react";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   logo: {
     display: "flex",
     alignItems: "center",
+    cursor: "pointer",
   },
 
   inner: {
@@ -74,6 +76,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Navbar() {
+  const navigate = useNavigate();
   const { classes, theme, cx } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
@@ -81,7 +84,12 @@ function Navbar() {
     <Header height={56} className="bg-stone-700 border-none">
       <Container>
         <div className={classes.inner}>
-          <div className={classes.logo}>
+          <div
+            className={classes.logo}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <TruckDelivery
               size={40}
               className={`${classes.truck} text-amber-500`}
