@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.mantine-mdj014 {
+  background-color: #f59e0b;
+}
+
+.mantine-c94evu {
+  background-color: white;
+}
