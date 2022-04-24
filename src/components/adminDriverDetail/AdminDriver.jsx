@@ -1,9 +1,31 @@
-import { Avatar, Button, Title } from "@mantine/core";
+import { Avatar, Button, Title, Text } from "@mantine/core";
 import React from "react";
 import styles from "./AdminDriver.module.css";
 import image from "../../assets/monke.jpg";
+import { useModals } from "@mantine/modals";
 
 function AdminDriver() {
+  const modals = useModals();
+
+  const openDeleteModal = () =>
+    modals.openConfirmModal({
+      title: "Hapus Akun Driver",
+      centered: true,
+      children: (
+        <>
+          <Text size="sm">
+            Anda akan menghapus akun driver. Tekan tombol Hapus Akun untuk
+            mengkonfirmasi penghapusan akun dan tekan tombol batal untuk
+            membatalkan penghapusan akun
+          </Text>
+        </>
+      ),
+      labels: { confirm: "Hapus Akun", cancel: "Batal Hapus" },
+      confirmProps: { color: "red" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => console.log("Confirmed"),
+    });
+
   return (
     <>
       <div className={styles.container}>
@@ -14,7 +36,11 @@ function AdminDriver() {
             <Button className="bg-amber-500" color="yellow">
               Konfirmasi
             </Button>
-            <Button className="bg-red-500" color="red">
+            <Button
+              className="bg-red-500"
+              color="red"
+              onClick={openDeleteModal}
+            >
               Hapus Akun
             </Button>
           </div>
