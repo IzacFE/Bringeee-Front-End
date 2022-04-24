@@ -24,6 +24,14 @@ function Coba2() {
       />
       <UserCard />
       <AdminOrderList />
+      <TabsAdmin
+        title1="Kustomer"
+        title2="Driver"
+        title3="Admin"
+        icon1={<Photo size={14} />}
+        icon2={<Photo size={14} />}
+        icon3={<Photo size={14} />}
+      />
       <Button className="bg-red-400">Profil user</Button>
     </>
   );
