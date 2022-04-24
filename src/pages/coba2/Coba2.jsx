@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import React from "react";
 import { Photo } from "tabler-icons-react";
+import AdminDriverTypes from "../../components/adminDriverTypes/AdminDriverTypes";
 import AdminOrderList from "../../components/adminOrderList/AdminOrderList";
 import OrderCard from "../../components/orderCard/OrderCard";
 import PaginList from "../../components/pagination/PaginList";
@@ -33,6 +34,7 @@ function Coba2() {
         icon3={<Photo size={14} />}
       />
       <Button className="bg-red-400">Profil user</Button>
+      <AdminDriverTypes />
     </>
   );
 }
