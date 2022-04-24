@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import image from "../../assets/box.png";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   orderButton: {
     cursor: "pointer",
   },

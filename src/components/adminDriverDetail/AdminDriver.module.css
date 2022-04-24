@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.left {
+  /* margin: auto; */
+  width: 35%;
+}
+
+.right {
+  width: 65%;
+}
+
+.buttonContainer {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  width: 250px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+@media (max-width: 576px) {
+  .container {
+    flex-direction: column;
+  }
+}
