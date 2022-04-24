@@ -5,6 +5,7 @@ import AdminDriver from "../../components/adminDriverDetail/AdminDriver";
 import AdminDriverTypes from "../../components/adminDriverTypes/AdminDriverTypes";
 import AdminOrderList from "../../components/adminOrderList/AdminOrderList";
 import CustomerModal from "../../components/customerAccModal/CustomerModal";
+import LoadSpin from "../../components/loadSpin/LoadSpin";
 import OrderCard from "../../components/orderCard/OrderCard";
 import PaginList from "../../components/pagination/PaginList";
 import SearchComps from "../../components/search/SearchComps";
@@ -48,6 +49,7 @@ function Coba2() {
         }}
       />
       <AdminDriver />
+      <LoadSpin />
     </>
   );
 }
