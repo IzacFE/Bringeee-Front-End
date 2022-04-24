@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Title,
-  Text,
-  Container,
-  Button,
-  Overlay,
-  createStyles,
-} from "@mantine/core";
+import { Title, Text, Container, Overlay, createStyles } from "@mantine/core";
 import img from "../../assets/containerbg.jpg";
 
 const useStyles = createStyles((theme) => ({

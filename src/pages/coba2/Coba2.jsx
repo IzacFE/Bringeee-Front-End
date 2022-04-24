@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import React, { useState } from "react";
 import { Photo } from "tabler-icons-react";
+import AdminDriver from "../../components/adminDriverDetail/AdminDriver";
 import AdminDriverTypes from "../../components/adminDriverTypes/AdminDriverTypes";
 import AdminOrderList from "../../components/adminOrderList/AdminOrderList";
 import CustomerModal from "../../components/customerAccModal/CustomerModal";
@@ -46,6 +47,7 @@ function Coba2() {
           setOpened(false);
         }}
       />
+      <AdminDriver />
     </>
   );
 }

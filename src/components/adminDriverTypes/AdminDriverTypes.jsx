@@ -10,8 +10,8 @@ function AdminDriverTypes(props) {
       <RadioGroup
         value={value}
         onChange={setValue}
-        label="Select your favorite framework/library"
-        description="This is anonymous"
+        // label="Select your favorite framework/library"
+        // description="This is anonymous"
         color="yellow"
         required
       >
