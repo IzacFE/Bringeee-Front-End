@@ -1,0 +1,42 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 5vh;
+}
+
+.konten {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5vh 5vw;
+  min-height: 85vh;
+  /* max-width: 1600px; */
+}
+
+.searchContainer {
+  width: 100%;
+  max-width: 600px;
+}
+
+.category {
+  margin-top: 3vh;
+  width: 100%;
+  max-width: 750px;
+}
+
+.orderContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 3vh;
+  width: 100%;
+  /* min-height: 80vh; */
+}
+
+.orderCard {
+  width: 100%;
+
+  max-width: 300px;
+  margin: 5px;
+}

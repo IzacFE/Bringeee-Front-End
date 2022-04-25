@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   createStyles,
   Header,
@@ -21,6 +22,8 @@ import {
   ChevronDown,
 } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
+import ModalJoin from "../modalJoin/ModalJoin";
+import ModalLogin from "../modalLogin/ModalLogin";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -77,8 +80,55 @@ const useStyles = createStyles((theme) => ({
 
 function Navbar() {
   const navigate = useNavigate();
-  const { classes, theme, cx } = useStyles();
+  const { classes, cx } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [openedLogin, setOpenedLogin] = useState(false);
+  const [openedJoin, setOpenedJoin] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Register Only input states
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState("");
+  const [address, setAddress] = useState("");
+  const [avatar, setAvatar] = useState("");
+
+  // Driver register only
+  const [vehicle, setVehicle] = useState("");
+  const [nik, setNik] = useState("");
+  const [ktp, setKtp] = useState("");
+  const [sim, setSim] = useState("");
+  const [stnk, setStnk] = useState("");
+  const [numbPlat, setNumbPlat] = useState("");
+
+  const dataSaver = (loginData) => {
+    localStorage.setItem("token", loginData.token);
+    localStorage.setItem("role", loginData.user.role);
+  };
+
+  const handleLogin = async () => {
+    var config = {
+      method: "post",
+      url: "https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/auth",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: "&email=" + email + "&password=" + password,
+    };
+
+    await axios(config)
+      .then((response) => {
+        dataSaver(response.data.data);
+        alert("berhasil");
+        window.location.reload();
+      })
+      .catch((response) => {
+        console.log(response);
+        alert("gagal");
+      });
+  };
 
   return (
     <Header height={56} className="bg-stone-700 border-none">
@@ -105,11 +155,32 @@ function Navbar() {
             </Text>
           </div>
 
+          <ModalLogin
+            openedModal={openedJoin}
+            closedModal={() => setOpenedJoin(false)}
+            email={(e) => setEmail(e.target.value)}
+            password={(e) => setPassword(e.target.value)}
+            login={() => handleLogin()}
+          />
+
+          <ModalJoin
+            openedModal={openedLogin}
+            closedModal={() => setOpenedLogin(false)}
+          />
+
           <Group spacing={5} className={classes.links}>
-            <Button compact className="hover:bg-white hover:text-stone-700">
+            <Button
+              compact
+              className="hover:bg-white hover:text-stone-700"
+              onClick={() => setOpenedJoin(true)}
+            >
               Masuk
             </Button>
-            <Button compact className="hover:bg-white hover:text-stone-700">
+            <Button
+              compact
+              className="hover:bg-white hover:text-stone-700"
+              onClick={() => setOpenedLogin(true)}
+            >
               Daftar
             </Button>
 
@@ -140,7 +211,6 @@ function Navbar() {
                       sx={{ lineHeight: 1 }}
                       mr={3}
                     >
-                      {/* {user.name} */}
                       Testing
                     </Text>
                     <ChevronDown size={12} className="text-white" />

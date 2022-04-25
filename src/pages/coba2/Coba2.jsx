@@ -13,6 +13,7 @@ import StepHorizon from "../../components/stepper/StepHorizon";
 import TabsAdmin from "../../components/tabsAdmin/TabsAdmin";
 import TimelineVer from "../../components/timeline/TimelineVer";
 import UserCard from "../../components/userCard/UserCard";
+import CategoryHome from "../../components/category/CategoryHome";
 
 function Coba2() {
   const [opened, setOpened] = useState(false);

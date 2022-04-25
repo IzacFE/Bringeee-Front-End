@@ -1,7 +1,5 @@
 import React from "react";
 import { createStyles, Card, Image, Avatar, Text, Group } from "@mantine/core";
-import avatar from "../../assets/monke.jpg";
-import image from "../../assets/box.png";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -26,20 +24,20 @@ function OrderCard(props) {
   return (
     <Card withBorder radius="md" p={0} className={classes.card}>
       <Group noWrap spacing={0}>
-        <Image src={image} height={140} width={140} />
+        <Image className="pl-2" src={props.image} height={140} width={140} />
         <div className={classes.body} onClick={props.onClick}>
           <Text transform="uppercase" color="dimmed" weight={700} size="xs">
-            Ini Asal
+            {props.from}
             <br />
-            Ini Tujuan
+            {props.destination}
           </Text>
           <Text className={classes.title} mt="xs" mb="md">
-            Rp 1.5jt
+            Rp {props.price}
           </Text>
           <Group noWrap spacing="xs">
             <Group spacing="xs" noWrap>
-              <Avatar size={20} src={avatar} />
-              <Text size="xs">Nama Kustomer</Text>
+              <Avatar size={20} src={props.avatar} />
+              <Text size="xs">{props.name}</Text>
             </Group>
           </Group>
           <Group mt="xs">
@@ -47,7 +45,7 @@ function OrderCard(props) {
               •
             </Text>
             <Text size="xs" color="dimmed">
-              1-9-2022
+              {props.created}
             </Text>
           </Group>
         </div>
