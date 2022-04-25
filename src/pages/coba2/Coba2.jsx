@@ -11,6 +11,7 @@ import PaginList from "../../components/pagination/PaginList";
 import SearchComps from "../../components/search/SearchComps";
 import StepHorizon from "../../components/stepper/StepHorizon";
 import TabsAdmin from "../../components/tabsAdmin/TabsAdmin";
+import TimelineVer from "../../components/timeline/TimelineVer";
 import UserCard from "../../components/userCard/UserCard";
 
 function Coba2() {
@@ -52,6 +53,7 @@ function Coba2() {
       <AdminDriver />
       <LoadSpin />
       <StepHorizon />
+      <TimelineVer />
     </>
   );
 }
