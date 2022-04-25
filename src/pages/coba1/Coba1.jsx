@@ -6,6 +6,7 @@ import { TabsProfileCostumer, TabsProfileDriver } from "../../components/tabsPro
 import FormOrder from "../../components/formOrder/FormOrder";
 import ChoosePayment from "../../components/choosePayment/ChoosePayment";
 import ConfirmPayment from "../../components/confirmPayment/ConfirmPayment";
+import DetailOrder from "../../components/detailOrder/DetailOrder";
 
 function Coba1() {
   const [openedLogin, setOpenedLogin] = useState(false);
@@ -46,6 +47,7 @@ function Coba1() {
       </div>
       <ChoosePayment />
       <ConfirmPayment />
+      <DetailOrder />
     </>
   );
 }
