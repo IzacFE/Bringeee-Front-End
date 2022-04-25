@@ -4,6 +4,10 @@ import { PhoneCall, At } from "tabler-icons-react";
 import image from "../../assets/monke.jpg";
 
 const useStyles = createStyles((theme) => ({
+  container: {
+    cursor: "pointer",
+  },
+
   icon: {
     color:
       theme.colorScheme === "dark"
@@ -19,9 +23,9 @@ const useStyles = createStyles((theme) => ({
 function UserCard() {
   const { classes } = useStyles();
   return (
-    <div>
+    <div className={classes.container}>
       <Group noWrap>
-        <Avatar src={image} size={94} radius="md" />
+        <Avatar src={image} size={94} />
         <div>
           <Text
             size="xs"

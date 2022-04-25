@@ -5,13 +5,13 @@ function TabsAdmin(props) {
   return (
     <Tabs color="yellow">
       <Tabs.Tab label={props.title1} icon={props.icon1}>
-        {props.confirm}
+        {props.konten1}
       </Tabs.Tab>
       <Tabs.Tab label={props.title2} icon={props.icon2}>
-        {props.ongoing}
+        {props.konten2}
       </Tabs.Tab>
       <Tabs.Tab label={props.title3} icon={props.icon3}>
-        {props.history}
+        {props.konten3}
       </Tabs.Tab>
     </Tabs>
   );

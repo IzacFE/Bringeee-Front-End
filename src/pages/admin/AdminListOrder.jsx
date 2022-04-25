@@ -44,9 +44,9 @@ function AdminListOrder() {
         icon1={<AlertCircle size={14} />}
         icon2={<Loader size={14} />}
         icon3={<History size={14} />}
-        confirm={confirmConten()}
-        ongoing={ongoingConten()}
-        history={historyConten()}
+        konten1={confirmConten()}
+        konten2={ongoingConten()}
+        konten3={historyConten()}
       />
     </div>
   );
