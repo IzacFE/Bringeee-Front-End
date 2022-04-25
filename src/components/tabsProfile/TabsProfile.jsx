@@ -1,4 +1,5 @@
 import React from "react";
+import FormOrder from "../../components/formOrder/FormOrder";
 import { Tabs } from "@mantine/core";
 import { FaTruck } from "react-icons/fa";
 
@@ -42,7 +43,9 @@ const TabsProfileCostumer = () => {
             </div>
           </div>
         </Tabs.Tab>
-        <Tabs.Tab label="Buat Order"> Settings tab content</Tabs.Tab>
+        <Tabs.Tab label="Buat Order">
+          <FormOrder />
+        </Tabs.Tab>
       </Tabs>
     </div>
   );

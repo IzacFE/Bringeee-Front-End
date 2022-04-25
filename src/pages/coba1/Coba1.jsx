@@ -3,7 +3,6 @@ import ModalLogin from "../../components/modalLogin/ModalLogin";
 import ModalJoin from "../../components/modalJoin/ModalJoin";
 import { ProfileCostumer, ProfileDriver } from "../../components/profile/ProfileUser";
 import { TabsProfileCostumer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
-import FormOrder from "../../components/formOrder/FormOrder";
 import ChoosePayment from "../../components/choosePayment/ChoosePayment";
 import ConfirmPayment from "../../components/confirmPayment/ConfirmPayment";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
@@ -37,11 +36,6 @@ function Coba1() {
           </div>
           <div className="w-full p-2 md:w-1/2">
             <TabsProfileDriver />
-          </div>
-        </div>
-        <div className="flex flex-col md:flex-row">
-          <div className="w-full p-2 md:w-1/2">
-            <FormOrder />
           </div>
         </div>
       </div>
