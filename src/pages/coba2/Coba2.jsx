@@ -9,6 +9,7 @@ import LoadSpin from "../../components/loadSpin/LoadSpin";
 import OrderCard from "../../components/orderCard/OrderCard";
 import PaginList from "../../components/pagination/PaginList";
 import SearchComps from "../../components/search/SearchComps";
+import StepHorizon from "../../components/stepper/StepHorizon";
 import TabsAdmin from "../../components/tabsAdmin/TabsAdmin";
 import UserCard from "../../components/userCard/UserCard";
 
@@ -50,6 +51,7 @@ function Coba2() {
       />
       <AdminDriver />
       <LoadSpin />
+      <StepHorizon />
     </>
   );
 }
