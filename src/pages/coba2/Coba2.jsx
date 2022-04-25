@@ -1,5 +1,5 @@
-import { Button } from "@mantine/core";
 import React, { useState } from "react";
+import { Button } from "@mantine/core";
 import { Photo } from "tabler-icons-react";
 import AdminDriver from "../../components/adminDriverDetail/AdminDriver";
 import AdminDriverTypes from "../../components/adminDriverTypes/AdminDriverTypes";
