@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import CategoryHome from "../../components/category/CategoryHome";
 import OrderCard from "../../components/orderCard/OrderCard";
 import PaginList from "../../components/pagination/PaginList";
@@ -8,6 +9,7 @@ import SearchComps from "../../components/search/SearchComps";
 import styles from "./Home.module.css";
 
 function Home() {
+  const navigate = useNavigate();
   const [orderData, setOrderData] = useState([]);
   const [category, setCategory] = useState(0);
 
@@ -27,6 +29,15 @@ function Home() {
     //    })
     //    .finally(() => setIsReady(true));
     const data = [
+      {
+        order_picture: "https://source.unsplash.com/600x600/?random",
+        destination_start_city: "Malang",
+        destination_end_city: "Surabaya",
+        fix_price: "310000",
+        avatar: "https://source.unsplash.com/600x600/?random",
+        name: "Ahmad",
+        created_at: "2012-07-28T07:02:13:000+07:00",
+      },
       {
         order_picture: "https://source.unsplash.com/600x600/?random",
         destination_start_city: "Malang",
@@ -183,6 +194,9 @@ function Home() {
                     avatar={item.avatar}
                     name={item.name}
                     created={item.created_at.slice(0, 10)}
+                    onClick={() => {
+                      navigate("/");
+                    }}
                   />
                 </div>
               );

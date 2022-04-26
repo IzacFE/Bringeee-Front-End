@@ -9,12 +9,12 @@ function AdminDriver() {
 
   const openDeleteModal = () =>
     modals.openConfirmModal({
-      title: "Hapus Akun Driver",
+      title: "Hapus Akun Anda",
       centered: true,
       children: (
         <>
           <Text size="sm">
-            Anda akan menghapus akun driver. Tekan tombol Hapus Akun untuk
+            Anda akan menghapus akun anda. Tekan tombol Hapus Akun untuk
             mengkonfirmasi penghapusan akun dan tekan tombol batal untuk
             membatalkan penghapusan akun
           </Text>
