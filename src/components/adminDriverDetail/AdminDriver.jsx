@@ -31,7 +31,7 @@ function AdminDriver() {
       <div className={styles.container}>
         {" "}
         <div className={`${styles.left}`}>
-          <Avatar src={image} size={120} radius={120} mx="auto" />
+          <Avatar src={image} size={240} radius={240} mx="auto" />
           <div className={`${styles.buttonContainer}`}>
             <Button className="bg-amber-500" color="yellow">
               Konfirmasi

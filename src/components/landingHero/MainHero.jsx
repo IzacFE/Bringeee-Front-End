@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  createStyles,
-  Overlay,
-  Container,
-  Title,
-  Button,
-  Text,
-} from "@mantine/core";
+import { createStyles, Overlay, Container, Title, Text } from "@mantine/core";
 import img from "../../assets/HeroBG.jpg";
 
 const useStyles = createStyles((theme) => ({
@@ -18,18 +11,18 @@ const useStyles = createStyles((theme) => ({
   },
 
   container: {
-    height: 750,
+    minHeight: "95vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "flex-start",
-    paddingBottom: theme.spacing.xl * 6,
+    paddingBottom: theme.spacing.xl * 10,
     zIndex: 1,
     position: "relative",
 
     [theme.fn.smallerThan("sm")]: {
       height: 500,
-      paddingBottom: theme.spacing.xl * 3,
+      paddingBottom: theme.spacing.xl * 6,
     },
   },
 

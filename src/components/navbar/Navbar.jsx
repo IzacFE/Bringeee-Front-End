@@ -24,6 +24,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import ModalJoin from "../modalJoin/ModalJoin";
 import ModalLogin from "../modalLogin/ModalLogin";
+import { useModals } from "@mantine/modals";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -130,6 +131,63 @@ function Navbar() {
       });
   };
 
+  const handleRegister = () => {
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("gender", gender);
+    formData.append("address", address);
+    formData.append("avatar", avatar);
+    formData.append("dob", dob);
+    console.log(formData);
+
+    axios
+      .post(`/api/users`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        // console.log(response);
+        alert("berhasil");
+        // Router.push("/authentication/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+        alert("gagal register");
+      });
+    // console.log(name);
+    // console.log(email);
+    // console.log(password);
+    // console.log(gender);
+    // console.log(address);
+    // console.log(avatar);
+    // console.log(dob);
+  };
+
+  const modals = useModals();
+
+  const openDeleteModal = () =>
+    modals.openConfirmModal({
+      title: "Hapus Akun Driver",
+      centered: true,
+      children: (
+        <>
+          <Text size="sm">
+            Anda akan menghapus akun driver. Tekan tombol Hapus Akun untuk
+            mengkonfirmasi penghapusan akun dan tekan tombol batal untuk
+            membatalkan penghapusan akun
+          </Text>
+        </>
+      ),
+      labels: { confirm: "Hapus Akun", cancel: "Batal Hapus" },
+      confirmProps: { color: "red" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => console.log("Confirmed"),
+    });
+
   return (
     <Header height={56} className="bg-stone-700 border-none">
       <Container>
@@ -219,11 +277,30 @@ function Navbar() {
               }
             >
               <Menu.Label>Pengaturan</Menu.Label>
-              <Menu.Item icon={<User size={14} />}>Profil Akun</Menu.Item>
-              <Menu.Item icon={<SwitchHorizontal size={14} />}>
+              <Menu.Item
+                icon={<User size={14} />}
+                onClick={() => {
+                  navigate("/profile");
+                }}
+              >
+                Profil Akun
+              </Menu.Item>
+              <Menu.Item
+                icon={<SwitchHorizontal size={14} />}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
                 Ganti Akun
               </Menu.Item>
-              <Menu.Item icon={<Logout size={14} />}>Keluar</Menu.Item>
+              <Menu.Item
+                icon={<Logout size={14} />}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Keluar
+              </Menu.Item>
 
               <Divider />
 
@@ -231,9 +308,7 @@ function Navbar() {
               <Menu.Item
                 color="red"
                 icon={<Trash size={14} />}
-                onClick={() => {
-                  console.log("pressed");
-                }}
+                onClick={openDeleteModal}
               >
                 Hapus Akun
               </Menu.Item>
