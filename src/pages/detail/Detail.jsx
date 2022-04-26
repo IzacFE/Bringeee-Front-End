@@ -9,7 +9,7 @@ function Detail() {
 
   if (role === "costumer") {
     return (
-      <div className="container mx-auto py-5 p-2">
+      <div className="container mx-auto py-5 px-3">
         <div className="flex flex-col">
           <h2 className="text-center font-bold text-[35px]">Kargo menunggu di jemput driver...</h2>
           <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
@@ -29,7 +29,7 @@ function Detail() {
     );
   } else if (role === "driver") {
     return (
-      <div className="container mx-auto py-5 p-2">
+      <div className="container mx-auto py-5 px-3">
         <div className="flex flex-col">
           <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
             <div className="flex flex-col md:flex-row mb-3">
