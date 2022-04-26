@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "./AdminDetailOrder.module.css";
 import { Group, Button, Image, Text, InputWrapper, Input } from "@mantine/core";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
 import StepHorizon from "../../components/stepper/StepHorizon";
@@ -10,7 +11,7 @@ function AdminDetailOrder() {
 
   const ongoing = () => {
     return (
-      <div className="container mx-auto py-5 px-3">
+      <div className="container mx-auto">
         <div className="flex flex-col md:flex-row md:gap-2 mb-3">
           {/* <div className="mx-auto">
           <StepHorizon />
@@ -37,7 +38,7 @@ function AdminDetailOrder() {
 
   const confirm = () => {
     return (
-      <div className="container mx-auto py-5 px-3">
+      <div className="container mx-auto">
         <div className="flex flex-col md:flex-row md:gap-2 mb-3">
           {/* <div className="mx-auto">
           <StepHorizon />
@@ -53,19 +54,32 @@ function AdminDetailOrder() {
                 <Group>
                   <Image src={ImageOrder} width={200} />
                   <div>
-                    <Text>Setujui sesuai perkiraan tarif</Text>
-                    <Text>Rp 720000</Text>
-                    <Button className="bg-black">Setuju</Button>
-                    <Text>Sesuaikan perkiraan tarif</Text>
-                    <InputWrapper id="emailCos" required label="Email">
+                    <label className="font-medium text-[17px]">
+                      Setujui sesuai perkiraan tarif
+                    </label>
+                    <p className="text-amber-500 font-semibold text-[17px]">
+                      Rp 720000
+                    </p>
+                    <Button className="bg-amber-500 hover:bg-amber-400 my-2">
+                      Setujui
+                    </Button>
+                  </div>
+                  <div>
+                    <label className="font-medium text-[17px]">
+                      Sesuaikan tarif
+                    </label>
+                    <InputWrapper id="emailCos" required>
                       <Input
                         id="emailCos"
                         type="Number"
                         placeholder="720000"
                         onChange={(e) => setPrice(e.target.value)}
+                        className="py-2"
                       />
                     </InputWrapper>
-                    <Button className="bg-black">Kirim</Button>
+                    <Button className="bg-amber-500 hover:bg-amber-400 my-2">
+                      Kirim
+                    </Button>
                   </div>
                 </Group>
               </div>
@@ -78,8 +92,10 @@ function AdminDetailOrder() {
 
   return (
     <>
-      <>{confirm()}</>
-      <>{ongoing()}</>
+      <div className={styles.page}>
+        <>{confirm()}</>
+        <>{ongoing()}</>
+      </div>
     </>
   );
 }
