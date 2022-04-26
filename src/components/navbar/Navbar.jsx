@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   createStyles,
@@ -81,6 +81,8 @@ const useStyles = createStyles((theme) => ({
 
 function Navbar() {
   const navigate = useNavigate();
+  const [profileData, setProfileData] = useState({});
+  const [token, setToken] = useState("");
   const { classes, cx } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [openedLogin, setOpenedLogin] = useState(false);
@@ -89,30 +91,47 @@ function Navbar() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Register Only input states
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
-  const [dob, setDob] = useState("");
-  const [address, setAddress] = useState("");
-  const [avatar, setAvatar] = useState("");
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+      fetchData();
+    }
+  }, []);
 
-  // Driver register only
-  const [vehicle, setVehicle] = useState("");
-  const [nik, setNik] = useState("");
-  const [ktp, setKtp] = useState("");
-  const [sim, setSim] = useState("");
-  const [stnk, setStnk] = useState("");
-  const [numbPlat, setNumbPlat] = useState("");
+  const fetchData = async () => {
+    await axios
+      .get(`https://aws.wildani.tech/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data.User);
+        setProfileData(response.data.data.User);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+      });
+  };
 
   const dataSaver = (loginData) => {
     localStorage.setItem("token", loginData.token);
-    localStorage.setItem("role", loginData.user.role);
+    localStorage.setItem("role", loginData.User.role);
+    setProfileData(loginData.User);
+    if (loginData.User.role === "driver") {
+      localStorage.setItem("account_status", loginData.User.account_status);
+    }
+  };
+
+  const redirect = (role) => {
+    role === "customer" ? navigate("/profile") : navigate("/home");
   };
 
   const handleLogin = async () => {
     var config = {
       method: "post",
-      url: "https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/auth",
+      url: "https://aws.wildani.tech/api/auth",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -121,9 +140,11 @@ function Navbar() {
 
     await axios(config)
       .then((response) => {
+        console.log(response.data.data);
         dataSaver(response.data.data);
         alert("berhasil");
-        window.location.reload();
+        redirect(response.data.data.User.role);
+        // window.location.reload();
       })
       .catch((response) => {
         console.log(response);
@@ -131,40 +152,12 @@ function Navbar() {
       });
   };
 
-  const handleRegister = () => {
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("gender", gender);
-    formData.append("address", address);
-    formData.append("avatar", avatar);
-    formData.append("dob", dob);
-    console.log(formData);
+  const registerCustomer = () => {};
 
-    axios
-      .post(`/api/users`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        // console.log(response);
-        alert("berhasil");
-        // Router.push("/authentication/login");
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("error");
-        alert("gagal register");
-      });
-    // console.log(name);
-    // console.log(email);
-    // console.log(password);
-    // console.log(gender);
-    // console.log(address);
-    // console.log(avatar);
-    // console.log(dob);
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/");
+    window.location.reload();
   };
 
   const modals = useModals();
@@ -188,60 +181,11 @@ function Navbar() {
       onConfirm: () => console.log("Confirmed"),
     });
 
-  return (
-    <Header height={56} className="bg-stone-700 border-none">
-      <Container>
-        <div className={classes.inner}>
-          <div
-            className={classes.logo}
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <TruckDelivery
-              size={40}
-              className={`${classes.truck} text-amber-500`}
-            />
-            <Text
-              className="text-amber-500"
-              weight={500}
-              size="xl"
-              sx={{ lineHeight: 1 }}
-              //   mr={3}
-            >
-              Bringeee
-            </Text>
-          </div>
-
-          <ModalLogin
-            openedModal={openedJoin}
-            closedModal={() => setOpenedJoin(false)}
-            email={(e) => setEmail(e.target.value)}
-            password={(e) => setPassword(e.target.value)}
-            login={() => handleLogin()}
-          />
-
-          <ModalJoin
-            openedModal={openedLogin}
-            closedModal={() => setOpenedLogin(false)}
-          />
-
-          <Group spacing={5} className={classes.links}>
-            <Button
-              compact
-              className="hover:bg-white hover:text-stone-700"
-              onClick={() => setOpenedJoin(true)}
-            >
-              Masuk
-            </Button>
-            <Button
-              compact
-              className="hover:bg-white hover:text-stone-700"
-              onClick={() => setOpenedLogin(true)}
-            >
-              Daftar
-            </Button>
-
+  const navMenus = () => {
+    return (
+      <>
+        {localStorage.getItem("token") && (
+          <>
             <Menu
               size={260}
               placement="end"
@@ -256,12 +200,7 @@ function Navbar() {
                   })}
                 >
                   <Group spacing={7}>
-                    <Avatar
-                      //   src={user.image}
-                      //   alt={user.name}
-                      radius="xl"
-                      size={35}
-                    />
+                    <Avatar src={profileData.avatar} radius="xl" size={35} />
                     <Text
                       className="text-white"
                       weight={500}
@@ -269,7 +208,7 @@ function Navbar() {
                       sx={{ lineHeight: 1 }}
                       mr={3}
                     >
-                      Testing
+                      {profileData.name}
                     </Text>
                     <ChevronDown size={12} className="text-white" />
                   </Group>
@@ -296,7 +235,7 @@ function Navbar() {
               <Menu.Item
                 icon={<Logout size={14} />}
                 onClick={() => {
-                  navigate("/");
+                  logOut();
                 }}
               >
                 Keluar
@@ -313,6 +252,72 @@ function Navbar() {
                 Hapus Akun
               </Menu.Item>
             </Menu>
+          </>
+        )}
+        {!localStorage.getItem("token") && (
+          <>
+            <Button
+              compact
+              className="hover:bg-white hover:text-stone-700"
+              onClick={() => setOpenedLogin(true)}
+            >
+              Masuk
+            </Button>
+            <Button
+              compact
+              className="hover:bg-white hover:text-stone-700"
+              onClick={() => setOpenedJoin(true)}
+            >
+              Daftar
+            </Button>
+          </>
+        )}
+      </>
+    );
+  };
+
+  return (
+    <Header height={56} className="bg-stone-700 border-none">
+      <Container>
+        <div className={classes.inner}>
+          <div
+            className={classes.logo}
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <TruckDelivery
+              size={40}
+              className={`${classes.truck} text-amber-500`}
+            />
+            <Text
+              className="text-amber-500"
+              weight={500}
+              size="xl"
+              sx={{ lineHeight: 1 }}
+            >
+              Bringeee
+            </Text>
+          </div>
+
+          <ModalLogin
+            openedModal={openedLogin}
+            closedModal={() => setOpenedLogin(false)}
+            email={(e) => setEmail(e.target.value)}
+            password={(e) => setPassword(e.target.value)}
+            login={() => {
+              handleLogin();
+              setOpenedLogin(false);
+            }}
+          />
+
+          <ModalJoin
+            openedModal={openedJoin}
+            closedModal={() => setOpenedJoin(false)}
+          />
+
+          <Group spacing={5} className={classes.links}>
+            {navMenus()}
           </Group>
         </div>
       </Container>
