@@ -5,6 +5,7 @@ const ModalLogin = (props) => {
   return (
     <>
       <Modal
+        centered
         opened={props.openedModal}
         onClose={props.closedModal}
         title="Login"
