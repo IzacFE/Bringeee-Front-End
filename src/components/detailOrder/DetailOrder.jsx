@@ -1,23 +1,25 @@
 import React from "react";
 
-const DetailOrder = () => {
+const DetailOrder = (props) => {
   return (
     <div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Nama Costumer</label>
-        <p className="text-amber-500 font-semibold text-[17px]">Jhon</p>
+        <p className="text-amber-500 font-semibold text-[17px]">Jhone</p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Volume Muatan</label>
-        <p className="text-amber-500 font-semibold text-[17px]">80</p>
+        <p className="text-amber-500 font-semibold text-[17px]">{props.dataDetailOrder.total_volume}</p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Berat Muatan</label>
-        <p className="text-amber-500 font-semibold text-[17px]">800</p>
+        <p className="text-amber-500 font-semibold text-[17px]">{props.dataDetailOrder.total_weight}</p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Asal</label>
-        <p className="text-amber-500 font-semibold text-[17px]">Jakarta, DKI Jakarta</p>
+        <p className="text-amber-500 font-semibold text-[17px]">
+          {props.dataDetailOrder.destination_start_city}, {props.dataDetailOrder.destination_start_province}
+        </p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Tujuan</label>
@@ -29,7 +31,7 @@ const DetailOrder = () => {
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Status</label>
-        <p className="text-amber-500 font-semibold text-[17px]">Pengajuan</p>
+        <p className="text-amber-500 font-semibold text-[17px]">{props.dataDetailOrder.status}</p>
       </div>
     </div>
   );
