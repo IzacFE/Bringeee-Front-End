@@ -10,10 +10,14 @@ import styles from "./Home.module.css";
 
 function Home() {
   const navigate = useNavigate();
+  const [admin, setAdmin] = useState(false);
   const [orderData, setOrderData] = useState([]);
   const [category, setCategory] = useState(0);
 
   useEffect(() => {
+    if (localStorage.getItem("role") === "admin") {
+      setAdmin(true);
+    }
     fetchData();
   }, []);
 
@@ -179,7 +183,9 @@ function Home() {
           </div>
 
           <div className={styles.category}>
-            <CategoryHome active={category} setActive={setCategory} />
+            {admin && (
+              <CategoryHome active={category} setActive={setCategory} />
+            )}
           </div>
 
           <div className={styles.orderContainer}>

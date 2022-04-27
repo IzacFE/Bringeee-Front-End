@@ -87,6 +87,7 @@ function Navbar() {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [openedLogin, setOpenedLogin] = useState(false);
   const [openedJoin, setOpenedJoin] = useState(false);
+  const modals = useModals();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -159,8 +160,6 @@ function Navbar() {
     navigate("/");
     window.location.reload();
   };
-
-  const modals = useModals();
 
   const openDeleteModal = () =>
     modals.openConfirmModal({
