@@ -11,6 +11,7 @@ import {
   NativeSelect,
 } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
+import axios from "axios";
 
 const ModalJoin = (props) => {
   // stateDataCostumer
@@ -36,18 +37,40 @@ const ModalJoin = (props) => {
   const [stnk, setStnk] = useState("");
   const [nomorKendaraan, setNomorKendaraan] = useState("");
 
-  const handleDaftarCos = () => {
-    const data = {
-      yourEmail: emailCos,
-      yourPass: passwordCos,
-      yourNama: namaCos,
-      jenisKelamin: jenisKelaminCos,
-      yourUmur: umurCos,
-      yourAlamat: alamatCos,
-      avatar: avatarCos,
-    };
+  const handleDaftarCos = async () => {
+    const formData = new FormData();
+    formData.append("name", namaCos);
+    formData.append("email", emailCos);
+    formData.append("password", passwordCos);
+    formData.append("gender", jenisKelaminCos);
+    formData.append("address", alamatCos);
+    formData.append("avatar", avatarCos);
+    formData.append("dob", umurCos);
+    console.log(formData);
 
-    console.log(data);
+    await axios
+      .post(`/api/users`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        // console.log(response);
+        alert("berhasil");
+        // Router.push("/authentication/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+        alert("gagal register");
+      });
+    // console.log(name);
+    // console.log(email);
+    // console.log(password);
+    // console.log(gender);
+    // console.log(address);
+    // console.log(avatar);
+    // console.log(dob);
   };
 
   const handleDaftarDriver = () => {
