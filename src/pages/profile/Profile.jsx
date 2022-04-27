@@ -76,7 +76,7 @@ function Profile() {
 
   if (role === "costumer") {
     return (
-      <div className="container mx-auto py-5 px-3">
+      <div className="container mx-auto py-[5vh] px-[5vh]">
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-3/12">
             <ProfileCostumer dataUser={dataUser} />
@@ -89,7 +89,7 @@ function Profile() {
     );
   } else if (role === "driver") {
     return (
-      <div className="container mx-auto py-5 px-3">
+      <div className="container mx-auto py-[5vh] px-[5vh]">
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-3/12">
             <ProfileDriver dataUser={dataUser} />
