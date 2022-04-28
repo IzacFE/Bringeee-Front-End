@@ -12,7 +12,7 @@ import axios from "axios";
 
 function ConfirmOrder() {
   const params = useParams();
-  const [status, setStatus] = useState("confirm");
+  const [status, setStatus] = useState("transfer");
   const [isReady, setIsReady] = useState(false);
   const [dataDetailOrder, setDataDetailOrder] = useState([]);
 
