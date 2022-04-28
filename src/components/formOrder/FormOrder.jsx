@@ -187,9 +187,22 @@ const FormOrder = () => {
       </div>
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Muatan</label>
+        <div className="w-full">
+          <Textarea placeholder="" label="Deskripsi" />
+        </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
-            <NativeSelect label="Tipe Truk" placeholder="Pilih Tipe Truk" data={[]} rightSection={<ChevronDown size={14} />} rightSectionWidth={40} />
+            <NativeSelect
+              label="Tipe Truk"
+              placeholder="Pilih Tipe Truk"
+              data={[
+                { value: "1", label: "Pick Up" },
+                { value: "2", label: "Truck Box" },
+                { value: "3", label: "Triler" },
+              ]}
+              rightSection={<ChevronDown size={14} />}
+              rightSectionWidth={40}
+            />
           </div>
           <div className="w-full md:w-6/12">
             <TextInput type="number" label="Volume" placeholder="" />
