@@ -12,7 +12,7 @@ import axios from "axios";
 
 function ConfirmOrder() {
   const params = useParams();
-  const [status, setStatus] = useState("request");
+  const [status, setStatus] = useState("confirm");
   const [isReady, setIsReady] = useState(false);
   const [dataDetailOrder, setDataDetailOrder] = useState([]);
 
@@ -26,7 +26,6 @@ function ConfirmOrder() {
       .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/customers/orders/${id}`)
       .then((ress) => {
         setDataDetailOrder(ress.data.data);
-        console.log(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
