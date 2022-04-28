@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
   createStyles,
@@ -20,6 +20,8 @@ import {
   Trash,
   SwitchHorizontal,
   ChevronDown,
+  ListDetails,
+  Users,
 } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
 import ModalJoin from "../modalJoin/ModalJoin";
@@ -80,6 +82,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Navbar() {
+  // const tokenNih = useContext(TokenContext);
+  // console.log(tokenNih);
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState({});
   const [token, setToken] = useState("");
@@ -103,12 +107,12 @@ function Navbar() {
     await axios
       .get(`https://aws.wildani.tech/api/auth/me`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
-        console.log(response.data.data.User);
-        setProfileData(response.data.data.User);
+        console.log(response.data.data);
+        setProfileData(response.data.data.user);
       })
       .catch((err) => {
         console.log(err);
@@ -116,12 +120,16 @@ function Navbar() {
       });
   };
 
+  // localStorage.setItem("token", "token");
+  // localStorage.setItem("role", "admin");
+
   const dataSaver = (loginData) => {
     localStorage.setItem("token", loginData.token);
-    localStorage.setItem("role", loginData.User.role);
-    setProfileData(loginData.User);
-    if (loginData.User.role === "driver") {
-      localStorage.setItem("account_status", loginData.User.account_status);
+    localStorage.setItem("role", loginData.user.role);
+    setToken(loginData.token);
+    setProfileData(loginData.user);
+    if (loginData.user.role === "driver") {
+      localStorage.setItem("account_status", loginData.user.account_status);
     }
   };
 
@@ -144,7 +152,7 @@ function Navbar() {
         console.log(response.data.data);
         dataSaver(response.data.data);
         alert("berhasil");
-        redirect(response.data.data.User.role);
+        redirect(response.data.data.user.role);
         // window.location.reload();
       })
       .catch((response) => {
@@ -215,18 +223,42 @@ function Navbar() {
               }
             >
               <Menu.Label>Pengaturan</Menu.Label>
-              <Menu.Item
-                icon={<User size={14} />}
-                onClick={() => {
-                  navigate("/profile");
-                }}
-              >
-                Profil Akun
-              </Menu.Item>
+              {localStorage.getItem("role") === "admin" && (
+                <>
+                  <Menu.Item
+                    icon={<ListDetails size={14} />}
+                    onClick={() => {
+                      navigate("/admin-orders");
+                    }}
+                  >
+                    List Order
+                  </Menu.Item>
+                  <Menu.Item
+                    icon={<Users size={14} />}
+                    onClick={() => {
+                      navigate("/admin-users");
+                    }}
+                  >
+                    List User
+                  </Menu.Item>
+                </>
+              )}
+              {localStorage.getItem("role") !== "admin" && (
+                <Menu.Item
+                  icon={<User size={14} />}
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
+                >
+                  Profil Akun
+                </Menu.Item>
+              )}
+
               <Menu.Item
                 icon={<SwitchHorizontal size={14} />}
                 onClick={() => {
-                  navigate("/");
+                  setOpenedLogin(true);
+                  // navigate("/");
                 }}
               >
                 Ganti Akun
@@ -282,7 +314,16 @@ function Navbar() {
           <div
             className={classes.logo}
             onClick={() => {
-              navigate("/");
+              if (
+                localStorage.getItem("role") === "driver" ||
+                localStorage.getItem("role") === "admin"
+              ) {
+                navigate("/home");
+              } else if (localStorage.getItem("role") === "customer") {
+                navigate("/profile");
+              } else {
+                navigate("/");
+              }
             }}
           >
             <TruckDelivery
