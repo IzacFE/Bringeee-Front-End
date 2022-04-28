@@ -23,15 +23,12 @@ function WebRoutes() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/home" element={<Home />} />
           <Route path="/detail-order/:id" element={<Detail />} />
-          <Route path="/confirm-order" element={<ConfirmOrder />} />
+          <Route path="/confirm-order/:id" element={<ConfirmOrder />} />
           <Route path="/admin-orders" element={<AdminListOrder />} />
           <Route path="/admin-users" element={<AdminListUser />} />
           <Route path="/admin-report" element={<AdminReport />} />
           <Route path="/admin-driver-detail" element={<AdminDriverDetail />} />
-          <Route
-            path="/admin-detail-order/:id"
-            element={<AdminDetailOrder />}
-          />
+          <Route path="/admin-detail-order/:id" element={<AdminDetailOrder />} />
           <Route path="/coba1" element={<Coba1 />} />
           <Route path="/coba2" element={<Coba2 />} />
         </Routes>
