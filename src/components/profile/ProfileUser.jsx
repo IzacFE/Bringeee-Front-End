@@ -2,29 +2,21 @@ import React, { useState } from "react";
 import { Input, NativeSelect, Group, Button } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 
-const ProfileCostumer = () => {
+const ProfileCostumer = (props) => {
   const [allowEdit, setAllowEdit] = useState(false);
 
   if (!allowEdit) {
     return (
       <div>
-        <img src="https://i.ibb.co/CmWhGLX/pexels-pixabay-39866.jpg" alt="" className="w-[250px] mx-auto rounded-full" />
+        <img src={props.dataUser.avatar} alt="" className="w-[250px] mx-auto rounded-full" />
 
         <div className="my-4 flex flex-col gap-4">
-          <Input id="nama" placeholder="" defaultValue="Jhon" disabled />
-          <Input id="email" type="email" placeholder="" defaultValue="jhon@mail.com" disabled />
-          <NativeSelect
-            placeholder="Pilih Jenis Kelamin"
-            data={[
-              { value: "laki-laki", label: "Laki-Laki" },
-              { value: "perempuan", label: "Perempuan" },
-            ]}
-            rightSection={<ChevronDown size={14} />}
-            rightSectionWidth={40}
-            disabled
-          />
-          <Input id="umur" type="number" placeholder="" defaultValue={19} disabled />
-          <Group position="left">
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.name}</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.email}</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.gender}</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.age} th</h2>
+
+          <Group position="center">
             <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => setAllowEdit(true)}>
               Edit
             </Button>
@@ -35,11 +27,11 @@ const ProfileCostumer = () => {
   } else {
     return (
       <div>
-        <img src="https://i.ibb.co/CmWhGLX/pexels-pixabay-39866.jpg" alt="" className="w-[250px] mx-auto rounded-full" />
+        <img src={props.dataUser.avatar} alt="" className="w-[250px] mx-auto rounded-full" />
 
         <div className="my-4 flex flex-col gap-4">
-          <Input id="nama" placeholder="" defaultValue="Jhon" />
-          <Input id="email" type="email" placeholder="" defaultValue="jhon@mail.com" />
+          <Input id="nama" placeholder="" defaultValue={props.dataUser.name} disabled />
+          <Input id="email" type="email" placeholder="" defaultValue={props.dataUser.email} />
           <NativeSelect
             placeholder="Pilih Jenis Kelamin"
             data={[
@@ -49,7 +41,7 @@ const ProfileCostumer = () => {
             rightSection={<ChevronDown size={14} />}
             rightSectionWidth={40}
           />
-          <Input id="umur" type="number" placeholder="" defaultValue={19} />
+          <Input id="umur" type="number" placeholder="" defaultValue={props.dataUser.age} />
           <Group position="left">
             <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700">Simpan</Button>
             {""}
@@ -63,29 +55,21 @@ const ProfileCostumer = () => {
   }
 };
 
-const ProfileDriver = () => {
+const ProfileDriver = (props) => {
   const [allowEdit, setAllowEdit] = useState(false);
 
   if (!allowEdit) {
     return (
       <div>
-        <img src="https://i.ibb.co/CmWhGLX/pexels-pixabay-39866.jpg" alt="" className="w-[250px] mx-auto rounded-full" />
+        <img src={props.dataUser.avatar} alt="" className="w-[250px] mx-auto rounded-full" />
 
         <div className="my-4 flex flex-col gap-4">
-          <Input id="nama" placeholder="" defaultValue="Jhon" disabled />
-          <Input id="email" type="email" placeholder="" defaultValue="jhon@mail.com" disabled />
-          <NativeSelect
-            placeholder="Pilih Jenis Kelamin"
-            data={[
-              { value: "laki-laki", label: "Laki-Laki" },
-              { value: "perempuan", label: "Perempuan" },
-            ]}
-            rightSection={<ChevronDown size={14} />}
-            rightSectionWidth={40}
-            disabled
-          />
-          <Input id="umur" type="number" placeholder="" defaultValue={19} disabled />
-          <Group position="left">
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.name}</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.email}</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.gender}</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.age} th</h2>
+
+          <Group position="center">
             <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => setAllowEdit(true)}>
               Edit
             </Button>
@@ -96,11 +80,11 @@ const ProfileDriver = () => {
   } else {
     return (
       <div>
-        <img src="https://i.ibb.co/CmWhGLX/pexels-pixabay-39866.jpg" alt="" className="w-[250px] mx-auto rounded-full" />
+        <img src={props.dataUser.avatar} alt="" className="w-[250px] mx-auto rounded-full" />
 
         <div className="my-4 flex flex-col gap-4">
-          <Input id="nama" placeholder="" defaultValue="Jhon" disabled />
-          <Input id="email" type="email" placeholder="" defaultValue="jhon@mail.com" />
+          <Input id="nama" placeholder="" defaultValue={props.dataUser.name} disabled />
+          <Input id="email" type="email" placeholder="" defaultValue={props.dataUser.email} />
           <NativeSelect
             placeholder="Pilih Jenis Kelamin"
             data={[
@@ -110,7 +94,7 @@ const ProfileDriver = () => {
             rightSection={<ChevronDown size={14} />}
             rightSectionWidth={40}
           />
-          <Input id="umur" type="number" placeholder="" defaultValue={19} />
+          <Input id="umur" type="number" placeholder="" defaultValue={props.dataUser.age} />
           <Group position="left">
             <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700">Simpan</Button>
             {""}
