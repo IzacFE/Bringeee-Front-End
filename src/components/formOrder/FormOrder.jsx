@@ -139,14 +139,10 @@ const FormOrder = () => {
         },
       })
       .then((response) => {
-        console.log(response);
-        // alert("berhasil");
-        // Router.push("/authentication/login");
+        alert("berhasil");
       })
       .catch((err) => {
-        console.log(err);
-        console.log("error");
-        alert("gagal register");
+        alert("gagal");
       });
   };
 
