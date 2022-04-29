@@ -12,7 +12,7 @@ import axios from "axios";
 
 function ConfirmOrder() {
   const params = useParams();
-  const [status, setStatus] = useState("transfer");
+  const [status, setStatus] = useState("request");
   const [isReady, setIsReady] = useState(false);
   const [dataDetailOrder, setDataDetailOrder] = useState([]);
 
@@ -33,13 +33,13 @@ function ConfirmOrder() {
     setIsReady(true);
   };
 
-  if (status === "request") {
+  if (status === "request" || status === "adjust") {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2 mb-3">
             <div className="mx-auto">
-              <StepHorizon />
+              <StepHorizon status={status} />
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-2">
@@ -54,9 +54,12 @@ function ConfirmOrder() {
                   </Group>
                 </div>
               </div>
-              <Group position="center">
-                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]">Kirim</Button>
-              </Group>
+              {status === "adjust" && (
+                <Group position="center" className="flex flex-col md:flex-row">
+                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]">Setuju</Button>
+                  <Button className="bg-red-500 hover:bg-red-400 text-stone-700 w-[250px]">Batal</Button>
+                </Group>
+              )}
             </div>
           </div>
         </div>
@@ -70,7 +73,7 @@ function ConfirmOrder() {
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2 mb-3">
             <div className="mx-auto">
-              <StepHorizon />
+              <StepHorizon status={status} />
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-2 mb-10">
@@ -90,7 +93,24 @@ function ConfirmOrder() {
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2 mb-3">
             <div className="mx-auto">
-              <StepHorizon />
+              <StepHorizon status={status} />
+            </div>
+          </div>
+          <div className="flex flex-col justify-center md:flex-row md:gap-2 mb-3">
+            <ConfirmPayment />
+          </div>
+        </div>
+      );
+    } else {
+      return <LoadSpin />;
+    }
+  } else {
+    if (isReady) {
+      return (
+        <div className="container mx-auto py-[5vh] px-[5vw]">
+          <div className="flex flex-col md:flex-row md:gap-2 mb-3">
+            <div className="mx-auto">
+              <StepHorizon status={status} />
             </div>
           </div>
           <div className="flex flex-col justify-center md:flex-row md:gap-2 mb-3">
