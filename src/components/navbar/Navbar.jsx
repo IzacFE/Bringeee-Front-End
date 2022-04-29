@@ -101,8 +101,6 @@ function Navbar() {
   useEffect(() => {
     if (tokenCtx) {
       fetchData();
-      console.log(tokenCtx);
-      console.log(roleCtx);
     }
   }, []);
 
@@ -122,9 +120,6 @@ function Navbar() {
         console.log("error");
       });
   };
-
-  // localStorage.setItem("token", "token");
-  // localStorage.setItem("role", "admin");
 
   const dataSaver = (loginData) => {
     localStorage.setItem("token", loginData.token);
@@ -274,7 +269,6 @@ function Navbar() {
                 icon={<SwitchHorizontal size={14} />}
                 onClick={() => {
                   setOpenedLogin(true);
-                  // navigate("/");
                 }}
               >
                 Ganti Akun
@@ -304,6 +298,7 @@ function Navbar() {
         {!tokenCtx && (
           <>
             <Button
+              id="btn-open-login"
               compact
               className="hover:bg-white hover:text-stone-700"
               onClick={() => setOpenedLogin(true)}
@@ -311,6 +306,7 @@ function Navbar() {
               Masuk
             </Button>
             <Button
+              id="btn-open-join"
               compact
               className="hover:bg-white hover:text-stone-700"
               onClick={() => setOpenedJoin(true)}

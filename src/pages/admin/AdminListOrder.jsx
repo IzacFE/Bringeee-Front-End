@@ -1,38 +1,97 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TabsAdmin from "../../components/tabsAdmin/TabsAdmin";
 import { AlertCircle, History, Loader, Photo } from "tabler-icons-react";
 import AdminOrderList from "../../components/adminOrderList/AdminOrderList";
 import styles from "./AdminListOrder.module.css";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import axios from "axios";
+import { RoleContext, TokenContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 function AdminListOrder() {
+  const { tokenCtx } = useContext(TokenContext);
+  const { roleCtx } = useContext(RoleContext);
+  const navigate = useNavigate();
   const [isReady, setIsReady] = useState(false);
   const [confirmData, setConfirmData] = useState([]);
+  const [ongoingData, setOngoingData] = useState([]);
+  const [historyData, setHistoryData] = useState([]);
 
   useEffect(() => {
-    fetchConfirm();
+    if (roleCtx === "admin") {
+      fetchConfirm();
+      fetchOngoing();
+      fetchHistory();
+    } else if (roleCtx === "driver") {
+      navigate("/home");
+    } else if (roleCtx === "customer") {
+      navigate("/profile");
+    } else {
+      navigate("/");
+    }
   }, []);
 
   const fetchConfirm = async () => {
     await axios
-      .get(
-        `https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/orders?CONFIRMED`
-      )
+      .get(`https://aws.wildani.tech/api/orders?status=CONFIRMED,REQUESTED`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
       .then((response) => {
-        setConfirmData(response.data.data);
+        if (response.data.data) {
+          setConfirmData(response.data.data);
+        }
+        console.log(response.data.data);
+      })
+      .catch((err) => {
+        console.log("error");
+      });
+  };
+
+  const fetchOngoing = async () => {
+    await axios
+      .get(`https://aws.wildani.tech/api/orders?status=ON_PROCESS`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.data) {
+          setOngoingData(response.data.data);
+        }
+        // setOngoingData();
+        console.log(response.data.data);
+      })
+      .catch((err) => {
+        console.log("error");
+      });
+  };
+
+  const fetchHistory = async () => {
+    await axios
+      .get(`https://aws.wildani.tech/api/orders?status=DELIVERED`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.data) {
+          setHistoryData(response.data.data);
+        }
+        console.log(response.data.data);
       })
       .catch((err) => {
         console.log("error");
       })
-      .finally(() => setIsReady(true));
+      .finally(setTimeout(() => setIsReady(true), 5000));
   };
 
   const confirmConten = () => {
     return (
       <>
         <div className={`${styles.confirmContainer} rounded-md`}>
-          <AdminOrderList />
+          <AdminOrderList dataOrder={confirmData} />
         </div>
       </>
     );
@@ -42,7 +101,7 @@ function AdminListOrder() {
     return (
       <>
         <div className={`${styles.confirmContainer} rounded-md`}>
-          <AdminOrderList />
+          <AdminOrderList dataOrder={ongoingData} />
         </div>
       </>
     );
@@ -52,7 +111,7 @@ function AdminListOrder() {
     return (
       <>
         <div className={`${styles.confirmContainer} rounded-md`}>
-          <AdminOrderList />
+          <AdminOrderList dataOrder={historyData} />
         </div>
       </>
     );
