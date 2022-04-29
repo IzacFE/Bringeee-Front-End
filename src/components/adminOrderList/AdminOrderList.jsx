@@ -9,6 +9,7 @@ import {
   createStyles,
 } from "@mantine/core";
 import image from "../../assets/box.png";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles(() => ({
   orderButton: {
@@ -17,72 +18,93 @@ const useStyles = createStyles(() => ({
 }));
 
 function AdminOrderList(props) {
+  const navigate = useNavigate();
   const { classes } = useStyles();
 
-  const data = [
-    {
-      image,
-      name: "kostumer",
-      email: "ini@gmail.com",
-      from: "asal, Jawa",
-      destination: "Madura",
-      vehicleType: "Pick up",
-      status: "Pengajuan",
-    },
-    {
-      image,
-      name: "kostumer",
-      email: "ini@gmail.com",
-      from: "asal, Jawa",
-      destination: "Madura",
-      vehicleType: "Pick up",
-      status: "Pengajuan",
-    },
-    {
-      image,
-      name: "kostumer",
-      email: "ini@gmail.com",
-      from: "asal, Jawa",
-      destination: "Madura",
-      vehicleType: "Pick up",
-      status: "Penyesuaian",
-    },
-  ];
+  const data = props.dataOrder;
 
-  const rows = data.map((item) => (
-    <tr key={item.name}>
-      <td>
-        <Group
-          spacing="sm"
-          onClick={props.onClick}
-          className={classes.orderButton}
-        >
-          <Avatar size={40} src={item.image} radius={40} />
-          <div>
-            <Text size="sm" weight={500}>
-              {item.name}
-            </Text>
-            <Text size="xs" color="dimmed">
-              {item.email}
-            </Text>
+  // const data = [
+  //   {
+  //     image,
+  //     name: "kostumer",
+  //     email: "ini@gmail.com",
+  //     from: "asal, Jawa",
+  //     destination: "Madura",
+  //     vehicleType: "Pick up",
+  //     status: "Pengajuan",
+  //     id: 1,
+  //   },
+  //   {
+  //     image,
+  //     name: "kostumer",
+  //     email: "ini@gmail.com",
+  //     from: "asal, Jawa",
+  //     destination: "Madura",
+  //     vehicleType: "Pick up",
+  //     status: "Pengajuan",
+  //     id: 2,
+  //   },
+  //   {
+  //     image,
+  //     name: "kostumer",
+  //     email: "ini@gmail.com",
+  //     from: "asal, Jawa",
+  //     destination: "Madura",
+  //     vehicleType: "Pick up",
+  //     status: "Penyesuaian",
+  //     id: 3,
+  //   },
+  // ];
+
+  const rows = data.map((item, index) => (
+    <>
+      {item && (
+        <tr key={item.id}>
+          <td
+            onClick={() => {
+              navigate(`/admin-detail-order/${item.id}`);
+            }}
+          >
+            <Group
+              spacing="sm"
+              onClick={props.onClick}
+              className={classes.orderButton}
+            >
+              <Avatar size={40} src={item.customer.avatar} radius={40} />
+              <div>
+                <Text size="sm" weight={500}>
+                  {item.customer.name}
+                </Text>
+                <Text size="xs" color="dimmed">
+                  {item.customer.email}
+                </Text>
+              </div>
+            </Group>
+          </td>
+
+          <td>{item.destination_start_address}</td>
+
+          <td>{item.destination_end_address}</td>
+
+          <td>{item.truck_type.truck_type}</td>
+
+          <td>
+            {item.status === "REQUESTED" ? (
+              <Badge>Konfirmasi admin</Badge>
+            ) : (
+              <Badge color="gray">Konfirmasi kustomer</Badge>
+            )}
+          </td>
+        </tr>
+      )}
+      {/* {!item && (
+        <>
+          <div key={index}>
+            <p>Nothing</p>
           </div>
-        </Group>
-      </td>
-
-      <td>{item.from}</td>
-
-      <td>{item.destination}</td>
-
-      <td>{item.vehicleType}</td>
-
-      <td>
-        {item.status === "Pengajuan" ? (
-          <Badge>Konfirmasi admin</Badge>
-        ) : (
-          <Badge color="gray">Konfirmasi kustomer</Badge>
-        )}
-      </td>
-    </tr>
+        </>
+      )} */}
+    </>
   ));
 
   return (

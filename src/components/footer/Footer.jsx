@@ -139,15 +139,20 @@ function Footer() {
             </Text>
           </div>
 
-          <Text size="xs" color="dimmed" className={classes.description}>
-            Build fully functional accessible web applications faster than ever
+          <Text
+            size="xs"
+            color="dimmed"
+            className={`${classes.description} hover:text-white`}
+          >
+            Kontak kami:
+            <br />
+            6281-xxx-xxx
           </Text>
         </div>
         <div className={classes.groups}>
           <Text color="dimmed" className="hover:text-white">
-            Contact
-            <br />
-            6281-xxx-xxx
+            Bringee <br />
+            Capstone Group 1
           </Text>
         </div>
       </Container>
