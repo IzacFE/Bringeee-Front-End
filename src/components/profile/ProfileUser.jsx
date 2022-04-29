@@ -14,7 +14,7 @@ const ProfileCostumer = (props) => {
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.name}</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.email}</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.gender}</h2>
-          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.age} th</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.dob}</h2>
 
           <Group position="center">
             <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => setAllowEdit(true)}>
@@ -41,7 +41,7 @@ const ProfileCostumer = (props) => {
             rightSection={<ChevronDown size={14} />}
             rightSectionWidth={40}
           />
-          <Input id="umur" type="number" placeholder="" defaultValue={props.dataUser.age} />
+          <Input id="umur" type="date" placeholder="" defaultValue={props.dataUser.dob} />
           <Group position="left">
             <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700">Simpan</Button>
             {""}
