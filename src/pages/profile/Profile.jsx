@@ -39,7 +39,11 @@ function Profile() {
 
   const fetchHistoryOrderCostumer = async () => {
     await axios
-      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/customers/orders?status=CONFIRMED%2CMANIFESTED%2CON_PROCESS%2CARRIVED%2CCANCELLED`)
+      .get(`https://aws.wildani.tech/api/customers/orders?status=CARRIVED%2CCANCELLED`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((ress) => {
         setDataHistoryOrderCostumer(ress.data.data);
       })
@@ -50,7 +54,11 @@ function Profile() {
 
   const fetchOrderActiveCostumer = async () => {
     await axios
-      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/customers/orders?status=ON_PROCESS`)
+      .get(`https://aws.wildani.tech/api/customers/orders`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((ress) => {
         setOrderActiveCostumer(ress.data.data);
       })

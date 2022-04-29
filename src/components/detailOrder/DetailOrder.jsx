@@ -5,7 +5,7 @@ const DetailOrder = (props) => {
     <div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Nama Costumer</label>
-        <p className="text-amber-500 font-semibold text-[17px]">Jhone</p>
+        <p className="text-amber-500 font-semibold text-[17px]">{props.dataDetailOrder.customer.name}</p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Volume Muatan</label>
@@ -23,11 +23,13 @@ const DetailOrder = (props) => {
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Tujuan</label>
-        <p className="text-amber-500 font-semibold text-[17px]">Solo, Jawa Tengah</p>
+        <p className="text-amber-500 font-semibold text-[17px]">
+          {props.dataDetailOrder.destination_end_city}, {props.dataDetailOrder.destination_end_province}
+        </p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Tarif</label>
-        <p className="text-amber-500 font-semibold text-[17px]">Rp. 1.500.000</p>
+        <p className="text-amber-500 font-semibold text-[17px]">Rp. {props.dataDetailOrder.estimated_price}</p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Status</label>
