@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { useParams } from "react-router-dom";
 import { Group, Button, Image } from "@mantine/core";
@@ -9,8 +9,10 @@ import ImageOrder from "../../assets/package.png";
 import ConfirmPayment from "../../components/confirmPayment/ConfirmPayment";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import axios from "axios";
+import { TokenContext } from "../../App";
 
 function ConfirmOrder() {
+  const { tokenCtx } = useContext(TokenContext);
   const params = useParams();
   const [status, setStatus] = useState("request");
   const [isReady, setIsReady] = useState(false);
@@ -23,14 +25,20 @@ function ConfirmOrder() {
   const fetchDetailOrder = async () => {
     const { id } = params;
     await axios
-      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/customers/orders/${id}`)
+      .get(`https://aws.wildani.tech/api/customers/orders/${id}`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
       .then((ress) => {
         setDataDetailOrder(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsReady(true);
       });
-    setIsReady(true);
   };
 
   if (status === "request" || status === "adjust") {
@@ -50,7 +58,7 @@ function ConfirmOrder() {
                 </div>
                 <div className="w-full md:w-1/2">
                   <Group position="center">
-                    <Image src={ImageOrder} width={250} mx="auto" />
+                    <Image src={dataDetailOrder.order_picture} width={250} mx="auto" />
                   </Group>
                 </div>
               </div>
