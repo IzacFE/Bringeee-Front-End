@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { ProfileCostumer, ProfileDriver } from "../../components/profile/ProfileUser";
 import { TabsProfileCostumer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
+import { TokenContext, RoleContext } from "../../App";
 
 function Profile() {
-  const [role] = useState(localStorage.getItem("role"));
+  const { tokenCtx } = useContext(TokenContext);
+  const { roleCtx } = useContext(RoleContext);
   const [isReady, setIsReady] = useState(false);
   const [dataUser, setDataUser] = useState([]);
   const [dataCurrentOrderDriver, setDataCurrentOrderDriver] = useState([]);
@@ -15,18 +17,23 @@ function Profile() {
 
   useEffect(() => {
     fecthData();
-    fetchCurrentOrderDriver();
-    fetchHistoryOrderDriver();
-    fetchHistoryOrderCostumer();
-    fetchOrderActiveCostumer();
-    setIsReady(true);
+    if (tokenCtx) {
+      if (roleCtx === "driver") {
+        fetchCurrentOrderDriver();
+        fetchHistoryOrderDriver();
+      } else if (roleCtx === "customer") {
+        fetchHistoryOrderCostumer();
+        fetchOrderActiveCostumer();
+      }
+      setIsReady(true);
+    }
   }, []);
 
   const fecthData = async () => {
     await axios
       .get(`https://aws.wildani.tech/api/auth/me`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${tokenCtx}`,
         },
       })
       .then((ress) => {
@@ -41,7 +48,7 @@ function Profile() {
     await axios
       .get(`https://aws.wildani.tech/api/customers/orders?status=CARRIVED%2CCANCELLED`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${tokenCtx}`,
         },
       })
       .then((ress) => {
@@ -56,7 +63,7 @@ function Profile() {
     await axios
       .get(`https://aws.wildani.tech/api/customers/orders`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${tokenCtx}`,
         },
       })
       .then((ress) => {
@@ -89,7 +96,7 @@ function Profile() {
       });
   };
 
-  if (role === "customer") {
+  if (roleCtx === "customer") {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vw]">
@@ -106,7 +113,7 @@ function Profile() {
     } else {
       return <LoadSpin />;
     }
-  } else if (role === "driver") {
+  } else if (roleCtx === "driver") {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vh]">

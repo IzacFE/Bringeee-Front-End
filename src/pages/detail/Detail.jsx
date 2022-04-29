@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
 import TimelineVer from "../../components/timeline/TimelineVer";
 import { Image } from "@mantine/core";
 import ImageOrder from "../../assets/package.png";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
+import { TokenContext, RoleContext } from "../../App";
 import axios from "axios";
 
 function Detail() {
+  const { tokenCtx } = useContext(TokenContext);
+  const { roleCtx } = useContext(RoleContext);
   const params = useParams();
-  const [role, setRole] = useState("costumer");
   const [isReady, setIsReady] = useState(false);
   const [dataDetailOrder, setDataDetailOrder] = useState([]);
 
@@ -22,7 +24,7 @@ function Detail() {
     await axios
       .get(`https://aws.wildani.tech/api/customers/orders/${id}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${tokenCtx}`,
         },
       })
       .then((ress) => {
@@ -37,7 +39,7 @@ function Detail() {
       });
   };
 
-  if (role === "costumer") {
+  if (roleCtx === "customer") {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vw]">
@@ -61,7 +63,7 @@ function Detail() {
     } else {
       return <LoadSpin />;
     }
-  } else if (role === "driver") {
+  } else if (roleCtx === "driver") {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vh]">

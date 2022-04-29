@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Textarea, NativeSelect, TextInput, Group, Button } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
+import { TokenContext } from "../../App";
 
 const FormOrder = () => {
+  const { tokenCtx } = useContext(TokenContext);
   const [dataProvince, setDataProvince] = useState([]);
   const [dataCitiesStart, setDataCitiesStart] = useState([]);
   const [dataDistrictsStart, setDataDistrictsStart] = useState([]);
@@ -134,7 +136,7 @@ const FormOrder = () => {
     await axios
       .post(`https://aws.wildani.tech/api/customers/orders`, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${tokenCtx}`,
           "Content-Type": "multipart/form-data",
         },
       })
