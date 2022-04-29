@@ -1,16 +1,21 @@
-import { Button } from "@mantine/core";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { TokenContext, RoleContext } from "../../App";
+import { useNavigate } from "react-router-dom";
+import styles from "./Home.module.css";
+
+import { Button } from "@mantine/core";
 import CategoryHome from "../../components/category/CategoryHome";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import OrderCard from "../../components/orderCard/OrderCard";
 import PaginList from "../../components/pagination/PaginList";
 import SearchComps from "../../components/search/SearchComps";
-import styles from "./Home.module.css";
 
 function Home() {
+  const { tokenCtx, setTokenCtx } = useContext(TokenContext);
+  const { roleCtx, setRoleCtx } = useContext(RoleContext);
   const navigate = useNavigate();
+
   const [admin, setAdmin] = useState(false);
   const [driver, setDriver] = useState(false);
   const [orderData, setOrderData] = useState([]);
@@ -18,20 +23,25 @@ function Home() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("role") === "admin") {
+    if (roleCtx === "admin") {
       setAdmin(true);
-    } else if (localStorage.getItem("role") === "driver") {
+      fetchData();
+    } else if (roleCtx === "driver") {
       setDriver(true);
+      fetchData();
+    } else if (roleCtx === "customer") {
+      navigate("/profile");
+    } else {
+      navigate("/");
     }
-    fetchData();
   }, []);
 
   const fetchData = async () => {
-    if (localStorage.getItem("role") === "admin") {
+    if (roleCtx === "admin") {
       await axios
         .get(`https://aws.wildani.tech/api/orders`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${tokenCtx}`,
           },
         })
         .then((response) => {
@@ -42,11 +52,11 @@ function Home() {
           console.log("error");
         })
         .finally(() => setIsReady(true));
-    } else if (localStorage.getItem("role") === "driver") {
+    } else if (roleCtx === "driver") {
       await axios
         .get(`https://aws.wildani.tech/api/drivers/orders`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${tokenCtx}`,
           },
         })
         .then((response) => {
