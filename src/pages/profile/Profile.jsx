@@ -1,17 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  ProfileCostumer,
-  ProfileDriver,
-} from "../../components/profile/ProfileUser";
-import {
-  TabsProfileCostumer,
-  TabsProfileDriver,
-} from "../../components/tabsProfile/TabsProfile";
+import { ProfileCostumer, ProfileDriver } from "../../components/profile/ProfileUser";
+import { TabsProfileCostumer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 
 function Profile() {
-  const [role, setRole] = useState("costumer");
+  const [role] = useState(localStorage.getItem("role"));
   const [isReady, setIsReady] = useState(false);
   const [dataUser, setDataUser] = useState([]);
   const [dataCurrentOrderDriver, setDataCurrentOrderDriver] = useState([]);
@@ -30,11 +24,13 @@ function Profile() {
 
   const fecthData = async () => {
     await axios
-      .get(
-        `https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/auth/me`
-      )
+      .get(`https://aws.wildani.tech/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((ress) => {
-        setDataUser(ress.data.user);
+        setDataUser(ress.data.data.user);
       })
       .catch((err) => {
         console.log(err);
@@ -43,9 +39,7 @@ function Profile() {
 
   const fetchHistoryOrderCostumer = async () => {
     await axios
-      .get(
-        `https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/customers/orders?status=CONFIRMED%2CMANIFESTED%2CON_PROCESS%2CARRIVED%2CCANCELLED`
-      )
+      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/customers/orders?status=CONFIRMED%2CMANIFESTED%2CON_PROCESS%2CARRIVED%2CCANCELLED`)
       .then((ress) => {
         setDataHistoryOrderCostumer(ress.data.data);
       })
@@ -56,9 +50,7 @@ function Profile() {
 
   const fetchOrderActiveCostumer = async () => {
     await axios
-      .get(
-        `https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/customers/orders?status=ON_PROCESS`
-      )
+      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/customers/orders?status=ON_PROCESS`)
       .then((ress) => {
         setOrderActiveCostumer(ress.data.data);
       })
@@ -69,9 +61,7 @@ function Profile() {
 
   const fetchCurrentOrderDriver = async () => {
     await axios
-      .get(
-        `https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/drivers/current_order`
-      )
+      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/drivers/current_order`)
       .then((ress) => {
         setDataCurrentOrderDriver(ress.data.data);
       })
@@ -82,9 +72,7 @@ function Profile() {
 
   const fetchHistoryOrderDriver = async () => {
     await axios
-      .get(
-        `https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/drivers/orders?sortVolume=true&sortWeight=true&sortDistance=true`
-      )
+      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/drivers/orders?sortVolume=true&sortWeight=true&sortDistance=true`)
       .then((ress) => {
         setDataHistoryOrderDriver(ress.data.data);
       })
@@ -93,7 +81,7 @@ function Profile() {
       });
   };
 
-  if (role === "costumer") {
+  if (role === "customer") {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vw]">
@@ -102,10 +90,7 @@ function Profile() {
               <ProfileCostumer dataUser={dataUser} />
             </div>
             <div className="w-full md:w-9/12">
-              <TabsProfileCostumer
-                dataHistoryOrder={dataHistoryOrderCostumer}
-                dataOrderActive={dataOrderActiveCostumer}
-              />
+              <TabsProfileCostumer dataHistoryOrder={dataHistoryOrderCostumer} dataOrderActive={dataOrderActiveCostumer} />
             </div>
           </div>
         </div>
@@ -122,10 +107,7 @@ function Profile() {
               <ProfileDriver dataUser={dataUser} />
             </div>
             <div className="w-full md:w-9/12">
-              <TabsProfileDriver
-                dataOrderActive={dataCurrentOrderDriver}
-                dataHistoryOrder={dataHistoryOrderDriver}
-              />
+              <TabsProfileDriver dataOrderActive={dataCurrentOrderDriver} dataHistoryOrder={dataHistoryOrderDriver} />
             </div>
           </div>
         </div>
