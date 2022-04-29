@@ -28,6 +28,8 @@ import ModalJoin from "../modalJoin/ModalJoin";
 import ModalLogin from "../modalLogin/ModalLogin";
 import { useModals } from "@mantine/modals";
 
+import { TokenContext, RoleContext } from "../../App";
+
 const useStyles = createStyles((theme) => ({
   logo: {
     display: "flex",
@@ -82,8 +84,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Navbar() {
-  // const tokenNih = useContext(TokenContext);
-  // console.log(tokenNih);
+  const tokenCtx = useContext(TokenContext);
+  const roleCtx = useContext(RoleContext);
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState({});
   const [token, setToken] = useState("");
@@ -100,6 +102,8 @@ function Navbar() {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
       fetchData();
+      console.log(tokenCtx);
+      console.log(roleCtx);
     }
   }, []);
 

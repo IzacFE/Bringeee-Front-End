@@ -27,7 +27,10 @@ function WebRoutes() {
           <Route path="/admin-orders" element={<AdminListOrder />} />
           <Route path="/admin-users" element={<AdminListUser />} />
           <Route path="/admin-report" element={<AdminReport />} />
-          <Route path="/admin-driver-detail" element={<AdminDriverDetail />} />
+          <Route
+            path="/admin-driver-detail/:id"
+            element={<AdminDriverDetail />}
+          />
           <Route
             path="/admin-detail-order/:id"
             element={<AdminDetailOrder />}
