@@ -19,7 +19,7 @@ const ModalLogin = (props) => {
       >
         <InputWrapper id="email" required label="Email">
           <Input
-            id="email"
+            id="input-email-login"
             type="email"
             placeholder="Your email"
             onChange={props.email}
@@ -27,7 +27,7 @@ const ModalLogin = (props) => {
         </InputWrapper>
         <InputWrapper id="password" required label="Kata Sandi">
           <Input
-            id="password"
+            id="input-password-login"
             type="password"
             placeholder="Your password"
             onChange={props.password}
@@ -35,6 +35,7 @@ const ModalLogin = (props) => {
         </InputWrapper>
         <Group position="right" className="my-5">
           <Button
+            id="btn-process-login"
             className="bg-amber-500 hover:bg-amber-400 text-stone-700"
             onClick={props.login}
           >

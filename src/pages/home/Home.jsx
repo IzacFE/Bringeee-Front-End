@@ -12,8 +12,8 @@ import PaginList from "../../components/pagination/PaginList";
 import SearchComps from "../../components/search/SearchComps";
 
 function Home() {
-  const { tokenCtx, setTokenCtx } = useContext(TokenContext);
-  const { roleCtx, setRoleCtx } = useContext(RoleContext);
+  const { tokenCtx } = useContext(TokenContext);
+  const { roleCtx } = useContext(RoleContext);
   const navigate = useNavigate();
 
   const [admin, setAdmin] = useState(false);
@@ -222,8 +222,6 @@ function Home() {
     //   },
     // ];
 
-    // setOrderData(data);
-    // console.log(data);
     // setIsReady(true);
   };
 
