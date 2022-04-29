@@ -4,8 +4,10 @@ import { Truck, User, World } from "tabler-icons-react";
 import TabsAdmin from "../../components/tabsAdmin/TabsAdmin";
 import UserCard from "../../components/userCard/UserCard";
 import CustomerModal from "../../components/customerAccModal/CustomerModal";
+import { useNavigate } from "react-router-dom";
 
 function AdminListUser() {
+  const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
 
   const kustomer = () => {
@@ -76,7 +78,7 @@ function AdminListUser() {
           <div
             className={`${styles.cardContainer} bg-white rounded-md m-2`}
             onClick={() => {
-              setOpened(true);
+              navigate("/admin-driver-detail/1");
             }}
           >
             <UserCard />

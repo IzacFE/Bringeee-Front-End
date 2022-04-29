@@ -9,6 +9,7 @@ import {
   createStyles,
 } from "@mantine/core";
 import image from "../../assets/box.png";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles(() => ({
   orderButton: {
@@ -17,6 +18,7 @@ const useStyles = createStyles(() => ({
 }));
 
 function AdminOrderList(props) {
+  const navigate = useNavigate();
   const { classes } = useStyles();
 
   const data = [
@@ -28,6 +30,7 @@ function AdminOrderList(props) {
       destination: "Madura",
       vehicleType: "Pick up",
       status: "Pengajuan",
+      id: 1,
     },
     {
       image,
@@ -37,6 +40,7 @@ function AdminOrderList(props) {
       destination: "Madura",
       vehicleType: "Pick up",
       status: "Pengajuan",
+      id: 1,
     },
     {
       image,
@@ -46,12 +50,17 @@ function AdminOrderList(props) {
       destination: "Madura",
       vehicleType: "Pick up",
       status: "Penyesuaian",
+      id: 1,
     },
   ];
 
   const rows = data.map((item) => (
     <tr key={item.name}>
-      <td>
+      <td
+        onClick={() => {
+          navigate(`/admin-detail-order/${item.id}`);
+        }}
+      >
         <Group
           spacing="sm"
           onClick={props.onClick}

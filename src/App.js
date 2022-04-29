@@ -4,9 +4,9 @@ import { NotificationsProvider } from "@mantine/notifications";
 import React, { createContext } from "react";
 import WebRoutes from "./routes/WebRoutes";
 
-const TokenContext = createContext();
+export const TokenContext = createContext();
 
-const RoleContext = createContext();
+export const RoleContext = createContext();
 
 function App() {
   return (
