@@ -12,6 +12,7 @@ import styles from "./Home.module.css";
 function Home() {
   const navigate = useNavigate();
   const [admin, setAdmin] = useState(false);
+  const [driver, setDriver] = useState(false);
   const [orderData, setOrderData] = useState([]);
   const [category, setCategory] = useState(0);
   const [isReady, setIsReady] = useState(false);
@@ -19,182 +20,201 @@ function Home() {
   useEffect(() => {
     if (localStorage.getItem("role") === "admin") {
       setAdmin(true);
+    } else if (localStorage.getItem("role") === "driver") {
+      setDriver(true);
     }
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    // await axios
-    //   .get(`https://aws.wildani.tech/api/orders`, {
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     setOrderData(response.data.data);
-    //     console.log(response.data.data);
-    //     //  setDisplayedData(response.data.data.slice(0, 8));
-    //   })
-    //   .catch((err) => {
-    //     console.log("error");
-    //   })
-    //   .finally(() => setIsReady(true));
-    const data = [
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-      {
-        order_picture: "https://source.unsplash.com/600x600/?random",
-        destination_start_city: "Malang",
-        destination_end_city: "Surabaya",
-        fix_price: "310000",
-        avatar: "https://source.unsplash.com/600x600/?random",
-        name: "Ahmad",
-        created_at: "2012-07-28T07:02:13:000+07:00",
-        id: "1",
-      },
-    ];
+    if (localStorage.getItem("role") === "admin") {
+      await axios
+        .get(`https://aws.wildani.tech/api/orders`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          setOrderData(response.data.data);
+          console.log(response.data.data);
+        })
+        .catch((err) => {
+          console.log("error");
+        })
+        .finally(() => setIsReady(true));
+    } else if (localStorage.getItem("role") === "driver") {
+      await axios
+        .get(`https://aws.wildani.tech/api/drivers/orders`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          setOrderData(response.data.data);
+          console.log(response.data.data);
+        })
+        .catch((err) => {
+          console.log("error");
+        })
+        .finally(() => setIsReady(true));
+    }
 
-    setOrderData(data);
-    console.log(data);
-    setIsReady(true);
+    // const data = [
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    //   {
+    //     order_picture: "https://source.unsplash.com/600x600/?random",
+    //     destination_start_city: "Malang",
+    //     destination_end_city: "Surabaya",
+    //     fix_price: "310000",
+    //     avatar: "https://source.unsplash.com/600x600/?random",
+    //     name: "Ahmad",
+    //     created_at: "2012-07-28T07:02:13:000+07:00",
+    //     id: "1",
+    //   },
+    // ];
+
+    // setOrderData(data);
+    // console.log(data);
+    // setIsReady(true);
   };
 
   let result;

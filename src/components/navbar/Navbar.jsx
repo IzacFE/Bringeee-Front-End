@@ -22,6 +22,7 @@ import {
   ChevronDown,
   ListDetails,
   Users,
+  Report,
 } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
 import ModalJoin from "../modalJoin/ModalJoin";
@@ -102,8 +103,8 @@ function Navbar() {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
       fetchData();
-      console.log(tokenCtx);
-      console.log(roleCtx);
+      // console.log(tokenCtx);
+      // console.log(roleCtx);
     }
   }, []);
 
@@ -244,6 +245,14 @@ function Navbar() {
                     }}
                   >
                     List User
+                  </Menu.Item>
+                  <Menu.Item
+                    icon={<Report size={14} />}
+                    onClick={() => {
+                      navigate("/admin-report");
+                    }}
+                  >
+                    Report
                   </Menu.Item>
                 </>
               )}
