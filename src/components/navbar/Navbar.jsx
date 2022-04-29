@@ -14,7 +14,6 @@ import {
 } from "@mantine/core";
 import {
   TruckDelivery,
-  Login,
   User,
   Logout,
   Trash,
@@ -22,11 +21,14 @@ import {
   ChevronDown,
   ListDetails,
   Users,
+  Report,
 } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
 import ModalJoin from "../modalJoin/ModalJoin";
 import ModalLogin from "../modalLogin/ModalLogin";
 import { useModals } from "@mantine/modals";
+
+import { TokenContext, RoleContext } from "../../App";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -82,11 +84,11 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Navbar() {
-  // const tokenNih = useContext(TokenContext);
-  // console.log(tokenNih);
+  const { tokenCtx, setTokenCtx } = useContext(TokenContext);
+  const { roleCtx, setRoleCtx } = useContext(RoleContext);
   const navigate = useNavigate();
+
   const [profileData, setProfileData] = useState({});
-  const [token, setToken] = useState("");
   const { classes, cx } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [openedLogin, setOpenedLogin] = useState(false);
@@ -97,9 +99,10 @@ function Navbar() {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
+    if (tokenCtx) {
       fetchData();
+      console.log(tokenCtx);
+      console.log(roleCtx);
     }
   }, []);
 
@@ -107,7 +110,7 @@ function Navbar() {
     await axios
       .get(`https://aws.wildani.tech/api/auth/me`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${tokenCtx}`,
         },
       })
       .then((response) => {
@@ -126,7 +129,8 @@ function Navbar() {
   const dataSaver = (loginData) => {
     localStorage.setItem("token", loginData.token);
     localStorage.setItem("role", loginData.user.role);
-    setToken(loginData.token);
+    setTokenCtx(loginData.token);
+    setRoleCtx(loginData.user.role);
     setProfileData(loginData.user);
     if (loginData.user.role === "driver") {
       localStorage.setItem("account_status", loginData.user.account_status);
@@ -134,7 +138,11 @@ function Navbar() {
   };
 
   const redirect = (role) => {
-    role === "customer" ? navigate("/profile") : navigate("/home");
+    if (role === "customer") {
+      navigate("/profile");
+    } else if (role === "driver" || role === "admin") {
+      navigate("/home");
+    }
   };
 
   const handleLogin = async () => {
@@ -153,7 +161,6 @@ function Navbar() {
         dataSaver(response.data.data);
         alert("berhasil");
         redirect(response.data.data.user.role);
-        // window.location.reload();
       })
       .catch((response) => {
         console.log(response);
@@ -165,8 +172,9 @@ function Navbar() {
 
   const logOut = () => {
     localStorage.clear();
+    setTokenCtx("");
+    setRoleCtx("");
     navigate("/");
-    window.location.reload();
   };
 
   const openDeleteModal = () =>
@@ -191,7 +199,7 @@ function Navbar() {
   const navMenus = () => {
     return (
       <>
-        {localStorage.getItem("token") && (
+        {tokenCtx && (
           <>
             <Menu
               size={260}
@@ -223,7 +231,7 @@ function Navbar() {
               }
             >
               <Menu.Label>Pengaturan</Menu.Label>
-              {localStorage.getItem("role") === "admin" && (
+              {roleCtx === "admin" && (
                 <>
                   <Menu.Item
                     icon={<ListDetails size={14} />}
@@ -241,9 +249,17 @@ function Navbar() {
                   >
                     List User
                   </Menu.Item>
+                  <Menu.Item
+                    icon={<Report size={14} />}
+                    onClick={() => {
+                      navigate("/admin-report");
+                    }}
+                  >
+                    Report
+                  </Menu.Item>
                 </>
               )}
-              {localStorage.getItem("role") !== "admin" && (
+              {tokenCtx !== "admin" && (
                 <Menu.Item
                   icon={<User size={14} />}
                   onClick={() => {
@@ -285,7 +301,7 @@ function Navbar() {
             </Menu>
           </>
         )}
-        {!localStorage.getItem("token") && (
+        {!tokenCtx && (
           <>
             <Button
               compact

@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./AdminDetailOrder.module.css";
 import { Group, Button, Image, Text, InputWrapper, Input } from "@mantine/core";
-import DetailOrder from "../../components/detailOrder/DetailOrder";
+// import DetailOrder from "../../components/detailOrder/DetailOrder";
 import StepHorizon from "../../components/stepper/StepHorizon";
 import ImageOrder from "../../assets/package.png";
 import TimelineVer from "../../components/timeline/TimelineVer";
+import { useNavigate } from "react-router-dom";
 
 function AdminDetailOrder() {
+  const navigate = useNavigate();
   const [price, setPrice] = useState(0);
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("role") !== "admin") {
+      navigate("/");
+    } else {
+      setStatus("confirm");
+    }
+  }, []);
 
   const ongoing = () => {
     return (
@@ -20,9 +31,7 @@ function AdminDetailOrder() {
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
             <div className="flex flex-col md:flex-row mb-3">
-              <div className="w-full md:w-1/2">
-                <DetailOrder />
-              </div>
+              <div className="w-full md:w-1/2">{/* <DetailOrder /> */}</div>
               <div className="w-full md:w-1/2">
                 <Group>
                   <Image src={ImageOrder} width={200} />
@@ -47,9 +56,7 @@ function AdminDetailOrder() {
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
             <div className="flex flex-col md:flex-row mb-3">
-              <div className="w-full md:w-1/2">
-                <DetailOrder />
-              </div>
+              <div className="w-full md:w-1/2">{/* <DetailOrder /> */}</div>
               <div className="w-full md:w-1/2">
                 <Group>
                   <Image src={ImageOrder} width={200} />
@@ -93,8 +100,8 @@ function AdminDetailOrder() {
   return (
     <>
       <div className={styles.page}>
-        <>{confirm()}</>
-        <>{ongoing()}</>
+        <>{status === "confirm" && confirm()}</>
+        <>{status === "ongoing" && ongoing()}</>
       </div>
     </>
   );
