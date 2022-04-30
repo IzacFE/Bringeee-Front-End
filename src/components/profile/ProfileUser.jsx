@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input, NativeSelect, Group, Button } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 
-const ProfileCostumer = (props) => {
+const ProfileCustomer = (props) => {
   const [allowEdit, setAllowEdit] = useState(false);
 
   if (!allowEdit) {
@@ -108,4 +108,4 @@ const ProfileDriver = (props) => {
   }
 };
 
-export { ProfileCostumer, ProfileDriver };
+export { ProfileCustomer, ProfileDriver };

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ModalLogin from "../../components/modalLogin/ModalLogin";
 import ModalJoin from "../../components/modalJoin/ModalJoin";
-import { ProfileCostumer, ProfileDriver } from "../../components/profile/ProfileUser";
-import { TabsProfileCostumer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
+import { ProfileCustomer, ProfileDriver } from "../../components/profile/ProfileUser";
+import { TabsProfileCustomer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
 import ChoosePayment from "../../components/choosePayment/ChoosePayment";
 import ConfirmPayment from "../../components/confirmPayment/ConfirmPayment";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
@@ -27,12 +27,12 @@ function Coba1() {
             <ProfileDriver />{" "}
           </div>
           <div className="w-full p-2 md:w-3/12">
-            <ProfileCostumer />
+            <ProfileCustomer />
           </div>
         </div>
         <div className="flex flex-col md:flex-row">
           <div className="w-full p-2 md:w-1/2">
-            <TabsProfileCostumer />
+            <TabsProfileCustomer />
           </div>
           <div className="w-full p-2 md:w-1/2">
             <TabsProfileDriver />
