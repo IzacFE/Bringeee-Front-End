@@ -86,7 +86,7 @@ const TakeOrder = () => {
                 <DetailOrder dataDetailOrder={dataDetailOrder} />
                 {status === "ongoing" && (
                   <div className="py-2">
-                    <TextInput type="file" label="Foto" placeholder="" onChange={(e) => setArrivedPic(e.target.files[0])} />
+                    <TextInput type="file" label="Foto" placeholder="" onChange={(e) => setArrivedPic(e.target.files[0])} id="form-arrivedPicture" />
                   </div>
                 )}
               </div>
@@ -98,14 +98,14 @@ const TakeOrder = () => {
             </div>
             {statusDriver === "available" && (
               <Group position="center" className="flex flex-col md:flex-row">
-                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleTakeOrder()}>
+                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleTakeOrder()} id="btn-takeOrder">
                   Ambil Order
                 </Button>
               </Group>
             )}
             {status === "ongoing" && (
               <Group position="center">
-                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleFinishOrder()}>
+                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleFinishOrder()} id="btn-finishOrder">
                   Selesai
                 </Button>
               </Group>

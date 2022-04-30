@@ -97,10 +97,10 @@ function ConfirmOrder() {
               </div>
               {status === "adjust" && (
                 <Group position="center" className="flex flex-col md:flex-row">
-                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleConfirmOrder()}>
+                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleConfirmOrder()} id="btn-confirmOrder-agree">
                     Setuju
                   </Button>
-                  <Button className="bg-red-500 hover:bg-red-400 text-stone-700 w-[250px]" onClick={() => handleCancelOrder()}>
+                  <Button className="bg-red-500 hover:bg-red-400 text-stone-700 w-[250px]" onClick={() => handleCancelOrder()} id="btn-confirmOrder-cancel">
                     Batal
                   </Button>
                 </Group>
