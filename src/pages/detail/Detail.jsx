@@ -45,7 +45,7 @@ function Detail() {
   const fetchOrderHistories = async () => {
     const { id } = params;
     await axios
-      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.1/api/customers/orders/${id}/histories`, {
+      .get(`https://aws.wildani.tech/api/customers/orders/${id}/histories`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
