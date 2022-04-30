@@ -73,7 +73,7 @@ const TabsProfileDriver = (props) => {
     <div>
       <Tabs color="yellow">
         <Tabs.Tab label="Order Aktif">
-          <Link to={`/detail-order/${props.dataOrderActive.id}`}>
+          <Link to={`/take-order/${props.dataOrderActive.id}`}>
             <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
               <div className="w-full md:h-full">
                 <FaTruck size={100} className="mx-auto md:m-0" />

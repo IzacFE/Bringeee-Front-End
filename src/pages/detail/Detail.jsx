@@ -22,24 +22,41 @@ function Detail() {
 
   const fetchData = async () => {
     await fetchDetailOrder();
-    await fetchOrderHistories();
+    if (roleCtx === "customer") {
+      await fetchOrderHistories();
+    }
     setIsReady(true);
   };
 
   const fetchDetailOrder = async () => {
     const { id } = params;
-    await axios
-      .get(`https://aws.wildani.tech/api/customers/orders/${id}`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
-      .then((ress) => {
-        setDataDetailOrder(ress.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (roleCtx === "customer") {
+      await axios
+        .get(`https://aws.wildani.tech/api/customers/orders/${id}`, {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        })
+        .then((ress) => {
+          setDataDetailOrder(ress.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (roleCtx === "driver") {
+      await axios
+        .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.1/api/orders/${id}`, {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        })
+        .then((ress) => {
+          setDataDetailOrder(ress.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const fetchOrderHistories = async () => {
@@ -90,7 +107,7 @@ function Detail() {
             <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
               <div className="flex flex-col md:flex-row mb-3">
                 <div className="w-full md:w-1/2">
-                  <DetailOrder />
+                  <DetailOrder dataDetailOrder={dataDetailOrder} />
                   <div className="py-2">
                     <label className="font-medium text-[17px]">Diambil</label>
                     <p className="text-amber-500 font-semibold text-[17px]">19-4-2022</p>
