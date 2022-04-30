@@ -1,10 +1,9 @@
-import { Avatar, Button, Title, Text } from "@mantine/core";
+import { Avatar, Button, Title, Text, Image } from "@mantine/core";
 import React from "react";
 import styles from "./AdminDriver.module.css";
-import image from "../../assets/monke.jpg";
 import { useModals } from "@mantine/modals";
 
-function AdminDriver() {
+function AdminDriver(props) {
   const modals = useModals();
 
   const openDeleteModal = () =>
@@ -29,9 +28,8 @@ function AdminDriver() {
   return (
     <>
       <div className={styles.container}>
-        {" "}
         <div className={`${styles.left}`}>
-          <Avatar src={image} size={240} radius={240} mx="auto" />
+          <Avatar src={props.image} size={240} radius={240} mx="auto" />
           <div className={`${styles.buttonContainer}`}>
             <Button className="bg-amber-500" color="yellow">
               Konfirmasi
@@ -46,16 +44,23 @@ function AdminDriver() {
           </div>
         </div>
         <div className={`${styles.right}`}>
-          <Title className="text-amber-500">INI NAMA Driver</Title>
+          <Title className="text-amber-500">{props.name}</Title>
           <h3>
-            monke@mail.com <br />
-            Gender <br />
-            Address <br />
-            no phone <br />
-            Age 26th <br /> Jenis truck <br />
-            STNK <br />
-            Ktp <br />
-            sim <br /> Nik <br /> plat nomor <br />
+            {props.email} <br />
+            {props.gender} <br />
+            {props.address} <br />
+            {props.phone} <br />
+            Umur {props.age} <br />
+            {props.vehicle}
+            <br />
+            <Image radius="md" src={props.stnk} width={240} className="my-3" />
+            <Image radius="md" src={props.ktp} width={240} className="my-3" />
+            <Image radius="md" src={props.sim} width={240} className="my-3" />
+            {/* {props.stnk} <br />
+            {props.ktp} <br />
+            {props.sim} <br />  */}
+            {props.nik} <br />
+            {props.plateNumb} <br />
           </h3>
         </div>
       </div>

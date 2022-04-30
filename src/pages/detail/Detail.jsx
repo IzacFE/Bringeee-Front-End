@@ -14,28 +14,64 @@ function Detail() {
   const params = useParams();
   const [isReady, setIsReady] = useState(false);
   const [dataDetailOrder, setDataDetailOrder] = useState([]);
+  const [dataOrderHistories, setDataOrderHistories] = useState([]);
 
   useEffect(() => {
-    fetchDetailOrder();
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    await fetchDetailOrder();
+    if (roleCtx === "customer") {
+      await fetchOrderHistories();
+    }
+    setIsReady(true);
+  };
 
   const fetchDetailOrder = async () => {
     const { id } = params;
+    if (roleCtx === "customer") {
+      await axios
+        .get(`https://aws.wildani.tech/api/customers/orders/${id}`, {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        })
+        .then((ress) => {
+          setDataDetailOrder(ress.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (roleCtx === "driver") {
+      await axios
+        .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.1/api/orders/${id}`, {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        })
+        .then((ress) => {
+          setDataDetailOrder(ress.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const fetchOrderHistories = async () => {
+    const { id } = params;
     await axios
-      .get(`https://aws.wildani.tech/api/customers/orders/${id}`, {
+      .get(`https://aws.wildani.tech/api/customers/orders/${id}/histories`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
       })
       .then((ress) => {
-        setDataDetailOrder(ress.data.data);
-        console.log(ress.data.data);
+        setDataOrderHistories(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        setIsReady(true);
       });
   };
 
@@ -44,7 +80,7 @@ function Detail() {
       return (
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col">
-            <h2 className="text-center font-bold text-[35px] mb-5">Kargo menunggu di jemput driver...</h2>
+            {dataDetailOrder.status === "ARRIVED" ? <h2 className="text-center font-bold text-[35px] mb-5">Kargo telah sampai tujuan...</h2> : <h2 className="text-center font-bold text-[35px] mb-5">Kargo menunggu di jemput driver...</h2>}
             <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
               <div className="flex flex-col md:flex-row mb-3">
                 <div className="w-full md:w-1/2">
@@ -52,7 +88,7 @@ function Detail() {
                 </div>
                 <div className="w-full md:w-1/2">
                   <div className="flex justify-center md:justify-start">
-                    <TimelineVer />
+                    <TimelineVer dataHistories={dataOrderHistories} />
                   </div>
                 </div>
               </div>
@@ -71,7 +107,7 @@ function Detail() {
             <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
               <div className="flex flex-col md:flex-row mb-3">
                 <div className="w-full md:w-1/2">
-                  <DetailOrder />
+                  <DetailOrder dataDetailOrder={dataDetailOrder} />
                   <div className="py-2">
                     <label className="font-medium text-[17px]">Diambil</label>
                     <p className="text-amber-500 font-semibold text-[17px]">19-4-2022</p>

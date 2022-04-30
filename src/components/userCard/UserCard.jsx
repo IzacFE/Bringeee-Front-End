@@ -20,12 +20,12 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function UserCard() {
+function UserCard(props) {
   const { classes } = useStyles();
   return (
     <div className={classes.container}>
       <Group noWrap>
-        <Avatar src={image} size={94} />
+        <Avatar src={props.image} size={94} />
         <div>
           <Text
             size="xs"
@@ -33,24 +33,24 @@ function UserCard() {
             weight={700}
             color="dimmed"
           >
-            Kustomer
+            {props.role}
           </Text>
 
           <Text size="lg" weight={500} className={classes.name}>
-            Monke user
+            {props.name}
           </Text>
 
           <Group noWrap spacing={10} mt={3}>
             <At size={16} className={classes.icon} />
             <Text size="xs" color="dimmed">
-              monke@gmail.com
+              {props.email}
             </Text>
           </Group>
 
           <Group noWrap spacing={10} mt={5}>
             <PhoneCall size={16} className={classes.icon} />
             <Text size="xs" color="dimmed">
-              0281-123-456
+              {props.phone}
             </Text>
           </Group>
         </div>

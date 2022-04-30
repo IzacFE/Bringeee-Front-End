@@ -41,8 +41,6 @@ function CustomerModal(props) {
               target={
                 <Button
                   color="red"
-                  //   variant="default"
-                  fullWidth
                   mt="md"
                   leftIcon={<Trash size={14} />}
                   className="bg-red-500"
@@ -51,7 +49,6 @@ function CustomerModal(props) {
                   Hapus Akun
                 </Button>
               }
-              fullWidth
               position="bottom"
               withArrow
             >

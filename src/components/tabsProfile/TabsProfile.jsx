@@ -4,7 +4,7 @@ import FormOrder from "../../components/formOrder/FormOrder";
 import { Tabs } from "@mantine/core";
 import { FaTruck } from "react-icons/fa";
 
-const TabsProfileCostumer = (props) => {
+const TabsProfileCustomer = (props) => {
   return (
     <div>
       <Tabs color="yellow">
@@ -12,7 +12,7 @@ const TabsProfileCostumer = (props) => {
           <div className="bg-neutral-300 min-h-[350px] p-2">
             {props.dataOrderActive.map((orders) => {
               return (
-                <Link to={`/detail-order/${orders.id}`} key={orders.id}>
+                <Link to={`/confirm-order/${orders.id}`} key={orders.id}>
                   <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                     <div className="w-full md:h-full">
                       <FaTruck size={100} className="mx-auto md:m-0" />
@@ -73,7 +73,7 @@ const TabsProfileDriver = (props) => {
     <div>
       <Tabs color="yellow">
         <Tabs.Tab label="Order Aktif">
-          <Link to={`/detail-order/${props.dataOrderActive.id}`}>
+          <Link to={`/take-order/${props.dataOrderActive.id}`}>
             <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
               <div className="w-full md:h-full">
                 <FaTruck size={100} className="mx-auto md:m-0" />
@@ -125,4 +125,4 @@ const TabsProfileDriver = (props) => {
   );
 };
 
-export { TabsProfileCostumer, TabsProfileDriver };
+export { TabsProfileCustomer, TabsProfileDriver };

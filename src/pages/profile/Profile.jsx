@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
-import { ProfileCostumer, ProfileDriver } from "../../components/profile/ProfileUser";
-import { TabsProfileCostumer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
+import { ProfileCustomer, ProfileDriver } from "../../components/profile/ProfileUser";
+import { TabsProfileCustomer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import { TokenContext, RoleContext } from "../../App";
 
@@ -12,8 +12,8 @@ function Profile() {
   const [dataUser, setDataUser] = useState([]);
   const [dataCurrentOrderDriver, setDataCurrentOrderDriver] = useState([]);
   const [dataHistoryOrderDriver, setDataHistoryOrderDriver] = useState([]);
-  const [dataHistoryOrderCostumer, setDataHistoryOrderCostumer] = useState([]);
-  const [dataOrderActiveCostumer, setOrderActiveCostumer] = useState([]);
+  const [dataHistoryOrderCustomer, setDataHistoryOrderCustomer] = useState([]);
+  const [dataOrderActiveCustomer, setOrderActiveCustomer] = useState([]);
 
   useEffect(() => {
     fecthData();
@@ -22,8 +22,8 @@ function Profile() {
         fetchCurrentOrderDriver();
         fetchHistoryOrderDriver();
       } else if (roleCtx === "customer") {
-        fetchHistoryOrderCostumer();
-        fetchOrderActiveCostumer();
+        fetchHistoryOrderCustomer();
+        fetchOrderActiveCustomer();
       }
       setIsReady(true);
     }
@@ -44,7 +44,7 @@ function Profile() {
       });
   };
 
-  const fetchHistoryOrderCostumer = async () => {
+  const fetchHistoryOrderCustomer = async () => {
     await axios
       .get(`https://aws.wildani.tech/api/customers/orders?status=CARRIVED%2CCANCELLED`, {
         headers: {
@@ -52,22 +52,22 @@ function Profile() {
         },
       })
       .then((ress) => {
-        setDataHistoryOrderCostumer(ress.data.data);
+        setDataHistoryOrderCustomer(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const fetchOrderActiveCostumer = async () => {
+  const fetchOrderActiveCustomer = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/customers/orders`, {
+      .get(`https://aws.wildani.tech/api/customers/orders?status=CONFIRMED%2CMANIFESTED%2CON_PROCESS%2CREQUESTED`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
       })
       .then((ress) => {
-        setOrderActiveCostumer(ress.data.data);
+        setOrderActiveCustomer(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -102,10 +102,10 @@ function Profile() {
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2">
             <div className="w-full md:w-3/12">
-              <ProfileCostumer dataUser={dataUser} />
+              <ProfileCustomer dataUser={dataUser} />
             </div>
             <div className="w-full md:w-9/12">
-              <TabsProfileCostumer dataHistoryOrder={dataHistoryOrderCostumer} dataOrderActive={dataOrderActiveCostumer} />
+              <TabsProfileCustomer dataHistoryOrder={dataHistoryOrderCustomer} dataOrderActive={dataOrderActiveCustomer} />
             </div>
           </div>
         </div>
