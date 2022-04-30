@@ -7,6 +7,7 @@ import { TokenContext } from "../../App";
 const FormOrder = () => {
   const { tokenCtx } = useContext(TokenContext);
   const [dataProvince, setDataProvince] = useState([]);
+  const [dataTruck, setDataTruck] = useState([]);
   const [dataCitiesStart, setDataCitiesStart] = useState([]);
   const [dataDistrictsStart, setDataDistrictsStart] = useState([]);
   const [idProvStart, setIdProvStart] = useState("");
@@ -36,10 +37,22 @@ const FormOrder = () => {
 
   useEffect(() => {
     fetchProvince();
+    fetchTruckType();
   }, []);
 
-  const fetchProvince = () => {
-    axios
+  const fetchTruckType = async () => {
+    await axios
+      .get(`https://aws.wildani.tech/api/truck_types`)
+      .then((ress) => {
+        setDataTruck(ress.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchProvince = async () => {
+    await axios
       .get(`https://aws.wildani.tech/api/provinces`)
       .then((ress) => {
         setDataProvince(ress.data.data);
@@ -49,10 +62,10 @@ const FormOrder = () => {
       });
   };
 
-  const fetchCitiesStart = (e) => {
+  const fetchCitiesStart = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
 
-    axios
+    await axios
       .get(`https://aws.wildani.tech/api/provinces/${e.target.value}/cities`)
       .then((ress) => {
         setDataCitiesStart(ress.data.data);
@@ -66,9 +79,9 @@ const FormOrder = () => {
     setDataDistrictsStart([]);
   };
 
-  const fetchDistrictsStart = (e) => {
+  const fetchDistrictsStart = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
-    axios
+    await axios
       .get(`https://aws.wildani.tech/api/provinces/${idProvStart}/cities/${e.target.value}/districts`)
       .then((ress) => {
         setDataDistrictsStart(ress.data.data);
@@ -79,10 +92,10 @@ const FormOrder = () => {
     setCitiesStart(selected);
   };
 
-  const fetchCitiesEnd = (e) => {
+  const fetchCitiesEnd = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
 
-    axios
+    await axios
       .get(`https://aws.wildani.tech/api/provinces/${e.target.value}/cities`)
       .then((ress) => {
         setDataCitiesEnd(ress.data.data);
@@ -96,9 +109,9 @@ const FormOrder = () => {
     setDataDistrictsEnd([]);
   };
 
-  const fetchDistrictsEnd = (e) => {
+  const fetchDistrictsEnd = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
-    axios
+    await axios
       .get(`https://aws.wildani.tech/api/provinces/${idProvEnd}/cities/${e.target.value}/districts`)
       .then((ress) => {
         setDataDistrictsEnd(ress.data.data);
@@ -130,8 +143,6 @@ const FormOrder = () => {
     formData.append("total_weight", weight);
     formData.append("truck_type_id", typeTruck);
     formData.append("order_picture", imageOrder);
-
-    console.log(formData);
 
     await axios
       .post(`https://aws.wildani.tech/api/customers/orders`, formData, {
@@ -291,11 +302,9 @@ const FormOrder = () => {
               label="Tipe Truk"
               placeholder="Pilih Tipe Truk"
               onChange={(e) => setTypeTruck(e.target.value)}
-              data={[
-                { value: "1", label: "Pick Up" },
-                { value: "2", label: "Truck Box" },
-                { value: "3", label: "Triler" },
-              ]}
+              data={dataTruck.map((truck) => {
+                return { value: truck.id, label: truck.truck_type };
+              })}
               rightSection={<ChevronDown size={14} />}
               rightSectionWidth={40}
             />
