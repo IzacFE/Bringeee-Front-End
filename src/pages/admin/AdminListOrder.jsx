@@ -29,7 +29,7 @@ function AdminListOrder() {
     } else {
       navigate("/");
     }
-  }, []);
+  }, [roleCtx]);
 
   const fetchConfirm = async () => {
     await axios
@@ -84,7 +84,7 @@ function AdminListOrder() {
       .catch((err) => {
         console.log("error");
       })
-      .finally(setTimeout(() => setIsReady(true), 5000));
+      .finally(() => setIsReady(true));
   };
 
   const confirmConten = () => {

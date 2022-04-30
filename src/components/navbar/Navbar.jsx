@@ -112,7 +112,6 @@ function Navbar() {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setProfileData(response.data.data.user);
       })
       .catch((err) => {
