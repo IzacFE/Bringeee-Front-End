@@ -4,7 +4,7 @@ import FormOrder from "../../components/formOrder/FormOrder";
 import { Tabs } from "@mantine/core";
 import { FaTruck } from "react-icons/fa";
 
-const TabsProfileCostumer = (props) => {
+const TabsProfileCustomer = (props) => {
   return (
     <div>
       <Tabs color="yellow">
@@ -125,4 +125,4 @@ const TabsProfileDriver = (props) => {
   );
 };
 
-export { TabsProfileCostumer, TabsProfileDriver };
+export { TabsProfileCustomer, TabsProfileDriver };
