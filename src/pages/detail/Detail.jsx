@@ -36,7 +36,6 @@ function Detail() {
       })
       .then((ress) => {
         setDataDetailOrder(ress.data.data);
-        console.log(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +52,6 @@ function Detail() {
       })
       .then((ress) => {
         setDataOrderHistories(ress.data.data);
-        console.log(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
