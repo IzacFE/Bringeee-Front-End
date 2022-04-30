@@ -13,6 +13,7 @@ import Detail from "../pages/detail/Detail";
 import Home from "../pages/home/Home";
 import Landing from "../pages/landing/Landing";
 import Profile from "../pages/profile/Profile";
+import TakeOrder from "../pages/takeOrder/TakeOrder";
 
 function WebRoutes() {
   return (
@@ -24,17 +25,12 @@ function WebRoutes() {
           <Route path="/home" element={<Home />} />
           <Route path="/detail-order/:id" element={<Detail />} />
           <Route path="/confirm-order/:id" element={<ConfirmOrder />} />
+          <Route path="/take-order/:id" element={<TakeOrder />} />
           <Route path="/admin-orders" element={<AdminListOrder />} />
           <Route path="/admin-users" element={<AdminListUser />} />
           <Route path="/admin-report" element={<AdminReport />} />
-          <Route
-            path="/admin-driver-detail/:id"
-            element={<AdminDriverDetail />}
-          />
-          <Route
-            path="/admin-detail-order/:id"
-            element={<AdminDetailOrder />}
-          />
+          <Route path="/admin-driver-detail/:id" element={<AdminDriverDetail />} />
+          <Route path="/admin-detail-order/:id" element={<AdminDetailOrder />} />
           <Route path="/coba1" element={<Coba1 />} />
           <Route path="/coba2" element={<Coba2 />} />
         </Routes>
