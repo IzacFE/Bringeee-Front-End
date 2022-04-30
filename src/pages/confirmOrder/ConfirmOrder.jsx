@@ -5,7 +5,6 @@ import { Group, Button, Image } from "@mantine/core";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
 import StepHorizon from "../../components/stepper/StepHorizon";
 import ChoosePayment from "../../components/choosePayment/ChoosePayment";
-import ImageOrder from "../../assets/package.png";
 import ConfirmPayment from "../../components/confirmPayment/ConfirmPayment";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import axios from "axios";
@@ -41,6 +40,40 @@ function ConfirmOrder() {
       });
   };
 
+  const handleConfirmOrder = async () => {
+    const { id } = params;
+    await axios
+      .post(`https://aws.wildani.tech/api/customers/orders/${id}/confirm`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((ress) => {
+        console.log(ress);
+        alert("success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleCancelOrder = async () => {
+    const { id } = params;
+    await axios
+      .post(`https://aws.wildani.tech/api/customers/orders/${id}/cancel`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((ress) => {
+        console.log(ress);
+        alert("success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   if (status === "request" || status === "adjust") {
     if (isReady) {
       return (
@@ -64,8 +97,12 @@ function ConfirmOrder() {
               </div>
               {status === "adjust" && (
                 <Group position="center" className="flex flex-col md:flex-row">
-                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]">Setuju</Button>
-                  <Button className="bg-red-500 hover:bg-red-400 text-stone-700 w-[250px]">Batal</Button>
+                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleConfirmOrder()}>
+                    Setuju
+                  </Button>
+                  <Button className="bg-red-500 hover:bg-red-400 text-stone-700 w-[250px]" onClick={() => handleCancelOrder()}>
+                    Batal
+                  </Button>
                 </Group>
               )}
             </div>
