@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Modal,
   Button,
@@ -12,21 +12,27 @@ import {
 } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import axios from "axios";
+import { RoleContext, TokenContext } from "../../App";
 
 const ModalJoin = (props) => {
+  const { tokenCtx, setTokenCtx } = useContext(TokenContext);
+  const { roleCtx, setRoleCtx } = useContext(RoleContext);
   // stateDataCostumer
   const [emailCos, setEmailCos] = useState("");
   const [passwordCos, setPasswordCos] = useState("");
   const [namaCos, setNamaCos] = useState("");
+  const [phoneNumb, setPhoneNumb] = useState("");
   const [jenisKelaminCos, setJenisKelaminCos] = useState("");
-  const [umurCos, setUmurCos] = useState("");
+  const [dobCos, setDobCos] = useState("");
   const [alamatCos, setAlamatCos] = useState("");
   const [avatarCos, setAvatarCos] = useState("");
   //stateDataDriver
   const [emailDriver, setEmailDriver] = useState("");
   const [passwordDriver, setPasswordDriver] = useState("");
   const [namaDriver, setNamaDriver] = useState("");
+  const [phoneDriver, setPhoneDriver] = useState("");
   const [jenisKelaminDriver, setJenisKelaminDriver] = useState("");
+  const [dobDriver, setDobDriver] = useState("");
   const [umurDriver, setUmurDriver] = useState("");
   const [alamatDriver, setAlamatDriver] = useState("");
   const [avatarDriver, setAvatarDriver] = useState("");
@@ -35,57 +41,83 @@ const ModalJoin = (props) => {
   const [ktp, setKtp] = useState("");
   const [sim, setSim] = useState("");
   const [stnk, setStnk] = useState("");
+  const [vhcPict, setVhcPict] = useState("");
   const [nomorKendaraan, setNomorKendaraan] = useState("");
+
+  const dataSaver = (loginData) => {
+    localStorage.clear();
+    localStorage.setItem("token", loginData.token);
+    localStorage.setItem("role", loginData.user.role);
+    setTokenCtx(loginData.token);
+    setRoleCtx(loginData.user.role);
+    if (loginData.user.role === "driver") {
+      localStorage.setItem("account_status", loginData.user.account_status);
+    }
+  };
 
   const handleDaftarCos = async () => {
     const formData = new FormData();
     formData.append("name", namaCos);
     formData.append("email", emailCos);
     formData.append("password", passwordCos);
+    formData.append("phone_number", phoneNumb);
     formData.append("gender", jenisKelaminCos);
     formData.append("address", alamatCos);
     formData.append("avatar", avatarCos);
-    formData.append("dob", umurCos);
-    console.log(formData);
+    formData.append("dob", dobCos);
 
     await axios
-      .post(`/api/users`, formData, {
+      .post(`https://aws.wildani.tech/api/customers`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
-        // console.log(response);
-        alert("berhasil");
-        // Router.push("/authentication/login");
+        dataSaver(response.data.data);
+        window.location.reload();
+        alert("Berhasil Register");
       })
       .catch((err) => {
         console.log(err);
         console.log("error");
-        alert("gagal register");
       });
-    // console.log(name);
-    // console.log(email);
-    // console.log(password);
-    // console.log(gender);
-    // console.log(address);
-    // console.log(avatar);
-    // console.log(dob);
   };
 
-  const handleDaftarDriver = () => {
-    const data = {
-      yourEmail: emailDriver,
-      yourPass: passwordDriver,
-      yourNama: namaDriver,
-      jenisKelamin: jenisKelaminDriver,
-      yourUmur: umurDriver,
-      yourAlamat: alamatDriver,
-      avatar: avatarDriver,
-      truk: jenisTruk,
-    };
+  const handleDaftarDriver = async () => {
+    const formData = new FormData();
+    formData.append("name", namaDriver);
+    formData.append("email", emailDriver);
+    formData.append("password", passwordDriver);
+    formData.append("phone_number", phoneDriver);
+    formData.append("gender", jenisKelaminDriver);
+    formData.append("address", alamatDriver);
+    formData.append("avatar", avatarDriver);
+    formData.append("dob", dobDriver);
+    formData.append("truck_type_id", jenisTruk);
+    formData.append("ktp_file", ktp);
+    formData.append("stnk_file", stnk);
+    formData.append("driver_license_file", sim);
+    formData.append("age", umurDriver);
+    formData.append("vehicle_identifier", nomorKendaraan);
+    formData.append("nik", nik);
+    formData.append("vehicle_picture", vhcPict);
 
-    console.log(data);
+    await axios
+      .post(`https://aws.wildani.tech/api/drivers`, formData, {
+        // .post(`https://aws.wildani.tech/api`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        dataSaver(response.data.data);
+        window.location.reload();
+        alert("Berhasil Register");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+      });
   };
 
   return (
@@ -113,6 +145,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setEmailCos(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="passwordCos" required label="Kata Sandi">
               <Input
                 id="passwordCos"
@@ -121,6 +154,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setPasswordCos(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="nama" required label="Nama">
               <Input
                 id="nama"
@@ -129,6 +163,16 @@ const ModalJoin = (props) => {
                 onChange={(e) => setNamaCos(e.target.value)}
               />
             </InputWrapper>
+
+            <InputWrapper id="phone" required label="Nomor handphone">
+              <Input
+                id="phone"
+                type="tel"
+                placeholder=""
+                onChange={(e) => setPhoneNumb(e.target.value)}
+              />
+            </InputWrapper>
+
             <RadioGroup
               label="Jenis Kelamin"
               color="dark"
@@ -138,14 +182,16 @@ const ModalJoin = (props) => {
               <Radio value="laki-laki" label="Laki-Laki" />
               <Radio value="perempuan" label="Perempuan" />
             </RadioGroup>
-            <InputWrapper id="umurCos" required label="Umur">
+
+            <InputWrapper id="dobCos" required label="Tanggal lahir">
               <Input
-                id="umurCos"
-                type="number"
+                id="dobCos"
+                type="date"
                 placeholder=""
-                onChange={(e) => setUmurCos(e.target.value)}
+                onChange={(e) => setDobCos(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="alamatCos" required label="Alamat">
               <Input
                 id="alamatCos"
@@ -154,6 +200,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setAlamatCos(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="avatarCos" required label="Avatar">
               <Input
                 id="avatarCos"
@@ -162,6 +209,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setAvatarCos(e.target.files[0])}
               />
             </InputWrapper>
+
             <Group position="right" className="my-5">
               <Button
                 className="bg-amber-500 hover:bg-amber-400 text-stone-700"
@@ -171,6 +219,8 @@ const ModalJoin = (props) => {
               </Button>
             </Group>
           </Tabs.Tab>
+
+          {/* driver */}
           <Tabs.Tab label="Driver">
             <InputWrapper id="emailDriver" required label="Email">
               <Input
@@ -180,6 +230,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setEmailDriver(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="passwordDriver" required label="Kata Sandi">
               <Input
                 id="passwordDriver"
@@ -188,6 +239,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setPasswordDriver(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="nama" required label="Nama">
               <Input
                 id="nama"
@@ -196,15 +248,35 @@ const ModalJoin = (props) => {
                 onChange={(e) => setNamaDriver(e.target.value)}
               />
             </InputWrapper>
+
+            <InputWrapper id="phone" required label="Nomor handphone">
+              <Input
+                id="phone"
+                type="tel"
+                placeholder=""
+                onChange={(e) => setPhoneDriver(e.target.value)}
+              />
+            </InputWrapper>
+
             <RadioGroup
               label="Jenis Kelamin"
-              color="dark"
+              color="yellow"
               onChange={setJenisKelaminDriver}
               required
             >
               <Radio value="laki-laki" label="Laki-Laki" />
               <Radio value="perempuan" label="Perempuan" />
             </RadioGroup>
+
+            <InputWrapper id="dobCos" required label="Tanggal lahir">
+              <Input
+                id="dobCos"
+                type="date"
+                placeholder=""
+                onChange={(e) => setDobDriver(e.target.value)}
+              />
+            </InputWrapper>
+
             <InputWrapper id="umurDriver" required label="Umur">
               <Input
                 id="umurDriver"
@@ -213,6 +285,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setUmurDriver(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="alamatDriver" required label="Alamat">
               <Input
                 id="alamatDriver"
@@ -221,6 +294,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setAlamatDriver(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="avatarDriver" required label="Avatar">
               <Input
                 id="avatarDriver"
@@ -229,18 +303,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setAvatarDriver(e.target.files[0])}
               />
             </InputWrapper>
-            <NativeSelect
-              label="Jenis Truk"
-              required
-              onChange={(e) => setJenisTruk(e.target.value)}
-              data={[
-                { value: "1", label: "Pick Up" },
-                { value: "2", label: "Truck Box" },
-                { value: "3", label: "Triler" },
-              ]}
-              rightSection={<ChevronDown size={14} />}
-              rightSectionWidth={40}
-            />
+
             <InputWrapper id="nik" required label="NIK">
               <Input
                 id="nik"
@@ -249,6 +312,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setNik(e.target.value)}
               />
             </InputWrapper>
+
             <InputWrapper id="ktp" required label="KTP">
               <Input
                 id="ktp"
@@ -257,6 +321,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setKtp(e.target.files[0])}
               />
             </InputWrapper>
+
             <InputWrapper id="sim" required label="SIM">
               <Input
                 id="sim"
@@ -265,6 +330,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setSim(e.target.files[0])}
               />
             </InputWrapper>
+
             <InputWrapper id="stnk" required label="STNK">
               <Input
                 id="stnk"
@@ -273,6 +339,32 @@ const ModalJoin = (props) => {
                 onChange={(e) => setStnk(e.target.files[0])}
               />
             </InputWrapper>
+
+            <InputWrapper id="kendaraan" required label="Foto Kendaraan">
+              <Input
+                id="vehiclePict"
+                type="file"
+                placeholder=""
+                onChange={(e) => setVhcPict(e.target.files[0])}
+              />
+            </InputWrapper>
+
+            <NativeSelect
+              label="Jenis Truk"
+              required
+              onChange={(e) => setJenisTruk(e.target.value)}
+              data={[
+                { value: "1", label: "Pickup Truck - A" },
+                { value: "2", label: "Pickup Truck - B" },
+                { value: "3", label: "Mobil Box - Tier A" },
+                { value: "4", label: "Mobil Box - Tier B" },
+                { value: "5", label: "Fuso Truck - Tier A" },
+                { value: "6", label: "Fuso Truck - Tier B" },
+              ]}
+              rightSection={<ChevronDown size={14} />}
+              rightSectionWidth={40}
+            />
+
             <InputWrapper id="plat" required label="Nomor Kendaraan">
               <Input
                 id="plat"
@@ -281,6 +373,7 @@ const ModalJoin = (props) => {
                 onChange={(e) => setNomorKendaraan(e.target.value)}
               />
             </InputWrapper>
+
             <Group position="right" className="my-5">
               <Button
                 className="bg-amber-500 hover:bg-amber-400 text-stone-700"

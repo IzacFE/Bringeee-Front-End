@@ -102,7 +102,7 @@ function Navbar() {
     if (tokenCtx) {
       fetchData();
     }
-  }, []);
+  }, [tokenCtx]);
 
   const fetchData = async () => {
     await axios
@@ -121,6 +121,7 @@ function Navbar() {
   };
 
   const dataSaver = (loginData) => {
+    localStorage.clear();
     localStorage.setItem("token", loginData.token);
     localStorage.setItem("role", loginData.user.role);
     setTokenCtx(loginData.token);
@@ -162,7 +163,7 @@ function Navbar() {
       });
   };
 
-  const registerCustomer = () => {};
+  // const registerCustomer = () => {};
 
   const logOut = () => {
     localStorage.clear();
@@ -253,7 +254,7 @@ function Navbar() {
                   </Menu.Item>
                 </>
               )}
-              {tokenCtx !== "admin" && (
+              {roleCtx !== "admin" && (
                 <Menu.Item
                   icon={<User size={14} />}
                   onClick={() => {
