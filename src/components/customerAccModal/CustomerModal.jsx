@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Popover, Modal, Button, Avatar, Text, Paper } from "@mantine/core";
 import image from "../../assets/monke.jpg";
 import { Trash } from "tabler-icons-react";
@@ -6,14 +6,6 @@ import styles from "./CustomerModal.module.css";
 
 function CustomerModal(props) {
   const [openDel, setOpenDel] = useState(false);
-
-  const data = {
-    avatar: image,
-    name: "Test Name",
-    email: "test@gmail.com",
-    job: "kustomer",
-    else: "else",
-  };
 
   return (
     <>
@@ -24,16 +16,15 @@ function CustomerModal(props) {
         title="Akun Kostumer"
       >
         <Paper radius="md" withBorder p="lg">
-          <Avatar src={data.avatar} size={120} radius={120} mx="auto" />
+          <Avatar src={props.avatar} size={120} radius={120} mx="auto" />
           <Text align="center" size="lg" weight={500} mt="md">
-            {data.name}
+            {props.name}
           </Text>
           <Text align="center" color="dimmed" size="sm">
-            {data.email} • {data.job}
+            {props.email} • Kustomer
           </Text>
 
           <div className={styles.delContainer}>
-            {" "}
             <Popover
               placement="center"
               opened={openDel}

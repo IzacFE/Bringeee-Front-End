@@ -63,7 +63,7 @@ function AdminDetailOrder() {
               <div className="w-full md:w-1/2">
                 <Group>
                   <Image src={detail.order_picture} width={200} />
-                  <TimelineVer />
+                  {/* <TimelineVer /> */}
                 </Group>
               </div>
             </div>
@@ -132,7 +132,7 @@ function AdminDetailOrder() {
     result = (
       <div className={styles.page}>
         <>{detail.status === "REQUESTED" && confirm()}</>
-        <>{detail.status === "ongoing" && ongoing()}</>
+        <>{detail.status === "MANIFESTED" && ongoing()}</>
         <>{detail.status === "ongoing" && ongoing()}</>
       </div>
     );

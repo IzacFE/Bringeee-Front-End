@@ -36,6 +36,17 @@ function UserCard(props) {
             {props.role}
           </Text>
 
+          {props.role === "driver" && (
+            <Text
+              size="xs"
+              sx={{ textTransform: "uppercase" }}
+              weight={700}
+              color="dimmed"
+            >
+              {props.driverStatus}
+            </Text>
+          )}
+
           <Text size="lg" weight={500} className={classes.name}>
             {props.name}
           </Text>

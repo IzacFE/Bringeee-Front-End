@@ -8,6 +8,7 @@ import styles from "./Landing.module.css";
 import moneyBag from "../../assets/money-bag.png";
 import deliveryTruck from "../../assets/delivery-truck.png";
 import shield from "../../assets/shield.png";
+import animatedBox from "../../assets/animatedBox.gif";
 
 const useStyles = createStyles((theme) => ({
   bannerBox: {
@@ -34,6 +35,8 @@ const useStyles = createStyles((theme) => ({
 
 function Landing() {
   const { classes } = useStyles();
+
+  console.log(animatedBox);
 
   return (
     <>
