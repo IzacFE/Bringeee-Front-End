@@ -1,14 +1,15 @@
 import { SimpleGrid, createStyles, Image, Text, Title } from "@mantine/core";
-import React from "react";
+import React, { useEffect } from "react";
 import LandingCard from "../../components/landingCard/LandingCard";
 import DescripHero from "../../components/landingHero/DescripHero";
 import MainHero from "../../components/landingHero/MainHero";
 import styles from "./Landing.module.css";
 
+import Aos from "aos";
+import "aos/dist/aos.css";
 import moneyBag from "../../assets/money-bag.png";
 import deliveryTruck from "../../assets/delivery-truck.png";
 import shield from "../../assets/shield.png";
-import animatedBox from "../../assets/animatedBox.gif";
 
 const useStyles = createStyles((theme) => ({
   bannerBox: {
@@ -36,7 +37,9 @@ const useStyles = createStyles((theme) => ({
 function Landing() {
   const { classes } = useStyles();
 
-  console.log(animatedBox);
+  useEffect(() => {
+    Aos.init({});
+  }, []);
 
   return (
     <>

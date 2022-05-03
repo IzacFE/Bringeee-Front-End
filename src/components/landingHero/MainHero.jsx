@@ -8,6 +8,7 @@ const useStyles = createStyles((theme) => ({
     backgroundImage: `url(${img})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
+    backgroundAttachment: "fixed",
   },
 
   container: {
@@ -74,13 +75,15 @@ function MainHero() {
       />
       <Container className={classes.container}>
         <Title className={classes.title}>
+          Bringeee <br />
           Hadir pertama
           <br />
           Tiada duanya
         </Title>
         <Text className={classes.description} size="xl" mt="xl">
-          Kirim kargo tidak perlu bingung lagi, kami hadir untuk mengantarkan
-          kargo anda sampai tujuan, cukup konfirmasi online dan kargo kami antar
+          Kirim kargo?
+          <br />
+          Cukup Klik, kargo kami antar
         </Text>
       </Container>
     </div>

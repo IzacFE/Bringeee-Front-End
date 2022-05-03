@@ -12,7 +12,7 @@
 .boxContainer {
   width: 100%;
   margin: auto;
-  background-image: url("../../assets/animatedBox.gif");
+  background-image: url("../../assets/box.png");
   height: 350px;
   background-repeat: no-repeat;
   background-position: center;
