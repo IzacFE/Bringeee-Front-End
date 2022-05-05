@@ -8,7 +8,7 @@ const ModalLogin = (props) => {
         centered
         opened={props.openedModal}
         onClose={props.closedModal}
-        title="Login"
+        title="Masuk"
         styles={{
           title: {
             color: "#f59e0b",

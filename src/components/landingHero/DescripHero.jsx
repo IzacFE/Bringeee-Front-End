@@ -4,22 +4,18 @@ import img from "../../assets/kenalin.jpg";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
+import Introduction from "../landingIntro/Introduction";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: "100vh",
     position: "relative",
     paddingTop: "30vh",
-    paddingBottom: 180,
+    paddingBottom: "30vh",
     backgroundImage: `url(${img})`,
     backgroundAttachment: "fixed",
     backgroundSize: "cover",
     backgroundPosition: "center",
-
-    "@media (max-width: 520px)": {
-      // paddingTop: 80,
-      // paddingBottom: 50,
-    },
   },
 
   inner: {
@@ -40,7 +36,6 @@ const useStyles = createStyles((theme) => ({
 
     "@media (max-width: 520px)": {
       fontSize: 28,
-      textAlign: "left",
     },
   },
 
@@ -107,20 +102,12 @@ function DescripHero() {
         <Title className={classes.title}>
           Kenalan{" "}
           <Text component="span" inherit className="text-stone-800">
-            Yuk
+            Yuk!
           </Text>
         </Title>
 
-        <Container
-          size={900}
-          className="shadow-xl bg-amber-500 rounded-md p-12"
-        >
-          <Text size="lg" className={`${classes.description} text-white`}>
-            Bringee berdiri dari tahun 2022 sebagai satu-satunya startup
-            penyedia jasa kirim kargo online di Indonesia. Dengan total jumlah
-            250 ribu Mitra Driver yang tersebar di seluruh daerah dan siap untuk
-            menggerakkan ekonomi daerah.
-          </Text>
+        <Container size={900} className="shadow-xl bg-amber-500 rounded-md">
+          <Introduction />
         </Container>
       </div>
     </div>
