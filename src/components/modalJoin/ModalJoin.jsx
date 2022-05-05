@@ -104,7 +104,6 @@ const ModalJoin = (props) => {
 
     await axios
       .post(`https://aws.wildani.tech/api/drivers`, formData, {
-        // .post(`https://aws.wildani.tech/api`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -126,7 +125,7 @@ const ModalJoin = (props) => {
         centered
         opened={props.openedModal}
         onClose={props.closedModal}
-        title="Join"
+        title="Daftar"
         styles={{
           title: {
             color: "#f59e0b",
@@ -136,7 +135,7 @@ const ModalJoin = (props) => {
         }}
       >
         <Tabs color="yellow">
-          <Tabs.Tab label="Costumer">
+          <Tabs.Tab label="Kostumer">
             <InputWrapper id="emailCos" required label="Email">
               <Input
                 id="emailCos"
