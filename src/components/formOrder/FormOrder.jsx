@@ -164,7 +164,7 @@ const FormOrder = () => {
       <div className="flex flex-col mb-3">
         <label className="text-amber-500 font-medium text-[22px]">Asal</label>
         <div className="w-full">
-          <Textarea placeholder="" label="Alamat" onChange={(e) => setAddressStart(e.target.value)} />
+          <Textarea placeholder="" label="Alamat" onChange={(e) => setAddressStart(e.target.value)} id="form-createOrder-start-address" />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
@@ -177,6 +177,7 @@ const FormOrder = () => {
               })}
               rightSection={<ChevronDown size={14} />}
               rightSectionWidth={40}
+              id="form-createOrder-start-province"
             />
           </div>
           <div className="w-full md:w-6/12">
@@ -193,6 +194,7 @@ const FormOrder = () => {
               }
               rightSection={<ChevronDown size={14} />}
               rightSectionWidth={40}
+              id="form-createOrder-start-cities"
             />
           </div>
         </div>
@@ -211,25 +213,26 @@ const FormOrder = () => {
               }
               rightSection={<ChevronDown size={14} />}
               rightSectionWidth={40}
+              id="form-createOrder-start-districts"
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" label="Kode Pos" placeholder="" onChange={(e) => setPosStart(e.target.value)} />
+            <TextInput type="number" label="Kode Pos" placeholder="" onChange={(e) => setPosStart(e.target.value)} id="form-createOrder-start-postal" />
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
-            <TextInput type="text" label="Lat" placeholder="" onChange={(e) => setLatStart(e.target.value)} />
+            <TextInput type="text" label="Lat" placeholder="" onChange={(e) => setLatStart(e.target.value)} id="form-createOrder-start-lat" />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="text" label="Long" placeholder="" onChange={(e) => setLongStart(e.target.value)} />
+            <TextInput type="text" label="Long" placeholder="" onChange={(e) => setLongStart(e.target.value)} id="form-createOrder-start-long" />
           </div>
         </div>
       </div>
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Tujuan</label>
         <div className="w-full">
-          <Textarea placeholder="" label="Alamat" onChange={(e) => setAddressEnd(e.target.value)} />
+          <Textarea placeholder="" label="Alamat" onChange={(e) => setAddressEnd(e.target.value)} id="form-createOrder-end-address" />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
@@ -242,6 +245,7 @@ const FormOrder = () => {
               })}
               rightSection={<ChevronDown size={14} />}
               rightSectionWidth={40}
+              id="form-createOrder-end-province"
             />
           </div>
           <div className="w-full md:w-6/12">
@@ -258,6 +262,7 @@ const FormOrder = () => {
               }
               rightSection={<ChevronDown size={14} />}
               rightSectionWidth={40}
+              id="form-createOrder-end-cities"
             />
           </div>
         </div>
@@ -276,25 +281,26 @@ const FormOrder = () => {
               }
               rightSection={<ChevronDown size={14} />}
               rightSectionWidth={40}
+              id="form-createOrder-end-districts"
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" label="Kode Pos" placeholder="" onChange={(e) => setPosEnd(e.target.value)} />
+            <TextInput type="number" label="Kode Pos" placeholder="" onChange={(e) => setPosEnd(e.target.value)} id="form-createOrder-end-postal" />
           </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row md:gap-2">
         <div className="w-full md:w-6/12">
-          <TextInput type="text" label="Lat" placeholder="" onChange={(e) => setLatEnd(e.target.value)} />
+          <TextInput type="text" label="Lat" placeholder="" onChange={(e) => setLatEnd(e.target.value)} id="form-createOrder-end-lat" />
         </div>
         <div className="w-full md:w-6/12">
-          <TextInput type="text" label="Long" placeholder="" onChange={(e) => setLongEnd(e.target.value)} />
+          <TextInput type="text" label="Long" placeholder="" onChange={(e) => setLongEnd(e.target.value)} id="form-createOrder-end-long" />
         </div>
       </div>
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Muatan</label>
         <div className="w-full">
-          <Textarea placeholder="" label="Deskripsi" onChange={(e) => setDescription(e.target.value)} />
+          <Textarea placeholder="" label="Deskripsi" onChange={(e) => setDescription(e.target.value)} id="form-createOrder-desc" />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
@@ -307,23 +313,24 @@ const FormOrder = () => {
               })}
               rightSection={<ChevronDown size={14} />}
               rightSectionWidth={40}
+              id="form-createOrder-typeTruck"
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" label="Volume" placeholder="" onChange={(e) => setVolume(e.target.value)} />
+            <TextInput type="number" label="Volume" placeholder="" onChange={(e) => setVolume(e.target.value)} id="form-createOrder-volume" />
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
-            <TextInput type="number" label="Berat" placeholder="" onChange={(e) => setWeight(e.target.value)} />
+            <TextInput type="number" label="Berat" placeholder="" onChange={(e) => setWeight(e.target.value)} id="form-createOrder-weight" />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="file" label="Foto" placeholder="" onChange={(e) => setImageOrder(e.target.files[0])} />
+            <TextInput type="file" label="Foto" placeholder="" onChange={(e) => setImageOrder(e.target.files[0])} id="form-createOrder-picture" />
           </div>
         </div>
         <Group position="right" className="mt-5">
-          <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => createOrder()}>
-            Simpan
+          <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => createOrder()} id="btn-createOrder">
+            Buat Order
           </Button>
         </Group>
       </div>

@@ -56,9 +56,6 @@ function AdminDriver(props) {
             <Image radius="md" src={props.stnk} width={240} className="my-3" />
             <Image radius="md" src={props.ktp} width={240} className="my-3" />
             <Image radius="md" src={props.sim} width={240} className="my-3" />
-            {/* {props.stnk} <br />
-            {props.ktp} <br />
-            {props.sim} <br />  */}
             {props.nik} <br />
             {props.plateNumb} <br />
           </h3>

@@ -38,7 +38,7 @@ function Home() {
   const fetchData = async () => {
     if (roleCtx === "admin") {
       await axios
-        .get(`https://aws.wildani.tech/api/orders`, {
+        .get(`https://aws.wildani.tech/api/orders?status=MANIFESTED`, {
           headers: {
             Authorization: `Bearer ${tokenCtx}`,
           },
@@ -53,7 +53,7 @@ function Home() {
         .finally(() => setIsReady(true));
     } else if (roleCtx === "driver") {
       await axios
-        .get(`https://aws.wildani.tech/api/drivers/orders`, {
+        .get(`https://aws.wildani.tech/api/drivers/orders?status=MANIFESTED`, {
           headers: {
             Authorization: `Bearer ${tokenCtx}`,
           },
@@ -67,81 +67,6 @@ function Home() {
         })
         .finally(() => setIsReady(true));
     }
-
-    // const data = [
-    //   {
-    //     order_picture: "https://source.unsplash.com/600x600/?random",
-    //     destination_start_city: "Malang",
-    //     destination_end_city: "Surabaya",
-    //     fix_price: "310000",
-    //     avatar: "https://source.unsplash.com/600x600/?random",
-    //     name: "Ahmad",
-    //     created_at: "2012-07-28T07:02:13:000+07:00",
-    //     id: "1",
-    //   },
-    //   {
-    //     order_picture: "https://source.unsplash.com/600x600/?random",
-    //     destination_start_city: "Malang",
-    //     destination_end_city: "Surabaya",
-    //     fix_price: "310000",
-    //     avatar: "https://source.unsplash.com/600x600/?random",
-    //     name: "Ahmad",
-    //     created_at: "2012-07-28T07:02:13:000+07:00",
-    //     id: "1",
-    //   },
-    //   {
-    //     order_picture: "https://source.unsplash.com/600x600/?random",
-    //     destination_start_city: "Malang",
-    //     destination_end_city: "Surabaya",
-    //     fix_price: "310000",
-    //     avatar: "https://source.unsplash.com/600x600/?random",
-    //     name: "Ahmad",
-    //     created_at: "2012-07-28T07:02:13:000+07:00",
-    //     id: "1",
-    //   },
-    //   {
-    //     order_picture: "https://source.unsplash.com/600x600/?random",
-    //     destination_start_city: "Malang",
-    //     destination_end_city: "Surabaya",
-    //     fix_price: "310000",
-    //     avatar: "https://source.unsplash.com/600x600/?random",
-    //     name: "Ahmad",
-    //     created_at: "2012-07-28T07:02:13:000+07:00",
-    //     id: "1",
-    //   },
-    //   {
-    //     order_picture: "https://source.unsplash.com/600x600/?random",
-    //     destination_start_city: "Malang",
-    //     destination_end_city: "Surabaya",
-    //     fix_price: "310000",
-    //     avatar: "https://source.unsplash.com/600x600/?random",
-    //     name: "Ahmad",
-    //     created_at: "2012-07-28T07:02:13:000+07:00",
-    //     id: "1",
-    //   },
-    //   {
-    //     order_picture: "https://source.unsplash.com/600x600/?random",
-    //     destination_start_city: "Malang",
-    //     destination_end_city: "Surabaya",
-    //     fix_price: "310000",
-    //     avatar: "https://source.unsplash.com/600x600/?random",
-    //     name: "Ahmad",
-    //     created_at: "2012-07-28T07:02:13:000+07:00",
-    //     id: "1",
-    //   },
-    //   {
-    //     order_picture: "https://source.unsplash.com/600x600/?random",
-    //     destination_start_city: "Malang",
-    //     destination_end_city: "Surabaya",
-    //     fix_price: "310000",
-    //     avatar: "https://source.unsplash.com/600x600/?random",
-    //     name: "Ahmad",
-    //     created_at: "2012-07-28T07:02:13:000+07:00",
-    //     id: "1",
-    //   },
-    // ];
-
-    // setIsReady(true);
   };
 
   let result;

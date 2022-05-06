@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Title, Text, Container, Overlay, createStyles } from "@mantine/core";
-import img from "../../assets/containerbg.jpg";
+import img from "../../assets/kenalin.jpg";
+
+import Aos from "aos";
+import "aos/dist/aos.css";
+import Introduction from "../landingIntro/Introduction";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
+    minHeight: "100vh",
     position: "relative",
-    paddingTop: 180,
-    paddingBottom: 180,
+    paddingTop: "30vh",
+    paddingBottom: "30vh",
     backgroundImage: `url(${img})`,
+    backgroundAttachment: "fixed",
     backgroundSize: "cover",
     backgroundPosition: "center",
-
-    "@media (max-width: 520px)": {
-      paddingTop: 80,
-      paddingBottom: 50,
-    },
   },
 
   inner: {
@@ -35,13 +36,8 @@ const useStyles = createStyles((theme) => ({
 
     "@media (max-width: 520px)": {
       fontSize: 28,
-      textAlign: "left",
     },
   },
-
-  // highlight: {
-  //   color: theme.colors[theme.primaryColor][4],
-  // },
 
   description: {
     color: theme.colors.gray[0],
@@ -59,10 +55,6 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "center",
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
-
-    "@media (max-width: 520px)": {
-      flexDirection: "column",
-    },
   },
 
   control: {
@@ -94,25 +86,28 @@ const useStyles = createStyles((theme) => ({
 function DescripHero() {
   const { classes } = useStyles();
 
+  useEffect(() => {
+    Aos.init({});
+  }, []);
+
   return (
     <div className={`${classes.wrapper}`}>
-      <Overlay color="#292524" opacity={0.93} zIndex={1} />
+      <Overlay color="#292524" opacity={0.2} zIndex={1} />
 
-      <div className={classes.inner}>
+      <div
+        data-aos="fade-up"
+        data-aos-duration="1500"
+        className={classes.inner}
+      >
         <Title className={classes.title}>
-          Kami{" "}
-          <Text component="span" inherit className="text-amber-500">
-            Adalah
+          Kenalan{" "}
+          <Text component="span" inherit className="text-stone-800">
+            Yuk!
           </Text>
         </Title>
 
-        <Container size={700} className="bg-amber-500 rounded-md p-8">
-          <Text size="lg" className={`${classes.description} text-stone-800`}>
-            Bringee berdiri dari tahun 2022 sebagai satu-satunya startup
-            penyedia jasa kirim kargo online di Indonesia. Dengan total jumlah
-            250 ribu Mitra Driver yang tersebar di seluruh daerah dan siap untuk
-            menggerakkan ekonomi daerah.
-          </Text>
+        <Container size={900} className="shadow-xl bg-amber-500 rounded-md">
+          <Introduction />
         </Container>
       </div>
     </div>

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStyles, Overlay, Container, Title, Text } from "@mantine/core";
 import img from "../../assets/HeroBG.jpg";
+import Aos from "aos";
 
 const useStyles = createStyles((theme) => ({
   hero: {
@@ -8,6 +9,7 @@ const useStyles = createStyles((theme) => ({
     backgroundImage: `url(${img})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
+    backgroundAttachment: "fixed",
   },
 
   container: {
@@ -65,6 +67,10 @@ const useStyles = createStyles((theme) => ({
 function MainHero() {
   const { classes } = useStyles();
 
+  useEffect(() => {
+    Aos.init({});
+  }, []);
+
   return (
     <div className={classes.hero}>
       <Overlay
@@ -72,15 +78,21 @@ function MainHero() {
         opacity={1}
         zIndex={0}
       />
-      <Container className={classes.container}>
+      <Container
+        className={classes.container}
+        data-aos="zoom-in-up"
+        data-aos-duration="1500"
+      >
         <Title className={classes.title}>
+          Bringeee <br />
           Hadir pertama
           <br />
           Tiada duanya
         </Title>
         <Text className={classes.description} size="xl" mt="xl">
-          Kirim kargo tidak perlu bingung lagi, kami hadir untuk mengantarkan
-          kargo anda sampai tujuan, cukup konfirmasi online dan kargo kami antar
+          Kirim kargo?
+          <br />
+          Cukup Klik, kargo kami antar
         </Text>
       </Container>
     </div>
