@@ -1,5 +1,5 @@
 import { SimpleGrid, createStyles, Image, Text, Title } from "@mantine/core";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import LandingCard from "../../components/landingCard/LandingCard";
 import DescripHero from "../../components/landingHero/DescripHero";
 import MainHero from "../../components/landingHero/MainHero";
@@ -8,6 +8,8 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import FeaturesComp from "../../components/landingFeatures/FeaturesComp";
 import LandingContent from "../../components/landingContent/LandingContent";
+import { RoleContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   bannerBox: {
@@ -41,10 +43,18 @@ const useStyles = createStyles((theme) => ({
 
 function Landing() {
   const { classes } = useStyles();
+  const { roleCtx } = useContext(RoleContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (roleCtx === "admin" || roleCtx === "driver") {
+      navigate("/home");
+    } else if (roleCtx === "customer") {
+      navigate("/profile");
+    }
+
     Aos.init({});
-  }, []);
+  }, [roleCtx]);
 
   return (
     <>
