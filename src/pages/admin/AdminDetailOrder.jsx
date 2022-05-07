@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
+import AdminHomeOrder from "../../components/detailOrder/AdminHomeOrder";
 
 function AdminDetailOrder() {
   const { tokenCtx } = useContext(TokenContext);
@@ -44,6 +45,14 @@ function AdminDetailOrder() {
         console.log("error");
       })
       .finally(() => setIsReady(true));
+  };
+
+  const takeOrder = () => {
+    return (
+      // <div className="container mx-auto">
+      <AdminHomeOrder dataDetailOrder={detail} />
+      // </div>
+    );
   };
 
   const ongoing = () => {
@@ -132,8 +141,8 @@ function AdminDetailOrder() {
     result = (
       <div className={styles.page}>
         <>{detail.status === "REQUESTED" && confirm()}</>
-        <>{detail.status === "MANIFESTED" && ongoing()}</>
-        <>{detail.status === "ongoing" && ongoing()}</>
+        <>{detail.status === "MANIFESTED" && takeOrder()}</>
+        <>{detail.status === "ON_PROCESS" && ongoing()}</>
       </div>
     );
   } else {
