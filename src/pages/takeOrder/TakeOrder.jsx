@@ -69,6 +69,8 @@ const TakeOrder = () => {
     await axios(config)
       .then((ress) => {
         console.log(ress);
+        fecthData();
+        fetchDetailOrder();
       })
       .catch((err) => {
         console.log(err);
@@ -90,6 +92,8 @@ const TakeOrder = () => {
       })
       .then((ress) => {
         console.log(ress);
+        fecthData();
+        fetchDetailOrder();
       })
       .catch((err) => {
         console.log(err);
