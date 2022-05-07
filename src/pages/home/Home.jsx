@@ -60,8 +60,6 @@ function Home() {
           setPaginData(response.data.pagination);
           setPaginLink(response.data.links);
           console.log(response.data.data);
-          console.log(response.data.pagination);
-          console.log(response.data.links);
         })
         .catch((err) => {
           console.log("error");
@@ -105,9 +103,6 @@ function Home() {
         setOrderData(response.data.data);
         setPaginData(response.data.pagination);
         setPaginLink(response.data.links);
-        console.log(response.data.data);
-        console.log(response.data.pagination);
-        console.log(response.data.links);
       })
       .catch((err) => {
         console.log("error");
@@ -122,25 +117,10 @@ function Home() {
         <div className={styles.konten}>
           <div className={styles.category}>
             {roleCtx === "admin" && (
-              <CategoryHome
-                active={category}
-                setActive={setCategory}
-                all={() => {
-                  console.log("pressed");
-                }}
-                pickUpA={() => {
-                  console.log(category);
-                }}
-              />
+              <CategoryHome active={category} setActive={setCategory} />
             )}
           </div>
-          <Button
-            onClick={() => {
-              console.log(category);
-            }}
-          >
-            Hallo
-          </Button>
+
           <div className={styles.orderContainer}>
             {orderData.map((item, index) => {
               return (
@@ -150,11 +130,15 @@ function Home() {
                     from={item.destination_start_city}
                     destination={item.destination_end_city}
                     price={item.fix_price}
-                    avatar={item.avatar}
-                    name={item.name}
+                    avatar={item.customer.avatar}
+                    name={item.customer.name}
                     created={item.created_at.slice(0, 10)}
                     onClick={() => {
-                      navigate(`/admin-detail-order/${item.id}`);
+                      if (roleCtx === "admin") {
+                        navigate(`/admin-detail-order/${item.id}`);
+                      } else if (roleCtx === "driver") {
+                        navigate(`/take-order/${item.id}`);
+                      }
                     }}
                   />
                 </div>

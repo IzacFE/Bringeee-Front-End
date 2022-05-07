@@ -24,12 +24,12 @@ function OrderCard(props) {
   return (
     <Card withBorder radius="md" p={0} className={classes.card}>
       <Group noWrap spacing={0}>
-        <Image className="pl-2" src={props.image} height={140} width={140} />
+        <Image className="pl-2" src={props.image} height={180} width={140} />
         <div className={classes.body} onClick={props.onClick}>
           <Text transform="uppercase" color="dimmed" weight={700} size="xs">
-            {props.from}
+            dari {props.from}
             <br />
-            {props.destination}
+            ke {props.destination}
           </Text>
           <Text className={classes.title} mt="xs" mb="md">
             Rp {props.price}
