@@ -163,9 +163,9 @@ function ConfirmOrder() {
           </div>
           <div className="flex flex-col justify-center md:flex-row md:gap-2 mb-3">
             <ConfirmPayment>
-              <Group position="center">
+              <Group position="center" className="mt-10">
                 <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleCancelPayment()} id="btn-cancelPayment">
-                  Ganti Pembayaran
+                  Ubah Metode Pembayaran
                 </Button>
               </Group>
             </ConfirmPayment>
@@ -186,9 +186,9 @@ function ConfirmOrder() {
           </div>
           <div className="flex flex-col justify-center md:flex-row md:gap-2 mb-3">
             <ConfirmPayment>
-              <Group position="center">
-                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" id="btn-choosePayment">
-                  Bayar
+              <Group position="center" className="mt-10">
+                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => navigate(`/detail-order/${params.id}`)} id="btn-choosePayment">
+                  Detail Order
                 </Button>
               </Group>
             </ConfirmPayment>
