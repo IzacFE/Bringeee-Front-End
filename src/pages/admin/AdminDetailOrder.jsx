@@ -47,8 +47,7 @@ function AdminDetailOrder() {
       })
       .catch((err) => {
         console.log("error");
-      })
-      .finally(() => setIsReady(true));
+      });
   };
 
   const fetchOrderHistories = async () => {
@@ -65,7 +64,8 @@ function AdminDetailOrder() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => setIsReady(true));
   };
 
   const handleConfirm = async () => {
