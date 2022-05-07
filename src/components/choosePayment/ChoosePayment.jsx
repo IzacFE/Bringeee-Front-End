@@ -11,11 +11,6 @@ const ChoosePayment = (props) => {
 
   const createPayment = async () => {
     const { id } = params;
-    // var qs = require("qs");
-
-    // var data = qs.stringify({
-    //   payment_method: bank,
-    // });
     var config = {
       method: "post",
       url: `https://aws.wildani.tech/api/customers/orders/${id}/payment`,
@@ -29,7 +24,7 @@ const ChoosePayment = (props) => {
     await axios(config)
       .then((ress) => {
         console.log(ress.data);
-        window.location.reload();
+        props.reloadSoftPage();
       })
       .catch((err) => {
         console.log(err);

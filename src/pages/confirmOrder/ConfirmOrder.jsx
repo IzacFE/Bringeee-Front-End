@@ -44,11 +44,15 @@ function ConfirmOrder() {
   const handleConfirmOrder = async () => {
     const { id } = params;
     await axios
-      .post(`https://aws.wildani.tech/api/customers/orders/${id}/confirm`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
+      .post(
+        `https://aws.wildani.tech/api/customers/orders/${id}/confirm`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
       .then((ress) => {
         console.log(ress);
         alert("success");
@@ -61,11 +65,15 @@ function ConfirmOrder() {
   const handleCancelOrder = async () => {
     const { id } = params;
     await axios
-      .post(`https://aws.wildani.tech/api/customers/orders/${id}/cancel`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
+      .post(
+        `https://aws.wildani.tech/api/customers/orders/${id}/cancel`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
       .then((ress) => {
         console.log(ress);
         alert("success");
@@ -146,7 +154,7 @@ function ConfirmOrder() {
               <h2 className="font-semibold text-[25px]">Pilih Bank Yang Diinginkan...</h2>
             </div>
           </div>
-          <ChoosePayment detailOrderFetch={() => fetchDetailOrder()} />
+          <ChoosePayment reloadSoftPage={() => fetchDetailOrder()} />
         </div>
       );
     } else {
