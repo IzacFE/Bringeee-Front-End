@@ -8,7 +8,6 @@ import {
   ScrollArea,
   createStyles,
 } from "@mantine/core";
-import image from "../../assets/box.png";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles(() => ({
@@ -22,44 +21,12 @@ function AdminOrderList(props) {
   const { classes } = useStyles();
 
   const data = props.dataOrder;
-
-  // const data = [
-  //   {
-  //     image,
-  //     name: "kostumer",
-  //     email: "ini@gmail.com",
-  //     from: "asal, Jawa",
-  //     destination: "Madura",
-  //     vehicleType: "Pick up",
-  //     status: "Pengajuan",
-  //     id: 1,
-  //   },
-  //   {
-  //     image,
-  //     name: "kostumer",
-  //     email: "ini@gmail.com",
-  //     from: "asal, Jawa",
-  //     destination: "Madura",
-  //     vehicleType: "Pick up",
-  //     status: "Pengajuan",
-  //     id: 2,
-  //   },
-  //   {
-  //     image,
-  //     name: "kostumer",
-  //     email: "ini@gmail.com",
-  //     from: "asal, Jawa",
-  //     destination: "Madura",
-  //     vehicleType: "Pick up",
-  //     status: "Penyesuaian",
-  //     id: 3,
-  //   },
-  // ];
+  const key = props.check;
 
   const rows = data.map((item, index) => (
     <>
       {item && (
-        <tr key={item.id}>
+        <tr key={`${key}${item.status}${item.id}`}>
           <td
             onClick={() => {
               navigate(`/admin-detail-order/${item.id}`);
@@ -89,10 +56,30 @@ function AdminOrderList(props) {
           <td>{item.truck_type.truck_type}</td>
 
           <td>
-            {item.status === "REQUESTED" ? (
-              <Badge>Konfirmasi admin</Badge>
-            ) : (
+            {item.status === "REQUESTED" && <Badge>Konfirmasi admin</Badge>}
+
+            {item.status === "NEED_CUSTOMER_CONFIRM" && (
               <Badge color="gray">Konfirmasi kustomer</Badge>
+            )}
+
+            {item.status === "CONFIRMED" && (
+              <Badge color="green">Menunggu Pembayaran</Badge>
+            )}
+
+            {item.status === "MANIFESTED" && (
+              <Badge color="grape">Menunggu Dipilih Driver</Badge>
+            )}
+
+            {item.status === "ON_PROCESS" && (
+              <Badge color="yellow">Diantar Driver</Badge>
+            )}
+
+            {item.status === "DELIVERED" && (
+              <Badge color="orange">Order Selesai</Badge>
+            )}
+
+            {item.status === "CANCELLED" && (
+              <Badge color="red">Dibatalkan</Badge>
             )}
           </td>
         </tr>

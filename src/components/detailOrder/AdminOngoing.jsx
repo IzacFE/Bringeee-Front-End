@@ -1,8 +1,9 @@
-import { Image } from "@mantine/core";
 import React from "react";
-import styles from "./AdminHomeOrder.module.css";
+import { Button, Group, Image, Input, InputWrapper } from "@mantine/core";
+import styles from "./AdminOngoing.module.css";
+import TimelineVer from "../timeline/TimelineVer";
 
-function AdminHomeOrder(props) {
+function AdminOngoing(props) {
   return (
     <div className={`${styles.container} bg-white rounded-md shadow-xl`}>
       <div className={styles.left}>
@@ -12,6 +13,7 @@ function AdminHomeOrder(props) {
             {props.dataDetailOrder.customer.name}
           </p>
         </div>
+
         <div className="py-2">
           <label className="font-medium text-[17px]">Deskripsi</label>
           <p className="text-amber-500 font-semibold text-[17px]">
@@ -19,10 +21,28 @@ function AdminHomeOrder(props) {
           </p>
         </div>
 
-        <label className="font-medium text-[17px]">Jenis Kendaraan</label>
-        <p className="text-amber-500 font-semibold text-[17px]">
-          {props.dataDetailOrder.truck_type.truck_type}
-        </p>
+        <div className="py-2">
+          <label className="font-medium text-[17px]">Nama Driver</label>
+          <p className="text-amber-500 font-semibold text-[17px]">
+            {props.dataDetailOrder.driver.name}
+          </p>
+        </div>
+
+        <div className="py-2">
+          <label className="font-medium text-[17px]">Jenis Kendaraan</label>
+          <p className="text-amber-500 font-semibold text-[17px]">
+            {props.dataDetailOrder.driver.truck_type.truck_type}
+          </p>
+        </div>
+
+        <div className="py-2">
+          <label className="font-medium text-[17px]">
+            Nomor Plat Kendaraan
+          </label>
+          <p className="text-amber-500 font-semibold text-[17px]">
+            {props.dataDetailOrder.driver.vehicle_identifier}
+          </p>
+        </div>
 
         <div className="py-2">
           <label className="font-medium text-[17px]">Volume Muatan</label>
@@ -63,16 +83,17 @@ function AdminHomeOrder(props) {
         <div className="py-2">
           <label className="font-medium text-[17px]">Status</label>
           <p className="text-amber-500 font-semibold text-[17px]">
-            Menunggu dipilih oleh driver
+            Proses diantar oleh driver
           </p>
         </div>
       </div>
       <div className={styles.right}>
         <label className="font-medium text-[17px]">Gambar Order</label>
         <Image src={props.dataDetailOrder.order_picture} width={500} />
+        <TimelineVer dataHistories={props.dataHistory} />
       </div>
     </div>
   );
 }
 
-export default AdminHomeOrder;
+export default AdminOngoing;

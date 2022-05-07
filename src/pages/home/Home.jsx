@@ -48,7 +48,7 @@ function Home() {
     if (roleCtx === "admin") {
       await axios
         .get(
-          `https://aws.wildani.tech/api/orders?status=MANIFESTED&limit=16&page=${activePage}`,
+          `https://aws.wildani.tech/api/orders?status=MANIFESTED&limit=8&page=${activePage}`,
           {
             headers: {
               Authorization: `Bearer ${tokenCtx}`,
@@ -59,7 +59,7 @@ function Home() {
           setOrderData(response.data.data);
           setPaginData(response.data.pagination);
           setPaginLink(response.data.links);
-          console.log(response.data.data);
+          console.log(response.data.pagination);
         })
         .catch((err) => {
           console.log("error");
@@ -68,7 +68,7 @@ function Home() {
     } else if (roleCtx === "driver") {
       await axios
         .get(
-          `https://aws.wildani.tech/api/drivers/orders?status=MANIFESTED&limit=16&page=${activePage}`,
+          `https://aws.wildani.tech/api/drivers/orders?status=MANIFESTED&limit=8&page=${activePage}`,
           {
             headers: {
               Authorization: `Bearer ${tokenCtx}`,
