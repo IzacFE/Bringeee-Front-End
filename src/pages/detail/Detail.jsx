@@ -18,7 +18,7 @@ function Detail() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [tokenCtx]);
 
   const fetchData = async () => {
     await fetchDetailOrder();
@@ -45,7 +45,7 @@ function Detail() {
         });
     } else if (roleCtx === "driver") {
       await axios
-        .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.1/api/orders/${id}`, {
+        .get(`https://aws.wildani.tech/api/orders/${id}`, {
           headers: {
             Authorization: `Bearer ${tokenCtx}`,
           },

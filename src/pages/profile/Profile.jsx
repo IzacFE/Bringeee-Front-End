@@ -46,7 +46,7 @@ function Profile() {
 
   const fetchHistoryOrderCustomer = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/customers/orders?status=CDELIVERED%2CCANCELLED`, {
+      .get(`https://aws.wildani.tech/api/customers/orders?status=DELIVERED%2CCANCELLED`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
@@ -93,7 +93,7 @@ function Profile() {
 
   const fetchHistoryOrderDriver = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/drivers/orders?sortVolume=true&sortWeight=true&sortDistance=true`, {
+      .get(`https://aws.wildani.tech/api/drivers/history_orders?sortVolume=true&sortWeight=true&sortDistance=true'`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
