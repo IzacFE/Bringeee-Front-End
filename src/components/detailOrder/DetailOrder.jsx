@@ -28,8 +28,12 @@ const DetailOrder = (props) => {
         </p>
       </div>
       <div className="py-2">
-        <label className="font-medium text-[17px]">Tarif</label>
+        <label className="font-medium text-[17px]">Estimasi Tarif</label>
         <p className="text-amber-500 font-semibold text-[17px]">Rp. {props.dataDetailOrder.estimated_price}</p>
+      </div>
+      <div className="py-2">
+        <label className="font-medium text-[17px]">Penyesuaian Tarif/Tarif Tetap</label>
+        <p className="text-amber-500 font-semibold text-[17px]">Rp. {props.dataDetailOrder.fix_price}</p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Status</label>
