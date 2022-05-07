@@ -11,6 +11,7 @@ import axios from "axios";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import AdminHomeOrder from "../../components/detailOrder/AdminHomeOrder";
+import AdminConfirmOrder from "../../components/detailOrder/AdminConfirmOrder";
 
 function AdminDetailOrder() {
   const { tokenCtx } = useContext(TokenContext);
@@ -47,12 +48,94 @@ function AdminDetailOrder() {
       .finally(() => setIsReady(true));
   };
 
-  const takeOrder = () => {
+  const confirm = () => {
     return (
+      <AdminConfirmOrder
+        dataDetailOrder={detail}
+        clickSetuju={() => {
+          console.log("setuju");
+        }}
+        onChange={(e) => {
+          setPrice(e.target.value);
+        }}
+        clickSesuaikan={() => {
+          console.log("sesuaikan");
+        }}
+      />
       // <div className="container mx-auto">
-      <AdminHomeOrder dataDetailOrder={detail} />
+      //   <div className="flex flex-col md:flex-row md:gap-2 mb-3"></div>
+      //   <div className="flex flex-col md:flex-row md:gap-2">
+      //     <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
+      //       <div className="flex flex-col md:flex-row mb-3">
+      //         <div className="w-full md:w-1/2">
+      //           <DetailOrder dataDetailOrder={detail} />
+      //         </div>
+      //         <div className="w-full md:w-1/2">
+      //           {detail.status === "REQUESTED" && (
+      //             <Group>
+      //               <Image src={detail.order_picture} width={200} />
+      //               <div>
+      //                 <label className="font-medium text-[17px]">
+      //                   Setujui sesuai perkiraan tarif
+      //                 </label>
+      //                 <p className="text-amber-500 font-semibold text-[17px]">
+      //                   Rp {detail.estimated_price}
+      //                 </p>
+      //                 <Button className="bg-amber-500 hover:bg-amber-400 my-2">
+      //                   Setujui
+      //                 </Button>
+      //               </div>
+      //               <div>
+      //                 <label className="font-medium text-[17px]">
+      //                   Sesuaikan tarif
+      //                 </label>
+      //                 <InputWrapper id="emailCos" required>
+      //                   <Input
+      //                     id="emailCos"
+      //                     type="Number"
+      //                     placeholder="720000"
+      //                     onChange={(e) => setPrice(e.target.value)}
+      //                     className="py-2"
+      //                   />
+      //                 </InputWrapper>
+      //                 <Button className="bg-amber-500 hover:bg-amber-400 my-2">
+      //                   Kirim
+      //                 </Button>
+      //               </div>
+      //             </Group>
+      //           )}
+
+      //           {detail.status === "NEED_CUSTOMER_CONFIRM" && (
+      //             <Group>
+      //               <Image src={detail.order_picture} width={200} />
+      //               <div>
+      //                 <label className="font-medium text-[17px]">
+      //                   Tarif setelah disesuaikan
+      //                 </label>
+      //                 <p className="text-amber-500 font-semibold text-[17px]">
+      //                   Rp {detail.estimated_price}
+      //                 </p>
+      //                 <Button className="bg-amber-500 hover:bg-amber-400 my-2">
+      //                   Setujui
+      //                 </Button>
+      //               </div>
+      //               <div>
+      //                 <label className="font-medium text-[17px]">
+      //                   Menunggu Konfirmasi Kustomer
+      //                 </label>
+      //               </div>
+      //             </Group>
+      //           )}
+      //         </div>
+      //       </div>
+      //     </div>
+      //   </div>
       // </div>
     );
+  };
+
+  const takeOrder = () => {
+    return <AdminHomeOrder dataDetailOrder={detail} />;
   };
 
   const ongoing = () => {
@@ -82,65 +165,12 @@ function AdminDetailOrder() {
     );
   };
 
-  const confirm = () => {
-    return (
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row md:gap-2 mb-3">
-          {/* <div className="mx-auto">
-          <StepHorizon />
-        </div> */}
-        </div>
-        <div className="flex flex-col md:flex-row md:gap-2">
-          <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
-            <div className="flex flex-col md:flex-row mb-3">
-              <div className="w-full md:w-1/2">
-                <DetailOrder dataDetailOrder={detail} />
-              </div>
-              <div className="w-full md:w-1/2">
-                <Group>
-                  <Image src={detail.order_picture} width={200} />
-                  <div>
-                    <label className="font-medium text-[17px]">
-                      Setujui sesuai perkiraan tarif
-                    </label>
-                    <p className="text-amber-500 font-semibold text-[17px]">
-                      Rp {detail.estimated_price}
-                    </p>
-                    <Button className="bg-amber-500 hover:bg-amber-400 my-2">
-                      Setujui
-                    </Button>
-                  </div>
-                  <div>
-                    <label className="font-medium text-[17px]">
-                      Sesuaikan tarif
-                    </label>
-                    <InputWrapper id="emailCos" required>
-                      <Input
-                        id="emailCos"
-                        type="Number"
-                        placeholder="720000"
-                        onChange={(e) => setPrice(e.target.value)}
-                        className="py-2"
-                      />
-                    </InputWrapper>
-                    <Button className="bg-amber-500 hover:bg-amber-400 my-2">
-                      Kirim
-                    </Button>
-                  </div>
-                </Group>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   let result;
   if (isReady) {
     result = (
       <div className={styles.page}>
         <>{detail.status === "REQUESTED" && confirm()}</>
+        <>{detail.status === "NEED_CUSTOMER_CONFIRM" && confirm()}</>
         <>{detail.status === "MANIFESTED" && takeOrder()}</>
         <>{detail.status === "ON_PROCESS" && ongoing()}</>
       </div>

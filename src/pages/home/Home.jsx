@@ -59,7 +59,7 @@ function Home() {
           setOrderData(response.data.data);
           setPaginData(response.data.pagination);
           setPaginLink(response.data.links);
-          console.log(response.data.data);
+          console.log(response.data.pagination);
         })
         .catch((err) => {
           console.log("error");
