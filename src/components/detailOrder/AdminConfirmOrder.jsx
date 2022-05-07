@@ -1,7 +1,6 @@
-import { Button, Group, Image, Input, InputWrapper } from "@mantine/core";
 import React from "react";
+import { Button, Group, Image, Input, InputWrapper } from "@mantine/core";
 import styles from "./AdminHomeOrder.module.css";
-import DetailOrder from "./DetailOrder";
 
 function AdminConfirmOrder(props) {
   return (
@@ -19,6 +18,12 @@ function AdminConfirmOrder(props) {
             {props.dataDetailOrder.description}
           </p>
         </div>
+
+        <label className="font-medium text-[17px]">Jenis Kendaraan</label>
+        <p className="text-amber-500 font-semibold text-[17px]">
+          {props.dataDetailOrder.truck_type.truck_type}
+        </p>
+
         <div className="py-2">
           <label className="font-medium text-[17px]">Volume Muatan</label>
           <p className="text-amber-500 font-semibold text-[17px]">
@@ -52,16 +57,23 @@ function AdminConfirmOrder(props) {
         <div className="py-2">
           <label className="font-medium text-[17px]">Tarif</label>
           <p className="text-amber-500 font-semibold text-[17px]">
-            Rp. {props.dataDetailOrder.fix_price}
+            {props.dataDetailOrder.status === "REQUESTED" &&
+              `Rp. ${props.dataDetailOrder.estimated_price}`}
+            {props.dataDetailOrder.status !== "REQUESTED" &&
+              `Rp. ${props.dataDetailOrder.fix_price}`}
           </p>
         </div>
         <div className="py-2">
           <label className="font-medium text-[17px]">Status</label>
           <p className="text-amber-500 font-semibold text-[17px]">
-            {props.dataDetailOrder.status === "NEED_CUSTOMER_CONFIRM" &&
-              "Menunggu Konfirmasi Kustomer"}
             {props.dataDetailOrder.status === "REQUESTED" &&
               "Menunggu Konfirmasi Admin"}
+
+            {props.dataDetailOrder.status === "NEED_CUSTOMER_CONFIRM" &&
+              "Menunggu Konfirmasi Kustomer"}
+
+            {props.dataDetailOrder.status === "CONFIRMED" &&
+              "Proses Pembayaran oleh Kustomer"}
           </p>
         </div>
       </div>

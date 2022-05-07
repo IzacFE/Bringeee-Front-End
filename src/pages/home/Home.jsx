@@ -48,7 +48,7 @@ function Home() {
     if (roleCtx === "admin") {
       await axios
         .get(
-          `https://aws.wildani.tech/api/orders?status=MANIFESTED&limit=16&page=${activePage}`,
+          `https://aws.wildani.tech/api/orders?status=MANIFESTED&limit=8&page=${activePage}`,
           {
             headers: {
               Authorization: `Bearer ${tokenCtx}`,
@@ -68,7 +68,7 @@ function Home() {
     } else if (roleCtx === "driver") {
       await axios
         .get(
-          `https://aws.wildani.tech/api/drivers/orders?status=MANIFESTED&limit=16&page=${activePage}`,
+          `https://aws.wildani.tech/api/drivers/orders?status=MANIFESTED&limit=8&page=${activePage}`,
           {
             headers: {
               Authorization: `Bearer ${tokenCtx}`,
