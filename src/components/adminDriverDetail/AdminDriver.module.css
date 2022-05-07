@@ -4,12 +4,14 @@
 }
 
 .left {
-  /* margin: auto; */
+  padding: 12px;
   width: 35%;
 }
 
 .right {
+  background-color: white;
   width: 65%;
+  padding: 12px;
 }
 
 .buttonContainer {
@@ -26,5 +28,14 @@
 @media (max-width: 800px) {
   .container {
     flex-direction: column;
+  }
+
+  .left {
+    width: 100%;
+    text-align: center;
+  }
+
+  .right {
+    width: 100%;
   }
 }

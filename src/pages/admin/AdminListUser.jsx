@@ -38,7 +38,7 @@ function AdminListUser() {
       })
       .then((response) => {
         setUserCostumer(response.data.data);
-        // console.log(response.data.data);
+        console.log(response.data.data);
       })
       .catch((err) => {
         console.log("error");
@@ -54,7 +54,7 @@ function AdminListUser() {
       })
       .then((response) => {
         setUserDriver(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       })
       .catch((err) => {
         console.log("error");
@@ -125,6 +125,23 @@ function AdminListUser() {
     );
   };
 
+  const handleDelCost = async (akunID) => {
+    setIsReady(false);
+    await axios
+      .delete(`https://aws.wildani.tech/api/customers/${akunID}`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((response) => {
+        fetchCustomer();
+      })
+      .catch((err) => {
+        console.log("error");
+      })
+      .finally(() => setIsReady(true));
+  };
+
   let result;
   if (isReady) {
     result = (
@@ -141,10 +158,17 @@ function AdminListUser() {
           avatar={modalData.avatar}
           name={modalData.name}
           email={modalData.email}
-          // avatar={modalData.avatar}
+          gender={modalData.gender}
+          dob={modalData.dob}
+          phone={modalData.phone_number}
+          idAcc={modalData.id}
           opened={opened}
           onClose={() => {
             setOpened(false);
+          }}
+          clickDelete={() => {
+            setOpened(false);
+            handleDelCost(modalData.id);
           }}
         />
       </div>
