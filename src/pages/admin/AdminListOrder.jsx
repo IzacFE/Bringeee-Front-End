@@ -33,11 +33,14 @@ function AdminListOrder() {
 
   const fetchConfirm = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/orders?status=CONFIRMED,REQUESTED`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
+      .get(
+        `https://aws.wildani.tech/api/orders?status=NEED_CUSTOMER_CONFIRM,REQUESTED`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
       .then((response) => {
         if (response.data.data) {
           setConfirmData(response.data.data);
@@ -51,16 +54,18 @@ function AdminListOrder() {
 
   const fetchOngoing = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/orders?status=ON_PROCESS`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
+      .get(
+        `https://aws.wildani.tech/api/orders?status=CONFIRMED,MANIFESTED,ON_PROCESS`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
       .then((response) => {
         if (response.data.data) {
           setOngoingData(response.data.data);
         }
-        // setOngoingData();
         console.log(response.data.data);
       })
       .catch((err) => {
@@ -70,7 +75,7 @@ function AdminListOrder() {
 
   const fetchHistory = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/orders?status=DELIVERED`, {
+      .get(`https://aws.wildani.tech/api/orders?status=DELIVERED,CANCELLED`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
@@ -91,7 +96,7 @@ function AdminListOrder() {
     return (
       <>
         <div className={`${styles.confirmContainer} rounded-md`}>
-          <AdminOrderList dataOrder={confirmData} />
+          <AdminOrderList dataOrder={confirmData} check={"confirm"} />
         </div>
       </>
     );
@@ -101,7 +106,7 @@ function AdminListOrder() {
     return (
       <>
         <div className={`${styles.confirmContainer} rounded-md`}>
-          <AdminOrderList dataOrder={ongoingData} />
+          <AdminOrderList dataOrder={ongoingData} check={"ongoing"} />
         </div>
       </>
     );
@@ -111,7 +116,7 @@ function AdminListOrder() {
     return (
       <>
         <div className={`${styles.confirmContainer} rounded-md`}>
-          <AdminOrderList dataOrder={historyData} />
+          <AdminOrderList dataOrder={historyData} check={"history"} />
         </div>
       </>
     );
