@@ -10,8 +10,12 @@ function CategoryHome(props) {
       onTabChange={props.setActive}
     >
       <Tabs.Tab label={"Semua"} />
-      <Tabs.Tab label={"Pick up"} />
-      <Tabs.Tab label={"Trailer"} />
+      <Tabs.Tab label={"Pick up A"} />
+      <Tabs.Tab label={"Pick up B"} />
+      <Tabs.Tab label={"Mobil box A"} />
+      <Tabs.Tab label={"Mobil box B"} />
+      <Tabs.Tab label={"Truk Fuso A"} />
+      <Tabs.Tab label={"Truk Fuso B"} />
     </Tabs>
   );
 }

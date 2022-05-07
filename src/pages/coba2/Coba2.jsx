@@ -7,7 +7,6 @@ import AdminOrderList from "../../components/adminOrderList/AdminOrderList";
 import CustomerModal from "../../components/customerAccModal/CustomerModal";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import OrderCard from "../../components/orderCard/OrderCard";
-import PaginList from "../../components/pagination/PaginList";
 import SearchComps from "../../components/search/SearchComps";
 import StepHorizon from "../../components/stepper/StepHorizon";
 import TabsAdmin from "../../components/tabsAdmin/TabsAdmin";
@@ -22,7 +21,6 @@ function Coba2() {
     <>
       <SearchComps />
       <OrderCard />
-      <PaginList />
       <TabsAdmin
         title1="Order Konfirmasi"
         title2="Order Ongoing"
