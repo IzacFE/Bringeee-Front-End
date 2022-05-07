@@ -27,7 +27,7 @@ function Profile() {
       }
       setIsReady(true);
     }
-  }, []);
+  }, [tokenCtx]);
 
   const fecthData = async () => {
     await axios
@@ -46,7 +46,7 @@ function Profile() {
 
   const fetchHistoryOrderCustomer = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/customers/orders?status=CARRIVED%2CCANCELLED`, {
+      .get(`https://aws.wildani.tech/api/customers/orders?status=DELIVERED%2CCANCELLED`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
@@ -68,6 +68,7 @@ function Profile() {
       })
       .then((ress) => {
         setOrderActiveCustomer(ress.data.data);
+        console.log(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -76,9 +77,14 @@ function Profile() {
 
   const fetchCurrentOrderDriver = async () => {
     await axios
-      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/drivers/current_order`)
+      .get(`https://aws.wildani.tech/api/drivers/current_order`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
       .then((ress) => {
         setDataCurrentOrderDriver(ress.data.data);
+        console.log(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +93,11 @@ function Profile() {
 
   const fetchHistoryOrderDriver = async () => {
     await axios
-      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.0/api/drivers/orders?sortVolume=true&sortWeight=true&sortDistance=true`)
+      .get(`https://aws.wildani.tech/api/drivers/history_orders?sortVolume=true&sortWeight=true&sortDistance=true'`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
       .then((ress) => {
         setDataHistoryOrderDriver(ress.data.data);
       })

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Group, Button, Image } from "@mantine/core";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
 import StepHorizon from "../../components/stepper/StepHorizon";
@@ -11,9 +10,10 @@ import axios from "axios";
 import { TokenContext } from "../../App";
 
 function ConfirmOrder() {
+  let navigate = useNavigate();
   const { tokenCtx } = useContext(TokenContext);
+  const [status] = useState("request");
   const params = useParams();
-  const [status, setStatus] = useState("request");
   const [isReady, setIsReady] = useState(false);
   const [dataDetailOrder, setDataDetailOrder] = useState([]);
 
@@ -31,6 +31,7 @@ function ConfirmOrder() {
       })
       .then((ress) => {
         setDataDetailOrder(ress.data.data);
+        console.log(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -74,13 +75,32 @@ function ConfirmOrder() {
       });
   };
 
-  if (status === "request" || status === "adjust") {
+  const handleCancelPayment = async () => {
+    const { id } = params;
+    var config = {
+      method: "post",
+      url: `https://aws.wildani.tech/api/customers/orders/${id}/payment/cancel`,
+      headers: {
+        Authorization: `Bearer ${tokenCtx}`,
+      },
+    };
+    await axios(config)
+      .then((ress) => {
+        console.log(ress);
+        fetchDetailOrder();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  if ((!dataDetailOrder.transaction_id && dataDetailOrder.status === "REQUESTED") || (!dataDetailOrder.transaction_id && dataDetailOrder.status === "NEED_CUSTOMER_CONFIRM")) {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2 mb-3">
             <div className="mx-auto">
-              <StepHorizon status={status} />
+              <StepHorizon status={dataDetailOrder.status} />
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-2">
@@ -95,7 +115,7 @@ function ConfirmOrder() {
                   </Group>
                 </div>
               </div>
-              {status === "adjust" && (
+              {!dataDetailOrder.transaction_id && dataDetailOrder.status === "NEED_CUSTOMER_CONFIRM" && (
                 <Group position="center" className="flex flex-col md:flex-row">
                   <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleConfirmOrder()} id="btn-confirmOrder-agree">
                     Setuju
@@ -112,13 +132,13 @@ function ConfirmOrder() {
     } else {
       return <LoadSpin />;
     }
-  } else if (status === "confirm") {
+  } else if (!dataDetailOrder.transaction_id && dataDetailOrder.status === "CONFIRMED") {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2 mb-3">
             <div className="mx-auto">
-              <StepHorizon status={status} />
+              <StepHorizon status={dataDetailOrder.status} />
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-2 mb-10">
@@ -126,23 +146,29 @@ function ConfirmOrder() {
               <h2 className="font-semibold text-[25px]">Pilih Bank Yang Diinginkan...</h2>
             </div>
           </div>
-          <ChoosePayment />
+          <ChoosePayment detailOrderFetch={() => fetchDetailOrder()} />
         </div>
       );
     } else {
       return <LoadSpin />;
     }
-  } else if (status === "transfer") {
+  } else if (dataDetailOrder.transaction_id && dataDetailOrder.status === "CONFIRMED") {
     if (isReady) {
       return (
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2 mb-3">
             <div className="mx-auto">
-              <StepHorizon status={status} />
+              <StepHorizon status="PAYMENT" />
             </div>
           </div>
           <div className="flex flex-col justify-center md:flex-row md:gap-2 mb-3">
-            <ConfirmPayment />
+            <ConfirmPayment>
+              <Group position="center">
+                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleCancelPayment()} id="btn-cancelPayment">
+                  Ganti Pembayaran
+                </Button>
+              </Group>
+            </ConfirmPayment>
           </div>
         </div>
       );
@@ -159,7 +185,13 @@ function ConfirmOrder() {
             </div>
           </div>
           <div className="flex flex-col justify-center md:flex-row md:gap-2 mb-3">
-            <ConfirmPayment />
+            <ConfirmPayment>
+              <Group position="center">
+                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" id="btn-choosePayment">
+                  Bayar
+                </Button>
+              </Group>
+            </ConfirmPayment>
           </div>
         </div>
       );

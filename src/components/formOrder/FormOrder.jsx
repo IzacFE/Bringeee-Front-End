@@ -159,6 +159,25 @@ const FormOrder = () => {
       });
   };
 
+  const priceEstimate = async () => {
+    var config = {
+      method: "post",
+      url: "https://aws.wildani.tech/api/customers/orders/estimate",
+      headers: {
+        Authorization: `Bearer ${tokenCtx}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: "&destination_start_lat=" + latStart + "&destination_start_long=" + longStart + "&destination_end_lat=" + latEnd + "&destination_end_long=" + longEnd + "&truck_type=" + typeTruck,
+    };
+    await axios(config)
+      .then((response) => {
+        alert("berhasil");
+      })
+      .catch((err) => {
+        alert("gagal");
+      });
+  };
+
   return (
     <div className="bg-neutral-50 rounded-[20px] drop-shadow-md p-5">
       <div className="flex flex-col mb-3">
