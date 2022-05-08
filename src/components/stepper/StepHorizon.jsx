@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Stepper, Button, Group } from "@mantine/core";
 
 function StepHorizon(props) {
-  const [active, setActive] = useState(props.status === "request" || props.status === "adjust" ? 0 : props.status == "confirm" ? 1 : props.status == "transfer" ? 2 : 3);
+  const [active, setActive] = useState(props.status === "REQUESTED" || props.status === "NEED_CUSTOMER_CONFIRM" ? 0 : props.status == "CONFIRMED" ? 1 : props.status == "PAYMENT" ? 2 : 3);
 
   return (
     <>

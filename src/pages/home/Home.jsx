@@ -4,48 +4,62 @@ import { TokenContext, RoleContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 
-import { Button } from "@mantine/core";
+import { Button, Pagination } from "@mantine/core";
 import CategoryHome from "../../components/category/CategoryHome";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import OrderCard from "../../components/orderCard/OrderCard";
-import PaginList from "../../components/pagination/PaginList";
-import SearchComps from "../../components/search/SearchComps";
 
 function Home() {
   const { tokenCtx } = useContext(TokenContext);
   const { roleCtx } = useContext(RoleContext);
   const navigate = useNavigate();
 
-  const [driver, setDriver] = useState(false);
   const [orderData, setOrderData] = useState([]);
   const [category, setCategory] = useState(0);
   const [isReady, setIsReady] = useState(false);
+
+  const [paginData, setPaginData] = useState({});
+  const [paginLink, setPaginLink] = useState({});
+  const [activePage, setPage] = useState(1);
 
   useEffect(() => {
     setIsReady(false);
     if (roleCtx === "admin") {
       fetchData();
     } else if (roleCtx === "driver") {
-      setDriver(true);
       fetchData();
     } else if (roleCtx === "customer") {
       navigate("/profile");
     } else {
       navigate("/");
     }
-  }, [roleCtx]);
+  }, [tokenCtx, activePage]);
+
+  useEffect(() => {
+    if (category !== 0) {
+      fetchCategory();
+    } else if (category === 0) {
+      fetchData();
+    }
+  }, [category]);
 
   const fetchData = async () => {
+    setIsReady(false);
     if (roleCtx === "admin") {
       await axios
-        .get(`https://aws.wildani.tech/api/orders?status=MANIFESTED`, {
-          headers: {
-            Authorization: `Bearer ${tokenCtx}`,
-          },
-        })
+        .get(
+          `https://aws.wildani.tech/api/orders?status=MANIFESTED&limit=8&page=${activePage}`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenCtx}`,
+            },
+          }
+        )
         .then((response) => {
           setOrderData(response.data.data);
-          console.log(response.data.data);
+          setPaginData(response.data.pagination);
+          setPaginLink(response.data.links);
+          console.log(response.data.pagination);
         })
         .catch((err) => {
           console.log("error");
@@ -53,13 +67,18 @@ function Home() {
         .finally(() => setIsReady(true));
     } else if (roleCtx === "driver") {
       await axios
-        .get(`https://aws.wildani.tech/api/drivers/orders?status=MANIFESTED`, {
-          headers: {
-            Authorization: `Bearer ${tokenCtx}`,
-          },
-        })
+        .get(
+          `https://aws.wildani.tech/api/drivers/orders?status=MANIFESTED&limit=8&page=${activePage}`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenCtx}`,
+            },
+          }
+        )
         .then((response) => {
           setOrderData(response.data.data);
+          setPaginData(response.data.pagination);
+          setPaginLink(response.data.links);
           console.log(response.data.data);
         })
         .catch((err) => {
@@ -69,15 +88,33 @@ function Home() {
     }
   };
 
+  const fetchCategory = async () => {
+    setIsReady(false);
+    await axios
+      .get(
+        `https://aws.wildani.tech/api/orders?status=MANIFESTED&truck_type=${category}`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
+      .then((response) => {
+        setOrderData(response.data.data);
+        setPaginData(response.data.pagination);
+        setPaginLink(response.data.links);
+      })
+      .catch((err) => {
+        console.log("error");
+      })
+      .finally(() => setIsReady(true));
+  };
+
   let result;
   if (isReady) {
     result = (
       <div className={styles.page}>
         <div className={styles.konten}>
-          <div className={styles.searchContainer}>
-            <SearchComps />
-          </div>
-
           <div className={styles.category}>
             {roleCtx === "admin" && (
               <CategoryHome active={category} setActive={setCategory} />
@@ -93,11 +130,15 @@ function Home() {
                     from={item.destination_start_city}
                     destination={item.destination_end_city}
                     price={item.fix_price}
-                    avatar={item.avatar}
-                    name={item.name}
+                    avatar={item.customer.avatar}
+                    name={item.customer.name}
                     created={item.created_at.slice(0, 10)}
                     onClick={() => {
-                      navigate(`/admin-detail-order/${item.id}`);
+                      if (roleCtx === "admin") {
+                        navigate(`/admin-detail-order/${item.id}`);
+                      } else if (roleCtx === "driver") {
+                        navigate(`/take-order/${item.id}`);
+                      }
                     }}
                   />
                 </div>
@@ -105,7 +146,13 @@ function Home() {
             })}
           </div>
         </div>
-        <PaginList className={styles.pagination} />
+        <Pagination
+          page={activePage}
+          onChange={setPage}
+          total={paginData.total_pages}
+          color="yellow"
+          className={styles.pagination}
+        />
       </div>
     );
   } else {

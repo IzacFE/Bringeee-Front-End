@@ -11,19 +11,37 @@ const TakeOrder = () => {
   const params = useParams();
   const { tokenCtx } = useContext(TokenContext);
   const [isReady, setIsReady] = useState(false);
-  const [statusDriver, setStatusDriver] = useState("available");
-  const [status, setStatus] = useState("");
+  const [dataUser, setDataUser] = useState([]);
   const [arrivedPic, setArrivedPic] = useState("");
   const [dataDetailOrder, setDataDetailOrder] = useState([]);
 
   useEffect(() => {
-    fetchDetailOrder();
+    async function fetchDatas() {
+      await fecthData();
+      await fetchDetailOrder();
+    }
+    fetchDatas();
   }, []);
+
+  const fecthData = async () => {
+    await axios
+      .get(`https://aws.wildani.tech/api/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((ress) => {
+        setDataUser(ress.data.data.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const fetchDetailOrder = async () => {
     const { id } = params;
     await axios
-      .get(`https://virtserver.swaggerhub.com/wildanie12/Bringee-API/v1.1/api/orders/${id}`, {
+      .get(`https://aws.wildani.tech/api/orders/${id}`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
@@ -41,14 +59,18 @@ const TakeOrder = () => {
 
   const handleTakeOrder = async () => {
     const { id } = params;
-    await axios
-      .post(`https://aws.wildani.tech/api/drivers/orders/${id}/take_order`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
+    var config = {
+      method: "post",
+      url: `https://aws.wildani.tech/api/drivers/orders/${id}/take_order`,
+      headers: {
+        Authorization: `Bearer ${tokenCtx}`,
+      },
+    };
+    await axios(config)
       .then((ress) => {
         console.log(ress);
+        fecthData();
+        fetchDetailOrder();
       })
       .catch((err) => {
         console.log(err);
@@ -70,6 +92,8 @@ const TakeOrder = () => {
       })
       .then((ress) => {
         console.log(ress);
+        fecthData();
+        fetchDetailOrder();
       })
       .catch((err) => {
         console.log(err);
@@ -84,7 +108,7 @@ const TakeOrder = () => {
             <div className="flex flex-col md:flex-row mb-3">
               <div className="w-full md:w-1/2">
                 <DetailOrder dataDetailOrder={dataDetailOrder} />
-                {status === "ongoing" && (
+                {dataDetailOrder.status === "ON_PROCESS" && (
                   <div className="py-2">
                     <TextInput type="file" label="Foto" placeholder="" onChange={(e) => setArrivedPic(e.target.files[0])} id="form-arrivedPicture" />
                   </div>
@@ -96,19 +120,20 @@ const TakeOrder = () => {
                 </div>
               </div>
             </div>
-            {statusDriver === "available" && (
+            {dataUser.status === "IDLE" && dataDetailOrder.status === "MANIFESTED" ? (
               <Group position="center" className="flex flex-col md:flex-row">
                 <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleTakeOrder()} id="btn-takeOrder">
                   Ambil Order
                 </Button>
               </Group>
-            )}
-            {status === "ongoing" && (
-              <Group position="center">
-                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleFinishOrder()} id="btn-finishOrder">
-                  Selesai
-                </Button>
-              </Group>
+            ) : (
+              dataDetailOrder.status === "ON_PROCESS" && (
+                <Group position="center">
+                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleFinishOrder()} id="btn-finishOrder">
+                    Selesai
+                  </Button>
+                </Group>
+              )
             )}
           </div>
         </div>

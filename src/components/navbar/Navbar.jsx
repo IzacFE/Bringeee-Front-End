@@ -152,9 +152,7 @@ function Navbar() {
 
     await axios(config)
       .then((response) => {
-        console.log(response.data.data);
         dataSaver(response.data.data);
-        alert("berhasil");
         redirect(response.data.data.user.role);
       })
       .catch((response) => {
@@ -162,8 +160,6 @@ function Navbar() {
         alert("gagal");
       });
   };
-
-  // const registerCustomer = () => {};
 
   const logOut = () => {
     localStorage.clear();

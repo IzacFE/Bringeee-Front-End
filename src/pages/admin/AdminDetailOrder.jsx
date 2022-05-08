@@ -10,6 +10,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DetailOrder from "../../components/detailOrder/DetailOrder";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
+import AdminHomeOrder from "../../components/detailOrder/AdminHomeOrder";
+import AdminConfirmOrder from "../../components/detailOrder/AdminConfirmOrder";
+import AdminOngoing from "../../components/detailOrder/AdminOngoing";
 
 function AdminDetailOrder() {
   const { tokenCtx } = useContext(TokenContext);
@@ -19,13 +22,14 @@ function AdminDetailOrder() {
   const [isReady, setIsReady] = useState(false);
   const [detail, setDetail] = useState({});
   const [price, setPrice] = useState(0);
-  const [status, setStatus] = useState("");
+  const [history, setHistory] = useState({});
 
   useEffect(() => {
     if (roleCtx !== "admin") {
       navigate("/");
     } else {
       fetchData();
+      fetchOrderHistories();
     }
   }, [roleCtx]);
 
@@ -38,7 +42,48 @@ function AdminDetailOrder() {
       })
       .then((response) => {
         setDetail(response.data.data);
+
         console.log(response.data.data);
+      })
+      .catch((err) => {
+        console.log("error");
+      });
+  };
+
+  const fetchOrderHistories = async () => {
+    const { id } = params;
+    await axios
+      .get(`https://aws.wildani.tech/api/orders/${id}/histories`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((ress) => {
+        setHistory(ress.data.data);
+        console.log(ress.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setIsReady(true));
+  };
+
+  const handleConfirm = async () => {
+    setIsReady(false);
+    await axios
+      .post(
+        `https://aws.wildani.tech/api/orders/${params.id}/confirm`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        // navigate("/admin-orders");
+        // window.location.reload();
       })
       .catch((err) => {
         console.log("error");
@@ -46,85 +91,57 @@ function AdminDetailOrder() {
       .finally(() => setIsReady(true));
   };
 
-  const ongoing = () => {
-    return (
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row md:gap-2 mb-3">
-          {/* <div className="mx-auto">
-          <StepHorizon />
-        </div> */}
-        </div>
-        <div className="flex flex-col md:flex-row md:gap-2">
-          <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
-            <div className="flex flex-col md:flex-row mb-3">
-              <div className="w-full md:w-1/2">
-                <DetailOrder dataDetailOrder={detail} />
-              </div>
-              <div className="w-full md:w-1/2">
-                <Group>
-                  <Image src={detail.order_picture} width={200} />
-                  {/* <TimelineVer /> */}
-                </Group>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  const handleChangePrice = async () => {
+    setIsReady(false);
+    var config = {
+      method: "patch",
+      url: `https://aws.wildani.tech/api/orders/${params.id}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Bearer " + tokenCtx,
+      },
+      data: "&fixed_price=" + price,
+    };
+    await axios(config)
+      .then((response) => {
+        console.log(response);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.data);
+      })
+      .finally(() => setIsReady(true));
   };
 
   const confirm = () => {
     return (
-      <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row md:gap-2 mb-3">
-          {/* <div className="mx-auto">
-          <StepHorizon />
-        </div> */}
-        </div>
-        <div className="flex flex-col md:flex-row md:gap-2">
-          <div className="bg-slate-50 p-5 rounded-md shadow-md md:w-6/12 md:mx-auto">
-            <div className="flex flex-col md:flex-row mb-3">
-              <div className="w-full md:w-1/2">
-                <DetailOrder dataDetailOrder={detail} />
-              </div>
-              <div className="w-full md:w-1/2">
-                <Group>
-                  <Image src={detail.order_picture} width={200} />
-                  <div>
-                    <label className="font-medium text-[17px]">
-                      Setujui sesuai perkiraan tarif
-                    </label>
-                    <p className="text-amber-500 font-semibold text-[17px]">
-                      Rp {detail.estimated_price}
-                    </p>
-                    <Button className="bg-amber-500 hover:bg-amber-400 my-2">
-                      Setujui
-                    </Button>
-                  </div>
-                  <div>
-                    <label className="font-medium text-[17px]">
-                      Sesuaikan tarif
-                    </label>
-                    <InputWrapper id="emailCos" required>
-                      <Input
-                        id="emailCos"
-                        type="Number"
-                        placeholder="720000"
-                        onChange={(e) => setPrice(e.target.value)}
-                        className="py-2"
-                      />
-                    </InputWrapper>
-                    <Button className="bg-amber-500 hover:bg-amber-400 my-2">
-                      Kirim
-                    </Button>
-                  </div>
-                </Group>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AdminConfirmOrder
+        dataDetailOrder={detail}
+        clickSetuju={() => {
+          handleConfirm();
+          console.log("setuju");
+        }}
+        onChange={(e) => {
+          setPrice(e.target.value);
+        }}
+        clickSesuaikan={() => {
+          handleChangePrice();
+          console.log("sesuaikan");
+        }}
+      />
     );
+  };
+
+  const readyOrder = () => {
+    return <AdminHomeOrder dataDetailOrder={detail} />;
+  };
+
+  const ongoing = () => {
+    return <AdminOngoing dataDetailOrder={detail} dataHistory={history} />;
+  };
+
+  const finish = () => {
+    return <AdminOngoing dataDetailOrder={detail} dataHistory={history} />;
   };
 
   let result;
@@ -132,8 +149,11 @@ function AdminDetailOrder() {
     result = (
       <div className={styles.page}>
         <>{detail.status === "REQUESTED" && confirm()}</>
-        <>{detail.status === "MANIFESTED" && ongoing()}</>
-        <>{detail.status === "ongoing" && ongoing()}</>
+        <>{detail.status === "NEED_CUSTOMER_CONFIRM" && confirm()}</>
+        <>{detail.status === "CONFIRMED" && confirm()}</>
+        <>{detail.status === "MANIFESTED" && readyOrder()}</>
+        <>{detail.status === "ON_PROCESS" && ongoing()}</>
+        <>{detail.status === "DELIVERED" && finish()}</>
       </div>
     );
   } else {

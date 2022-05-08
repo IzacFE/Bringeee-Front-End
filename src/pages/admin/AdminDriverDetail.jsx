@@ -44,17 +44,59 @@ function AdminDriverDetail() {
       .finally(() => setIsReady(true));
   };
 
+  const handleConfirm = async () => {
+    setIsReady(false);
+    await axios
+      .post(
+        `https://aws.wildani.tech/api/drivers/${params.id}/confirm`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
+      .then((response) => {
+        fetchData();
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("error");
+      })
+      .finally(() => setIsReady(true));
+  };
+
+  const handleDelete = async () => {
+    setIsReady(false);
+    await axios
+      .delete(`https://aws.wildani.tech/api/drivers/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((response) => {
+        navigate("/admin-users");
+      })
+      .catch((err) => {
+        console.log("error");
+      })
+      .finally(() => setIsReady(true));
+  };
+
   let result;
   if (isReady) {
     result = (
       <div className={styles.page}>
         <AdminDriver
+          statusOrder={detail.status}
+          akunStatus={detail.account_status}
           image={detail.avatar}
           name={detail.name}
           email={detail.email}
           gender={detail.gender}
           address={detail.address}
           phone={detail.phone_number}
+          dob={detail.dob}
           age={detail.age}
           vehicle={detail.truck_type.truck_type}
           stnk={detail.stnk_file}
@@ -62,6 +104,12 @@ function AdminDriverDetail() {
           sim={detail.driver_license_file}
           nik={detail.nik}
           plateNumb={detail.vehicle_identifier}
+          onConfirm={() => {
+            handleConfirm();
+          }}
+          delAccount={() => {
+            handleDelete();
+          }}
         />
       </div>
     );

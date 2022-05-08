@@ -16,7 +16,7 @@ function SearchComps(props) {
           onClick={props.onClick}
           className="bg-amber-500 hover:bg-white hover:text-amber-500 hover:border-amber-500 hover:border-2"
         >
-          <ArrowRight size={18} />
+          <ArrowRight size={18} onClick={props.onClick} />
         </ActionIcon>
       }
       placeholder="Cari Order"
@@ -28,3 +28,16 @@ function SearchComps(props) {
 }
 
 export default SearchComps;
+
+{
+  /* <SearchComps
+  onChange={(event) => setSearch(event.currentTarget.value)}
+  onClick={() => {
+    console.log(search);
+  }}
+/>; */
+}
+
+{
+  /* <div className={styles.searchContainer}></div>; */
+}
