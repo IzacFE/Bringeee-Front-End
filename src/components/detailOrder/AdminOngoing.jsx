@@ -90,7 +90,7 @@ function AdminOngoing(props) {
       <div className={styles.right}>
         <label className="font-medium text-[17px]">Gambar Order</label>
         <Image src={props.dataDetailOrder.order_picture} width={500} />
-        <TimelineVer dataHistories={props.dataHistory} />
+        {props.dataHistory && <TimelineVer dataHistories={props.dataHistory} />}
       </div>
     </div>
   );

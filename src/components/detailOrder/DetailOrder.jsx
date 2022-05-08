@@ -1,7 +1,7 @@
 import React from "react";
 
 const DetailOrder = (props) => {
-  return (
+    return (
     <div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Nama Customer</label>

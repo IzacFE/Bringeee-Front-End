@@ -152,7 +152,6 @@ function Navbar() {
 
     await axios(config)
       .then((response) => {
-        console.log(response.data.data);
         dataSaver(response.data.data);
         redirect(response.data.data.user.role);
       })
