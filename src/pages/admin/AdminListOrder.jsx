@@ -29,7 +29,7 @@ function AdminListOrder() {
     } else {
       navigate("/");
     }
-  }, [roleCtx]);
+  }, [tokenCtx]);
 
   const fetchConfirm = async () => {
     await axios
