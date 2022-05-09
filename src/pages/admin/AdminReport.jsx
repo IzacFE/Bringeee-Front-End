@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./AdminReport.module.css";
-import { Button, Table } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
 import { RoleContext, TokenContext } from "../../App";
 import axios from "axios";
+import fileDownload from "js-file-download";
+
+import { Button, Table } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
+import BarChart from "../../components/barChart/BarChart";
 
 function AdminReport() {
   const { tokenCtx } = useContext(TokenContext);
@@ -181,7 +184,6 @@ function AdminReport() {
       )
       .then((response) => {
         setOrdersManifested(response.data.data);
-        console.log(response.data.data);
       })
       .catch((err) => {
         console.log("error");
@@ -244,14 +246,13 @@ function AdminReport() {
 
   const fetchStats = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/stats/orders?periodDay=31`, {
+      .get(`https://aws.wildani.tech/api/stats/orders/10`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
       })
       .then((response) => {
-        setStats(response.data.data);
-        console.log(response.data.data);
+        setStats(response.data.data[0]);
       })
       .catch((err) => {
         console.log("error");
@@ -261,19 +262,18 @@ function AdminReport() {
 
   const getReport = async () => {
     setIsReady(false);
-    await axios
-      .post(
-        `https://aws.wildani.tech/api/export/orders`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${tokenCtx}`,
-          },
-        }
-      )
+    var config = {
+      method: "post",
+      url: "https://aws.wildani.tech/api/export/orders",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${tokenCtx}`,
+      },
+      data: "&month=" + 5 + "&year=" + 2022,
+    };
+    await axios(config)
       .then((response) => {
-        setReport(response.data.data);
-        console.log(response.data.data);
+        fileDownload(response.data, "nama.csv");
       })
       .catch((err) => {
         console.log("error");
@@ -357,6 +357,12 @@ function AdminReport() {
           </thead>
           <tbody>{rows}</tbody>
         </Table>
+        <div className="mt-12">
+          <label className="font-medium text-[17px]">Tabel order</label>
+          <div className="bg-white p-6 rounded-md mt-4">
+            <BarChart label={stats.label} data={stats.total_order} />
+          </div>
+        </div>
 
         <Button
           className="bg-amber-500 hover:bg-amber-400 mt-8"
