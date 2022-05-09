@@ -54,7 +54,7 @@ const ProfileCustomer = (props) => {
   if (!allowEdit) {
     return (
       <div>
-        <img src={props.dataUser.avatar} alt="" className="w-[250px] mx-auto rounded-full" />
+        <img src={props.dataUser.avatar} alt="" className="w-[250px] h-[250px] mx-auto rounded-full" />
 
         <div className="my-4 flex flex-col gap-4">
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.name}</h2>
@@ -155,7 +155,7 @@ const ProfileDriver = (props) => {
   if (!allowEdit) {
     return (
       <div>
-        <img src={props.dataUser.avatar} alt="" className="w-[250px] mx-auto rounded-full" />
+        <img src={props.dataUser.avatar} alt="" className="w-[250px] h-[250px] mx-auto rounded-full" />
 
         <div className="my-4 flex flex-col gap-4">
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.name}</h2>
