@@ -4,6 +4,8 @@ import { ProfileCustomer, ProfileDriver } from "../../components/profile/Profile
 import { TabsProfileCustomer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import { TokenContext, RoleContext } from "../../App";
+import { showNotification } from "@mantine/notifications";
+import { X } from "tabler-icons-react";
 
 function Profile() {
   const { tokenCtx } = useContext(TokenContext);
@@ -40,7 +42,12 @@ function Profile() {
         setDataUser(ress.data.data.user);
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Gagal menampilkan data",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -55,7 +62,12 @@ function Profile() {
         setDataHistoryOrderCustomer(ress.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Gagal menampilkan data",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -68,10 +80,14 @@ function Profile() {
       })
       .then((ress) => {
         setOrderActiveCustomer(ress.data.data);
-        console.log(ress.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Gagal menampilkan data",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -84,10 +100,14 @@ function Profile() {
       })
       .then((ress) => {
         setDataCurrentOrderDriver(ress.data.data);
-        console.log(ress.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Gagal menampilkan data",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -102,7 +122,12 @@ function Profile() {
         setDataHistoryOrderDriver(ress.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Gagal menampilkan data",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -112,7 +137,7 @@ function Profile() {
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2">
             <div className="w-full md:w-3/12">
-              <ProfileCustomer dataUser={dataUser} />
+              <ProfileCustomer dataUser={dataUser} reloadSoftPage={() => fecthData()} />
             </div>
             <div className="w-full md:w-9/12">
               <TabsProfileCustomer dataHistoryOrder={dataHistoryOrderCustomer} dataOrderActive={dataOrderActiveCustomer} />
@@ -129,7 +154,7 @@ function Profile() {
         <div className="container mx-auto py-[5vh] px-[5vh]">
           <div className="flex flex-col md:flex-row md:gap-2">
             <div className="w-full md:w-3/12">
-              <ProfileDriver dataUser={dataUser} />
+              <ProfileDriver dataUser={dataUser} reloadSoftPage={() => fecthData()} />
             </div>
             <div className="w-full md:w-9/12">
               <TabsProfileDriver dataOrderActive={dataCurrentOrderDriver} dataHistoryOrder={dataHistoryOrderDriver} />
