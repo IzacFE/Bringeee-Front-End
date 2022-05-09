@@ -3,6 +3,8 @@ import { Input, NativeSelect, Group, Button } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import { TokenContext } from "../../App";
 import axios from "axios";
+import { showNotification } from "@mantine/notifications";
+import { Check, X } from "tabler-icons-react";
 
 const ProfileCustomer = (props) => {
   const { tokenCtx } = useContext(TokenContext);
@@ -30,11 +32,22 @@ const ProfileCustomer = (props) => {
         },
       })
       .then((response) => {
-        alert("berhasil");
+        showNotification({
+          title: "Berhasil",
+          message: "Profile berhasil diubah",
+          icon: <Check size={18} />,
+          color: "green",
+        });
         setAllowEdit(false);
+        props.reloadSoftPage();
       })
       .catch((err) => {
-        alert("gagal");
+        showNotification({
+          title: "Gagal",
+          message: "Profile tidak dapat diubah",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -65,7 +78,7 @@ const ProfileCustomer = (props) => {
 
         <div className="my-4 flex flex-col gap-4">
           <Input id="form-ProfileCostumer-name" placeholder="" defaultValue={props.dataUser.name} onChange={(e) => setNamaCus(e.target.value)} />
-          <Input id="form-ProfileCostumer-email" type="email" placeholder="" defaultValue={props.dataUser.email} />
+          <Input id="form-ProfileCostumer-email" type="email" placeholder="" defaultValue={props.dataUser.email} onChange={(e) => setEmailCus(e.target.value)} />
           <NativeSelect
             placeholder="Pilih Jenis Kelamin"
             onChange={(e) => setJenisKelaminCus(e.target.value)}

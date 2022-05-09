@@ -8,6 +8,8 @@ import ConfirmPayment from "../../components/confirmPayment/ConfirmPayment";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import axios from "axios";
 import { TokenContext } from "../../App";
+import { showNotification } from "@mantine/notifications";
+import { Check, X } from "tabler-icons-react";
 
 function ConfirmOrder() {
   let navigate = useNavigate();
@@ -19,7 +21,7 @@ function ConfirmOrder() {
 
   useEffect(() => {
     fetchDetailOrder();
-  }, []);
+  }, [tokenCtx]);
 
   const fetchDetailOrder = async () => {
     const { id } = params;
@@ -31,10 +33,14 @@ function ConfirmOrder() {
       })
       .then((ress) => {
         setDataDetailOrder(ress.data.data);
-        console.log(ress.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Gagal menampilkan data",
+          icon: <X size={18} />,
+          color: "red",
+        });
       })
       .finally(() => {
         setIsReady(true);
@@ -54,11 +60,21 @@ function ConfirmOrder() {
         }
       )
       .then((ress) => {
-        console.log(ress);
-        alert("success");
+        showNotification({
+          title: "Berhasil",
+          message: "Order dikonfirmasi",
+          icon: <Check size={18} />,
+          color: "green",
+        });
+        fetchDetailOrder();
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Order tidak dapat dikonfirmasi",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -75,11 +91,21 @@ function ConfirmOrder() {
         }
       )
       .then((ress) => {
-        console.log(ress);
-        alert("success");
+        showNotification({
+          title: "Berhasil",
+          message: "Order dibatalkan",
+          icon: <Check size={18} />,
+          color: "green",
+        });
+        fetchDetailOrder();
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Order tidak dapat dibatalkan",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -94,11 +120,21 @@ function ConfirmOrder() {
     };
     await axios(config)
       .then((ress) => {
-        console.log(ress);
+        showNotification({
+          title: "Berhasil",
+          message: "Metode Pembayaran dibatalkan!",
+          icon: <Check size={18} />,
+          color: "green",
+        });
         fetchDetailOrder();
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Metode Pembayaran tidak dapat dibatalkan!",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
