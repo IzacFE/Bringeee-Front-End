@@ -1,13 +1,10 @@
 import React from "react";
-import { useState } from "react";
-import { Stepper, Button, Group } from "@mantine/core";
+import { Stepper } from "@mantine/core";
 
 function StepHorizon(props) {
-  const [active, setActive] = useState(props.status === "REQUESTED" || props.status === "NEED_CUSTOMER_CONFIRM" ? 0 : props.status == "CONFIRMED" ? 1 : props.status == "PAYMENT" ? 2 : 3);
-
   return (
     <>
-      <Stepper color="yellow" active={active} onStepClick={setActive} breakpoint="sm">
+      <Stepper color="yellow" active={props.status === "REQUESTED" || props.status === "NEED_CUSTOMER_CONFIRM" ? 0 : props.status == "CONFIRMED" ? 1 : props.status == "PAYMENT" ? 2 : 3} breakpoint="sm">
         <Stepper.Step label="Order" description="Konfirmasi order">
           Menunggu Konfirmasi
         </Stepper.Step>
