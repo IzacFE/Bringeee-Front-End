@@ -1,7 +1,7 @@
 import React from "react";
 
 const DetailOrder = (props) => {
-    return (
+  return (
     <div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Nama Customer</label>
@@ -29,11 +29,21 @@ const DetailOrder = (props) => {
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Estimasi Tarif</label>
-        <p className="text-amber-500 font-semibold text-[17px]">Rp. {props.dataDetailOrder.estimated_price}</p>
+        <p className="text-amber-500 font-semibold text-[17px]">
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          }).format(props.dataDetailOrder.estimated_price)}
+        </p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Penyesuaian Tarif/Tarif Tetap</label>
-        <p className="text-amber-500 font-semibold text-[17px]">Rp. {props.dataDetailOrder.fix_price}</p>
+        <p className="text-amber-500 font-semibold text-[17px]">
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          }).format(props.dataDetailOrder.fix_price)}
+        </p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Status</label>
