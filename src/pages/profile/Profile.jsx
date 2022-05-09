@@ -73,7 +73,7 @@ function Profile() {
 
   const fetchOrderActiveCustomer = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/customers/orders?status=CONFIRMED%2CMANIFESTED%2CON_PROCESS%2CREQUESTED`, {
+      .get(`https://aws.wildani.tech/api/customers/orders?status=CONFIRMED%2CMANIFESTED%2CON_PROCESS%2CREQUESTED%2CNEED_CUSTOMER_CONFIRM`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
