@@ -5,7 +5,6 @@ import DetailOrder from "../../components/detailOrder/DetailOrder";
 import { TokenContext } from "../../App";
 import axios from "axios";
 import { Image, Button, Group, TextInput } from "@mantine/core";
-import ImageOrder from "../../assets/package.png";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
 
@@ -148,7 +147,7 @@ const TakeOrder = () => {
               </div>
               <div className="w-full md:w-1/2">
                 <div className="flex justify-center md:justify-start">
-                  <Image src={ImageOrder} width={250} mx="auto" />
+                  <Image src={dataDetailOrder.order_picture} width={250} mx="auto" />
                 </div>
               </div>
             </div>

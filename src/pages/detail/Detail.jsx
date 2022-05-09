@@ -123,7 +123,7 @@ function Detail() {
                 </div>
                 <div className="w-full md:w-1/2">
                   <div className="flex justify-center md:justify-start">
-                    <Image src={ImageOrder} width={250} mx="auto" />
+                    <Image src={dataDetailOrder.arrived_picture} width={250} mx="auto" />
                   </div>
                 </div>
               </div>
