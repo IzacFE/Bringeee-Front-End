@@ -3,7 +3,6 @@ import { Timeline, Text } from "@mantine/core";
 import moment from "moment";
 
 function TimelineVer(props) {
-  console.log(props.dataHistories);
   return (
     <Timeline active={props.dataHistories.length} bulletSize={20} lineWidth={4} color="yellow">
       {props.dataHistories.map((items) => {
