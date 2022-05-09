@@ -33,6 +33,7 @@ const DetailOrder = (props) => {
           {new Intl.NumberFormat("id-ID", {
             style: "currency",
             currency: "IDR",
+            minimumFractionDigits: 0,
           }).format(props.dataDetailOrder.estimated_price)}
         </p>
       </div>
@@ -42,6 +43,7 @@ const DetailOrder = (props) => {
           {new Intl.NumberFormat("id-ID", {
             style: "currency",
             currency: "IDR",
+            minimumFractionDigits: 0,
           }).format(props.dataDetailOrder.fix_price)}
         </p>
       </div>

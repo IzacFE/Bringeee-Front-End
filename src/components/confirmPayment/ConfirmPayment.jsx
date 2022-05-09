@@ -73,6 +73,7 @@ const ConfirmPayment = (props) => {
                   {new Intl.NumberFormat("id-ID", {
                     style: "currency",
                     currency: "IDR",
+                    minimumFractionDigits: 0,
                   }).format(dataPayment.gross_amount)}
                 </td>
               </tr>
