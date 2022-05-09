@@ -133,11 +133,22 @@ const ProfileDriver = (props) => {
         },
       })
       .then((response) => {
-        alert("berhasil");
+        showNotification({
+          title: "Berhasil",
+          message: "Profile berhasil diubah",
+          icon: <Check size={18} />,
+          color: "green",
+        });
         setAllowEdit(false);
+        props.reloadSoftPage();
       })
       .catch((err) => {
-        alert("gagal");
+        showNotification({
+          title: "Gagal",
+          message: "Profile tidak dapat diubah",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
