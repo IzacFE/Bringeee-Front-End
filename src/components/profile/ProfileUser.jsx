@@ -59,7 +59,7 @@ const ProfileCustomer = (props) => {
         <div className="my-4 flex flex-col gap-4">
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.name}</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.email}</h2>
-          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.gender}</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.gender === "male" ? "Laki-Laki" : "Perempuan"}</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.phone_number}</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.address}</h2>
 
@@ -81,6 +81,7 @@ const ProfileCustomer = (props) => {
           <Input id="form-ProfileCostumer-email" type="email" placeholder="" defaultValue={props.dataUser.email} onChange={(e) => setEmailCus(e.target.value)} />
           <NativeSelect
             placeholder="Pilih Jenis Kelamin"
+            value={jenisKelaminCus}
             onChange={(e) => setJenisKelaminCus(e.target.value)}
             data={[
               { value: "male", label: "Laki-Laki" },
@@ -160,7 +161,7 @@ const ProfileDriver = (props) => {
         <div className="my-4 flex flex-col gap-4">
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.name}</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.email}</h2>
-          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.gender}</h2>
+          <h2 className="text-stone-500 font-medium text-center">{props.dataUser.gender === "male" ? "Laki-Laki" : "Perempuan"}</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.age} th</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.phone_number}</h2>
           <h2 className="text-stone-500 font-medium text-center">{props.dataUser.address}</h2>
@@ -184,6 +185,7 @@ const ProfileDriver = (props) => {
           <NativeSelect
             placeholder="Pilih Jenis Kelamin"
             onChange={(e) => setJenisKelaminDriver(e.target.value)}
+            value={jenisKelaminDriver}
             data={[
               { value: "laki-laki", label: "Laki-Laki" },
               { value: "perempuan", label: "Perempuan" },
