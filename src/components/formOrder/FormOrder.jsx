@@ -3,17 +3,23 @@ import axios from "axios";
 import { Textarea, NativeSelect, TextInput, Group, Button } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import { TokenContext } from "../../App";
+import { showNotification } from "@mantine/notifications";
+import { Check, X } from "tabler-icons-react";
 
-const FormOrder = () => {
+const FormOrder = (props) => {
   const { tokenCtx } = useContext(TokenContext);
   const [dataProvince, setDataProvince] = useState([]);
   const [dataTruck, setDataTruck] = useState([]);
   const [dataCitiesStart, setDataCitiesStart] = useState([]);
   const [dataDistrictsStart, setDataDistrictsStart] = useState([]);
   const [idProvStart, setIdProvStart] = useState("");
+  const [cityStart, setCityStart] = useState("");
+  const [districtStart, setDistrictStart] = useState("");
   const [dataCitiesEnd, setDataCitiesEnd] = useState([]);
   const [dataDistrictsEnd, setDataDistrictsEnd] = useState([]);
   const [idProvEnd, setIdProvEnd] = useState("");
+  const [cityEnd, setCityEnd] = useState("");
+  const [districtEnd, setDistrictEnd] = useState("");
   //data
   const [addressStart, setAddressStart] = useState("");
   const [provinceStart, setProvinceStart] = useState("");
@@ -64,6 +70,11 @@ const FormOrder = () => {
 
   const fetchCitiesStart = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
+    setIdProvStart(e.target.value);
+    setProvinceStart(selected);
+    setCityStart("");
+    setDistrictStart("");
+    setDataDistrictsStart([]);
 
     await axios
       .get(`https://aws.wildani.tech/api/provinces/${e.target.value}/cities`)
@@ -73,14 +84,13 @@ const FormOrder = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    setIdProvStart(e.target.value);
-    setProvinceStart(selected);
-    setDataDistrictsStart([]);
   };
 
   const fetchDistrictsStart = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
+    setCityStart(e.target.value);
+    setCitiesStart(selected);
+    setDistrictsStart("");
     await axios
       .get(`https://aws.wildani.tech/api/provinces/${idProvStart}/cities/${e.target.value}/districts`)
       .then((ress) => {
@@ -89,11 +99,20 @@ const FormOrder = () => {
       .catch((err) => {
         console.log(err);
       });
-    setCitiesStart(selected);
+  };
+
+  const chooseDistrictsStart = (e) => {
+    setDistrictStart(e.target.value);
+    setDistrictsStart(e.target.options[e.target.selectedIndex].label);
   };
 
   const fetchCitiesEnd = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
+    setIdProvEnd(e.target.value);
+    setProvinceEnd(selected);
+    setCityEnd("");
+    setDistrictEnd("");
+    setDataDistrictsEnd([]);
 
     await axios
       .get(`https://aws.wildani.tech/api/provinces/${e.target.value}/cities`)
@@ -103,14 +122,13 @@ const FormOrder = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    setIdProvEnd(e.target.value);
-    setProvinceEnd(selected);
-    setDataDistrictsEnd([]);
   };
 
   const fetchDistrictsEnd = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
+    setCityEnd(e.target.value);
+    setCitiesEnd(selected);
+    setDistrictsEnd("");
     await axios
       .get(`https://aws.wildani.tech/api/provinces/${idProvEnd}/cities/${e.target.value}/districts`)
       .then((ress) => {
@@ -119,7 +137,11 @@ const FormOrder = () => {
       .catch((err) => {
         console.log(err);
       });
-    setCitiesEnd(selected);
+  };
+
+  const chooseDistrictsEnd = (e) => {
+    setDistrictEnd(e.target.value);
+    setDistrictsEnd(e.target.options[e.target.selectedIndex].label);
   };
 
   const createOrder = async () => {
@@ -152,10 +174,21 @@ const FormOrder = () => {
         },
       })
       .then((response) => {
-        alert("berhasil");
+        showNotification({
+          title: "Berhasil",
+          message: "Order telah dibuat",
+          icon: <Check size={18} />,
+          color: "green",
+        });
+        props.reloadSoftPage();
       })
       .catch((err) => {
-        alert("gagal");
+        showNotification({
+          title: "Gagal",
+          message: "Order gagal dibuat",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -178,6 +211,12 @@ const FormOrder = () => {
       });
   };
 
+  const [testVal, setTestVal] = useState("");
+
+  const test = (e) => {
+    setTestVal(e.target.value);
+  };
+
   return (
     <div className="bg-neutral-50 rounded-[20px] drop-shadow-md p-5">
       <div className="flex flex-col mb-3">
@@ -190,6 +229,7 @@ const FormOrder = () => {
             <NativeSelect
               label="Provinsi"
               placeholder="Pilih Provinsi"
+              value={idProvStart}
               onChange={(e) => fetchCitiesStart(e)}
               data={dataProvince.map((data) => {
                 return { value: data.ProvID, label: data.ProvName };
@@ -203,6 +243,7 @@ const FormOrder = () => {
             <NativeSelect
               label="Kota"
               placeholder="Pilih Kota"
+              value={cityStart}
               onChange={(e) => fetchDistrictsStart(e)}
               data={
                 dataCitiesStart
@@ -222,7 +263,8 @@ const FormOrder = () => {
             <NativeSelect
               label="Kecamatan"
               placeholder="Pilih Kecamatan"
-              onChange={(e) => setDistrictsStart(e.target.options[e.target.selectedIndex].label)}
+              value={districtStart}
+              onChange={(e) => chooseDistrictsStart(e)}
               data={
                 dataDistrictsStart
                   ? dataDistrictsStart.map((data) => {
@@ -258,6 +300,7 @@ const FormOrder = () => {
             <NativeSelect
               label="Provinsi"
               placeholder="Pilih Provinsi"
+              value={idProvEnd}
               onChange={(e) => fetchCitiesEnd(e)}
               data={dataProvince.map((data) => {
                 return { value: data.ProvID, label: data.ProvName };
@@ -271,6 +314,7 @@ const FormOrder = () => {
             <NativeSelect
               label="Kota"
               placeholder="Pilih Kota"
+              value={cityEnd}
               onChange={(e) => fetchDistrictsEnd(e)}
               data={
                 dataCitiesEnd
@@ -290,7 +334,8 @@ const FormOrder = () => {
             <NativeSelect
               label="Kecamatan"
               placeholder="Pilih Kecamatan"
-              onChange={(e) => setDistrictsEnd(e.target.options[e.target.selectedIndex].label)}
+              value={districtEnd}
+              onChange={(e) => chooseDistrictsEnd(e)}
               data={
                 dataDistrictsEnd
                   ? dataDistrictsEnd.map((data) => {
@@ -326,6 +371,7 @@ const FormOrder = () => {
             <NativeSelect
               label="Tipe Truk"
               placeholder="Pilih Tipe Truk"
+              value={typeTruck}
               onChange={(e) => setTypeTruck(e.target.value)}
               data={dataTruck.map((truck) => {
                 return { value: truck.id, label: truck.truck_type };
