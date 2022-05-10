@@ -1,10 +1,30 @@
-import { Avatar, Button, Title, Text, Image } from "@mantine/core";
-import React from "react";
+import {
+  Avatar,
+  Button,
+  Title,
+  Text,
+  Image,
+  Tabs,
+  InputWrapper,
+  Input,
+  NativeSelect,
+  Group,
+} from "@mantine/core";
+import React, { useEffect, useState } from "react";
 import styles from "./AdminDriver.module.css";
 import { useModals } from "@mantine/modals";
+import { ChevronDown } from "tabler-icons-react";
 
 function AdminDriver(props) {
   const modals = useModals();
+
+  const [jenisTruk, setJenisTruk] = useState("");
+  const [nik, setNik] = useState("");
+  const [ktp, setKtp] = useState("");
+  const [sim, setSim] = useState("");
+  const [stnk, setStnk] = useState("");
+  const [vhcPict, setVhcPict] = useState("");
+  const [nomorKendaraan, setNomorKendaraan] = useState("");
 
   const openDeleteModal = () =>
     modals.openConfirmModal({
@@ -116,21 +136,111 @@ function AdminDriver(props) {
             </Button>
           </div>
         </div>
+
         <div className={`${styles.right} rounded-md shadow-xl`}>
-          <div className="py-2">
-            <label className="font-medium text-[17px]">Foto STNK :</label>
-          </div>
-          <Image radius="md" src={props.stnk} width={240} className="my-3" />
+          <Tabs color="yellow">
+            <Tabs.Tab label="Data Kredential">
+              <div className="py-2">
+                <label className="font-medium text-[17px]">Foto STNK :</label>
+              </div>
+              <Image
+                radius="md"
+                src={props.stnk}
+                width={240}
+                className="my-3"
+              />
 
-          <div className="py-2">
-            <label className="font-medium text-[17px]">Foto KTP :</label>
-          </div>
-          <Image radius="md" src={props.ktp} width={240} className="my-3" />
+              <div className="py-2">
+                <label className="font-medium text-[17px]">Foto KTP :</label>
+              </div>
+              <Image radius="md" src={props.ktp} width={240} className="my-3" />
 
-          <div className="py-2">
-            <label className="font-medium text-[17px]">Foto SIM :</label>
-          </div>
-          <Image radius="md" src={props.sim} width={240} className="my-3" />
+              <div className="py-2">
+                <label className="font-medium text-[17px]">Foto SIM :</label>
+              </div>
+              <Image radius="md" src={props.sim} width={240} className="my-3" />
+            </Tabs.Tab>
+            <Tabs.Tab label="Edit Data Kredential">
+              <InputWrapper id="nik" required label="NIK">
+                <Input
+                  id="nik"
+                  type="number"
+                  placeholder=""
+                  onChange={(e) => setNik(e.target.value)}
+                />
+              </InputWrapper>
+
+              <InputWrapper id="ktp" required label="KTP">
+                <Input
+                  id="ktp"
+                  type="file"
+                  placeholder=""
+                  onChange={(e) => setKtp(e.target.files[0])}
+                />
+              </InputWrapper>
+
+              <InputWrapper id="sim" required label="SIM">
+                <Input
+                  id="sim"
+                  type="file"
+                  placeholder=""
+                  onChange={(e) => setSim(e.target.files[0])}
+                />
+              </InputWrapper>
+
+              <InputWrapper id="stnk" required label="STNK">
+                <Input
+                  id="stnk"
+                  type="file"
+                  placeholder=""
+                  onChange={(e) => setStnk(e.target.files[0])}
+                />
+              </InputWrapper>
+
+              <InputWrapper id="kendaraan" required label="Foto Kendaraan">
+                <Input
+                  id="vehiclePict"
+                  type="file"
+                  placeholder=""
+                  onChange={(e) => setVhcPict(e.target.files[0])}
+                />
+              </InputWrapper>
+
+              <NativeSelect
+                label="Jenis Truk"
+                required
+                onChange={(e) => setJenisTruk(e.target.value)}
+                data={[
+                  { value: "1", label: "Pickup Truck - A" },
+                  { value: "2", label: "Pickup Truck - B" },
+                  { value: "3", label: "Mobil Box - Tier A" },
+                  { value: "4", label: "Mobil Box - Tier B" },
+                  { value: "5", label: "Fuso Truck - Tier A" },
+                  { value: "6", label: "Fuso Truck - Tier B" },
+                ]}
+                rightSection={<ChevronDown size={14} />}
+                rightSectionWidth={40}
+              />
+
+              <InputWrapper id="plat" required label="Nomor Kendaraan">
+                <Input
+                  id="plat"
+                  type="text"
+                  placeholder=""
+                  onChange={(e) => setNomorKendaraan(e.target.value)}
+                />
+              </InputWrapper>
+
+              <Group position="right" className="my-5">
+                <Button
+                  className="bg-amber-500 hover:bg-amber-400 text-stone-700"
+                  onClick={props.editClick}
+                >
+                  Edit data
+                </Button>
+              </Group>
+            </Tabs.Tab>
+          </Tabs>
         </div>
       </div>
     </>
