@@ -211,12 +211,6 @@ const FormOrder = (props) => {
       });
   };
 
-  const [testVal, setTestVal] = useState("");
-
-  const test = (e) => {
-    setTestVal(e.target.value);
-  };
-
   return (
     <div className="bg-neutral-50 rounded-[20px] drop-shadow-md p-5">
       <div className="flex flex-col mb-3">
