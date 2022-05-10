@@ -10,21 +10,60 @@ import {
   NativeSelect,
   Group,
 } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./AdminDriver.module.css";
 import { useModals } from "@mantine/modals";
 import { ChevronDown } from "tabler-icons-react";
+import axios from "axios";
+import { TokenContext } from "../../App";
 
 function AdminDriver(props) {
+  const { tokenCtx } = useContext(TokenContext);
+  const id = props.driverID;
   const modals = useModals();
 
-  const [jenisTruk, setJenisTruk] = useState("");
+  const [jenisTruk, setJenisTruk] = useState("1");
   const [nik, setNik] = useState("");
   const [ktp, setKtp] = useState("");
   const [sim, setSim] = useState("");
   const [stnk, setStnk] = useState("");
   const [vhcPict, setVhcPict] = useState("");
   const [nomorKendaraan, setNomorKendaraan] = useState("");
+
+  const handleEditDriver = async () => {
+    const formData = new FormData();
+
+    formData.append("truck_type_id", jenisTruk);
+    formData.append("ktp_file", ktp);
+    formData.append("stnk_file", stnk);
+    formData.append("driver_license_file", sim);
+    formData.append("vehicle_identifier", nomorKendaraan);
+    formData.append("nik", nik);
+    formData.append("vehicle_picture", vhcPict);
+
+    console.log(jenisTruk);
+    console.log(ktp);
+    console.log(stnk);
+    console.log(sim);
+    console.log(nomorKendaraan);
+    console.log(nik);
+    console.log(vhcPict);
+
+    await axios
+      .put(`https://aws.wildani.tech/api/drivers/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((response) => {
+        // alert("berhasil");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+      });
+  };
 
   const openDeleteModal = () =>
     modals.openConfirmModal({
@@ -101,22 +140,6 @@ function AdminDriver(props) {
             </label>
           </div>
 
-          <div className="py-2">
-            <label className="font-medium text-[17px]">
-              Jenis kendaraan : {props.vehicle}
-            </label>
-          </div>
-
-          <div className="py-2">
-            <label className="font-medium text-[17px]">NIK : {props.nik}</label>
-          </div>
-
-          <div className="py-2">
-            <label className="font-medium text-[17px]">
-              Nomor plat kendaraan : {props.plateNumb}
-            </label>
-          </div>
-
           <div className={`${styles.buttonContainer}`}>
             {props.akunStatus === "PENDING" && (
               <Button
@@ -141,14 +164,22 @@ function AdminDriver(props) {
           <Tabs color="yellow">
             <Tabs.Tab label="Data Kredential">
               <div className="py-2">
-                <label className="font-medium text-[17px]">Foto STNK :</label>
+                <label className="font-medium text-[17px]">
+                  Jenis kendaraan : {props.vehicle}
+                </label>
               </div>
-              <Image
-                radius="md"
-                src={props.stnk}
-                width={240}
-                className="my-3"
-              />
+
+              <div className="py-2">
+                <label className="font-medium text-[17px]">
+                  NIK : {props.nik}
+                </label>
+              </div>
+
+              <div className="py-2">
+                <label className="font-medium text-[17px]">
+                  Nomor plat kendaraan : {props.plateNumb}
+                </label>
+              </div>
 
               <div className="py-2">
                 <label className="font-medium text-[17px]">Foto KTP :</label>
@@ -159,7 +190,30 @@ function AdminDriver(props) {
                 <label className="font-medium text-[17px]">Foto SIM :</label>
               </div>
               <Image radius="md" src={props.sim} width={240} className="my-3" />
+
+              <div className="py-2">
+                <label className="font-medium text-[17px]">Foto STNK :</label>
+              </div>
+              <Image
+                radius="md"
+                src={props.stnk}
+                width={240}
+                className="my-3"
+              />
+
+              <div className="py-2">
+                <label className="font-medium text-[17px]">
+                  Foto Kendaraan :
+                </label>
+              </div>
+              <Image
+                radius="md"
+                src={props.vehicleTyp}
+                width={240}
+                className="my-3"
+              />
             </Tabs.Tab>
+
             <Tabs.Tab label="Edit Data Kredential">
               <InputWrapper id="nik" required label="NIK">
                 <Input
@@ -230,14 +284,17 @@ function AdminDriver(props) {
                   onChange={(e) => setNomorKendaraan(e.target.value)}
                 />
               </InputWrapper>
-
               <Group position="right" className="my-5">
-                <Button
-                  className="bg-amber-500 hover:bg-amber-400 text-stone-700"
-                  onClick={props.editClick}
-                >
-                  Edit data
-                </Button>
+                <span onClick={props.editTrigger}>
+                  <Button
+                    className="bg-amber-500 hover:bg-amber-400 text-stone-700"
+                    onClick={() => {
+                      handleEditDriver();
+                    }}
+                  >
+                    Edit data
+                  </Button>
+                </span>
               </Group>
             </Tabs.Tab>
           </Tabs>
