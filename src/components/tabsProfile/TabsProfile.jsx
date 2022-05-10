@@ -63,7 +63,7 @@ const TabsProfileCustomer = (props) => {
           </div>
         </Tabs.Tab>
         <Tabs.Tab label="Buat Order">
-          <FormOrder />
+          <FormOrder reloadSoftPage={() => props.reloadSoftPage()} />
         </Tabs.Tab>
       </Tabs>
     </div>
