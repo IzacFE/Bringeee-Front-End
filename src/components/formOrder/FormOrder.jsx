@@ -1,19 +1,33 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useMemo, useRef } from "react";
 import axios from "axios";
-import { Textarea, NativeSelect, TextInput, Group, Button } from "@mantine/core";
+import {
+  Textarea,
+  NativeSelect,
+  TextInput,
+  Group,
+  Button,
+} from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import { TokenContext } from "../../App";
+import { showNotification } from "@mantine/notifications";
+import { Check, X } from "tabler-icons-react";
+import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
+import DraggableMarker from "../map/DraggableMarker";
 
-const FormOrder = () => {
+const FormOrder = (props) => {
   const { tokenCtx } = useContext(TokenContext);
   const [dataProvince, setDataProvince] = useState([]);
   const [dataTruck, setDataTruck] = useState([]);
   const [dataCitiesStart, setDataCitiesStart] = useState([]);
   const [dataDistrictsStart, setDataDistrictsStart] = useState([]);
   const [idProvStart, setIdProvStart] = useState("");
+  const [cityStart, setCityStart] = useState("");
+  const [districtStart, setDistrictStart] = useState("");
   const [dataCitiesEnd, setDataCitiesEnd] = useState([]);
   const [dataDistrictsEnd, setDataDistrictsEnd] = useState([]);
   const [idProvEnd, setIdProvEnd] = useState("");
+  const [cityEnd, setCityEnd] = useState("");
+  const [districtEnd, setDistrictEnd] = useState("");
   //data
   const [addressStart, setAddressStart] = useState("");
   const [provinceStart, setProvinceStart] = useState("");
@@ -35,10 +49,46 @@ const FormOrder = () => {
   const [weight, setWeight] = useState("");
   const [imageOrder, setImageOrder] = useState("");
 
+  const [positionStart, setPositionStart] = useState([
+    -7.253496039426577, 109.20410156250001,
+  ]);
+  const [positionEnd, setPositionEnd] = useState([
+    -7.253496039426577, 109.20410156250001,
+  ]);
+  const markerRefStart = useRef();
+  const markerRefEnd = useRef();
+
   useEffect(() => {
     fetchProvince();
     fetchTruckType();
   }, []);
+
+  const handlerStart = useMemo(
+    () => ({
+      dragend() {
+        const marker = markerRefStart.current;
+        if (marker != null) {
+          setPositionStart(marker.getLatLng());
+          console.log(marker.getLatLng());
+          console.log(marker);
+        }
+      },
+    }),
+    []
+  );
+
+  const handlerEnd = useMemo(
+    () => ({
+      dragend() {
+        const marker = markerRefEnd.current;
+        if (marker != null) {
+          setPositionEnd(marker.getLatLng());
+          console.log(marker.getLatLng());
+        }
+      },
+    }),
+    []
+  );
 
   const fetchTruckType = async () => {
     await axios
@@ -64,6 +114,11 @@ const FormOrder = () => {
 
   const fetchCitiesStart = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
+    setIdProvStart(e.target.value);
+    setProvinceStart(selected);
+    setCityStart("");
+    setDistrictStart("");
+    setDataDistrictsStart([]);
 
     await axios
       .get(`https://aws.wildani.tech/api/provinces/${e.target.value}/cities`)
@@ -73,27 +128,37 @@ const FormOrder = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    setIdProvStart(e.target.value);
-    setProvinceStart(selected);
-    setDataDistrictsStart([]);
   };
 
   const fetchDistrictsStart = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
+    setCityStart(e.target.value);
+    setCitiesStart(selected);
+    setDistrictsStart("");
     await axios
-      .get(`https://aws.wildani.tech/api/provinces/${idProvStart}/cities/${e.target.value}/districts`)
+      .get(
+        `https://aws.wildani.tech/api/provinces/${idProvStart}/cities/${e.target.value}/districts`
+      )
       .then((ress) => {
         setDataDistrictsStart(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-    setCitiesStart(selected);
+  };
+
+  const chooseDistrictsStart = (e) => {
+    setDistrictStart(e.target.value);
+    setDistrictsStart(e.target.options[e.target.selectedIndex].label);
   };
 
   const fetchCitiesEnd = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
+    setIdProvEnd(e.target.value);
+    setProvinceEnd(selected);
+    setCityEnd("");
+    setDistrictEnd("");
+    setDataDistrictsEnd([]);
 
     await axios
       .get(`https://aws.wildani.tech/api/provinces/${e.target.value}/cities`)
@@ -103,23 +168,28 @@ const FormOrder = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    setIdProvEnd(e.target.value);
-    setProvinceEnd(selected);
-    setDataDistrictsEnd([]);
   };
 
   const fetchDistrictsEnd = async (e) => {
     const selected = e.target.options[e.target.selectedIndex].label;
+    setCityEnd(e.target.value);
+    setCitiesEnd(selected);
+    setDistrictsEnd("");
     await axios
-      .get(`https://aws.wildani.tech/api/provinces/${idProvEnd}/cities/${e.target.value}/districts`)
+      .get(
+        `https://aws.wildani.tech/api/provinces/${idProvEnd}/cities/${e.target.value}/districts`
+      )
       .then((ress) => {
         setDataDistrictsEnd(ress.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-    setCitiesEnd(selected);
+  };
+
+  const chooseDistrictsEnd = (e) => {
+    setDistrictEnd(e.target.value);
+    setDistrictsEnd(e.target.options[e.target.selectedIndex].label);
   };
 
   const createOrder = async () => {
@@ -129,15 +199,15 @@ const FormOrder = () => {
     formData.append("destination_start_city", citiesStart);
     formData.append("destination_start_district", districtsStart);
     formData.append("destination_start_postal", posStart);
-    formData.append("destination_start_lat", latStart);
-    formData.append("destination_start_long", longStart);
+    formData.append("destination_start_lat", positionStart[0]);
+    formData.append("destination_start_long", positionStart[1]);
     formData.append("destination_end_address", addressEnd);
     formData.append("destination_end_province", provinceEnd);
     formData.append("destination_end_city", citiesEnd);
     formData.append("destination_end_district", districtsEnd);
     formData.append("destination_end_postal", posEnd);
-    formData.append("destination_end_lat", latEnd);
-    formData.append("destination_end_long", longEnd);
+    formData.append("destination_end_lat", positionEnd[0]);
+    formData.append("destination_end_long", positionEnd[1]);
     formData.append("description", description);
     formData.append("total_volume", volume);
     formData.append("total_weight", weight);
@@ -152,11 +222,53 @@ const FormOrder = () => {
         },
       })
       .then((response) => {
-        alert("berhasil");
+        showNotification({
+          title: "Berhasil",
+          message: "Order telah dibuat",
+          icon: <Check size={18} />,
+          color: "green",
+        });
+        resetForm();
+        props.reloadSoftPage();
       })
       .catch((err) => {
-        alert("gagal");
+        showNotification({
+          title: "Gagal",
+          message: "Order gagal dibuat",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
+  };
+
+  const resetForm = () => {
+    setAddressStart("");
+    setIdProvStart("");
+    setProvinceStart("");
+    setCityStart("");
+    setCitiesStart("");
+    setDistrictStart("");
+    setDistrictsStart("");
+    setPosStart("");
+    setLatStart("");
+    setLongStart("");
+    //
+    setAddressEnd("");
+    setIdProvEnd("");
+    setProvinceEnd("");
+    setCityEnd("");
+    setCitiesEnd("");
+    setDistrictEnd("");
+    setDistrictsEnd("");
+    setPosEnd("");
+    setLatEnd("");
+    setLongEnd("");
+    //
+    setDescription("");
+    setVolume("");
+    setWeight("");
+    setTypeTruck("");
+    setImageOrder("");
   };
 
   const priceEstimate = async () => {
@@ -167,7 +279,17 @@ const FormOrder = () => {
         Authorization: `Bearer ${tokenCtx}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      data: "&destination_start_lat=" + latStart + "&destination_start_long=" + longStart + "&destination_end_lat=" + latEnd + "&destination_end_long=" + longEnd + "&truck_type=" + typeTruck,
+      data:
+        "&destination_start_lat=" +
+        latStart +
+        "&destination_start_long=" +
+        longStart +
+        "&destination_end_lat=" +
+        latEnd +
+        "&destination_end_long=" +
+        longEnd +
+        "&truck_type=" +
+        typeTruck,
     };
     await axios(config)
       .then((response) => {
@@ -183,13 +305,20 @@ const FormOrder = () => {
       <div className="flex flex-col mb-3">
         <label className="text-amber-500 font-medium text-[22px]">Asal</label>
         <div className="w-full">
-          <Textarea placeholder="" label="Alamat" onChange={(e) => setAddressStart(e.target.value)} id="form-createOrder-start-address" />
+          <Textarea
+            placeholder=""
+            value={addressStart}
+            label="Alamat"
+            onChange={(e) => setAddressStart(e.target.value)}
+            id="form-createOrder-start-address"
+          />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
             <NativeSelect
               label="Provinsi"
               placeholder="Pilih Provinsi"
+              value={idProvStart}
               onChange={(e) => fetchCitiesStart(e)}
               data={dataProvince.map((data) => {
                 return { value: data.ProvID, label: data.ProvName };
@@ -203,6 +332,7 @@ const FormOrder = () => {
             <NativeSelect
               label="Kota"
               placeholder="Pilih Kota"
+              value={cityStart}
               onChange={(e) => fetchDistrictsStart(e)}
               data={
                 dataCitiesStart
@@ -222,7 +352,8 @@ const FormOrder = () => {
             <NativeSelect
               label="Kecamatan"
               placeholder="Pilih Kecamatan"
-              onChange={(e) => setDistrictsStart(e.target.options[e.target.selectedIndex].label)}
+              value={districtStart}
+              onChange={(e) => chooseDistrictsStart(e)}
               data={
                 dataDistrictsStart
                   ? dataDistrictsStart.map((data) => {
@@ -236,28 +367,51 @@ const FormOrder = () => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" label="Kode Pos" placeholder="" onChange={(e) => setPosStart(e.target.value)} id="form-createOrder-start-postal" />
+            <TextInput
+              type="number"
+              value={posStart}
+              label="Kode Pos"
+              placeholder=""
+              onChange={(e) => setPosStart(e.target.value)}
+              id="form-createOrder-start-postal"
+            />
           </div>
         </div>
+
         <div className="flex flex-col md:flex-row md:gap-2">
-          <div className="w-full md:w-6/12">
-            <TextInput type="text" label="Lat" placeholder="" onChange={(e) => setLatStart(e.target.value)} id="form-createOrder-start-lat" />
-          </div>
-          <div className="w-full md:w-6/12">
-            <TextInput type="text" label="Long" placeholder="" onChange={(e) => setLongStart(e.target.value)} id="form-createOrder-start-long" />
-          </div>
+          <MapContainer
+            center={[-7.253496039426577, 109.20410156250001]}
+            zoom={5}
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+            <DraggableMarker
+              eventHandlers={handlerStart}
+              position={positionStart}
+              markerRef={markerRefStart}
+            />
+          </MapContainer>
         </div>
       </div>
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Tujuan</label>
         <div className="w-full">
-          <Textarea placeholder="" label="Alamat" onChange={(e) => setAddressEnd(e.target.value)} id="form-createOrder-end-address" />
+          <Textarea
+            placeholder=""
+            value={addressEnd}
+            label="Alamat"
+            onChange={(e) => setAddressEnd(e.target.value)}
+            id="form-createOrder-end-address"
+          />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
             <NativeSelect
               label="Provinsi"
               placeholder="Pilih Provinsi"
+              value={idProvEnd}
               onChange={(e) => fetchCitiesEnd(e)}
               data={dataProvince.map((data) => {
                 return { value: data.ProvID, label: data.ProvName };
@@ -271,6 +425,7 @@ const FormOrder = () => {
             <NativeSelect
               label="Kota"
               placeholder="Pilih Kota"
+              value={cityEnd}
               onChange={(e) => fetchDistrictsEnd(e)}
               data={
                 dataCitiesEnd
@@ -290,7 +445,8 @@ const FormOrder = () => {
             <NativeSelect
               label="Kecamatan"
               placeholder="Pilih Kecamatan"
-              onChange={(e) => setDistrictsEnd(e.target.options[e.target.selectedIndex].label)}
+              value={districtEnd}
+              onChange={(e) => chooseDistrictsEnd(e)}
               data={
                 dataDistrictsEnd
                   ? dataDistrictsEnd.map((data) => {
@@ -304,28 +460,70 @@ const FormOrder = () => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" label="Kode Pos" placeholder="" onChange={(e) => setPosEnd(e.target.value)} id="form-createOrder-end-postal" />
+            <TextInput
+              type="number"
+              value={posEnd}
+              label="Kode Pos"
+              placeholder=""
+              onChange={(e) => setPosEnd(e.target.value)}
+              id="form-createOrder-end-postal"
+            />
           </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row md:gap-2">
-        <div className="w-full md:w-6/12">
-          <TextInput type="text" label="Lat" placeholder="" onChange={(e) => setLatEnd(e.target.value)} id="form-createOrder-end-lat" />
+        <MapContainer
+          center={[-7.253496039426577, 109.20410156250001]}
+          zoom={5}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <DraggableMarker
+            eventHandlers={handlerEnd}
+            position={positionEnd}
+            markerRef={markerRefEnd}
+          />
+        </MapContainer>
+        {/* <div className="w-full md:w-6/12">
+          <TextInput
+            type="text"
+            value={latEnd}
+            label="Lat"
+            placeholder=""
+            onChange={(e) => setLatEnd(e.target.value)}
+            id="form-createOrder-end-lat"
+          />
         </div>
         <div className="w-full md:w-6/12">
-          <TextInput type="text" label="Long" placeholder="" onChange={(e) => setLongEnd(e.target.value)} id="form-createOrder-end-long" />
-        </div>
+          <TextInput
+            type="text"
+            value={longEnd}
+            label="Long"
+            placeholder=""
+            onChange={(e) => setLongEnd(e.target.value)}
+            id="form-createOrder-end-long"
+          />
+        </div> */}
       </div>
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Muatan</label>
         <div className="w-full">
-          <Textarea placeholder="" label="Deskripsi" onChange={(e) => setDescription(e.target.value)} id="form-createOrder-desc" />
+          <Textarea
+            placeholder=""
+            value={description}
+            label="Deskripsi"
+            onChange={(e) => setDescription(e.target.value)}
+            id="form-createOrder-desc"
+          />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
             <NativeSelect
               label="Tipe Truk"
               placeholder="Pilih Tipe Truk"
+              value={typeTruck}
               onChange={(e) => setTypeTruck(e.target.value)}
               data={dataTruck.map((truck) => {
                 return { value: truck.id, label: truck.truck_type };
@@ -336,19 +534,44 @@ const FormOrder = () => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" label="Volume" placeholder="" onChange={(e) => setVolume(e.target.value)} id="form-createOrder-volume" />
+            <TextInput
+              type="number"
+              value={volume}
+              label="Volume"
+              placeholder=""
+              onChange={(e) => setVolume(e.target.value)}
+              id="form-createOrder-volume"
+            />
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
-            <TextInput type="number" label="Berat" placeholder="" onChange={(e) => setWeight(e.target.value)} id="form-createOrder-weight" />
+            <TextInput
+              type="number"
+              value={weight}
+              label="Berat"
+              placeholder=""
+              onChange={(e) => setWeight(e.target.value)}
+              id="form-createOrder-weight"
+            />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="file" label="Foto" placeholder="" onChange={(e) => setImageOrder(e.target.files[0])} id="form-createOrder-picture" />
+            <TextInput
+              type="file"
+              defaultValue={imageOrder}
+              label="Foto"
+              placeholder=""
+              onChange={(e) => setImageOrder(e.target.files[0])}
+              id="form-createOrder-picture"
+            />
           </div>
         </div>
         <Group position="right" className="mt-5">
-          <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => createOrder()} id="btn-createOrder">
+          <Button
+            className="bg-amber-500 hover:bg-amber-400 text-stone-700"
+            onClick={() => createOrder()}
+            id="btn-createOrder"
+          >
             Buat Order
           </Button>
         </Group>

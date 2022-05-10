@@ -13,6 +13,7 @@ import LoadSpin from "../../components/loadSpin/LoadSpin";
 import AdminHomeOrder from "../../components/detailOrder/AdminHomeOrder";
 import AdminConfirmOrder from "../../components/detailOrder/AdminConfirmOrder";
 import AdminOngoing from "../../components/detailOrder/AdminOngoing";
+import AdminCancelledOrder from "../../components/detailOrder/AdminCancelledOrder";
 
 function AdminDetailOrder() {
   const { tokenCtx } = useContext(TokenContext);
@@ -144,6 +145,12 @@ function AdminDetailOrder() {
     return <AdminOngoing dataDetailOrder={detail} dataHistory={history} />;
   };
 
+  const cancelled = () => {
+    return (
+      <AdminCancelledOrder dataDetailOrder={detail} dataHistory={history} />
+    );
+  };
+
   let result;
   if (isReady) {
     result = (
@@ -154,6 +161,7 @@ function AdminDetailOrder() {
         <>{detail.status === "MANIFESTED" && readyOrder()}</>
         <>{detail.status === "ON_PROCESS" && ongoing()}</>
         <>{detail.status === "DELIVERED" && finish()}</>
+        <>{detail.status === "CANCELLED" && cancelled()}</>
       </div>
     );
   } else {

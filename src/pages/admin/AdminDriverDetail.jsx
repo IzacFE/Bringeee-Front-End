@@ -15,6 +15,14 @@ function AdminDriverDetail() {
 
   const [detail, setDetail] = useState();
 
+  const [jenisTruk, setJenisTruk] = useState("1");
+  const [nik, setNik] = useState("");
+  const [ktp, setKtp] = useState("");
+  const [sim, setSim] = useState("");
+  const [stnk, setStnk] = useState("");
+  const [vhcPict, setVhcPict] = useState("");
+  const [nomorKendaraan, setNomorKendaraan] = useState("");
+
   useEffect(() => {
     if (roleCtx === "admin") {
       fetchData();
@@ -28,6 +36,7 @@ function AdminDriverDetail() {
   }, [roleCtx]);
 
   const fetchData = async () => {
+    setIsReady(false);
     await axios
       .get(`https://aws.wildani.tech/api/drivers/${params.id}`, {
         headers: {
@@ -83,6 +92,33 @@ function AdminDriverDetail() {
       .finally(() => setIsReady(true));
   };
 
+  const handleEditDriver = async () => {
+    const formData = new FormData();
+
+    formData.append("truck_type_id", jenisTruk);
+    formData.append("ktp_file", ktp);
+    formData.append("stnk_file", stnk);
+    formData.append("driver_license_file", sim);
+    formData.append("vehicle_identifier", nomorKendaraan);
+    formData.append("nik", nik);
+    formData.append("vehicle_picture", vhcPict);
+
+    await axios
+      .put(`https://aws.wildani.tech/api/drivers/${detail.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((response) => {
+        fetchData();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+      });
+  };
+
   let result;
   if (isReady) {
     result = (
@@ -110,6 +146,14 @@ function AdminDriverDetail() {
           delAccount={() => {
             handleDelete();
           }}
+          changeNik={(e) => setNik(e.target.value)}
+          changeKtp={(e) => setKtp(e.target.value[0])}
+          changeSim={(e) => setSim(e.target.value[0])}
+          changeStnk={(e) => setStnk(e.target.value[0])}
+          changeVhcPict={(e) => setVhcPict(e.target.value[0])}
+          changeJenisTruk={(e) => setJenisTruk(e.target.value)}
+          changeNomorKendaraan={(e) => setNomorKendaraan(e.target.value)}
+          editClick={() => handleEditDriver()}
         />
       </div>
     );

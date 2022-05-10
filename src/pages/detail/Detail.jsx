@@ -112,18 +112,10 @@ function Detail() {
               <div className="flex flex-col md:flex-row mb-3">
                 <div className="w-full md:w-1/2">
                   <DetailOrder dataDetailOrder={dataDetailOrder} />
-                  <div className="py-2">
-                    <label className="font-medium text-[17px]">Diambil</label>
-                    <p className="text-amber-500 font-semibold text-[17px]">19-4-2022</p>
-                  </div>
-                  <div className="py-2">
-                    <label className="font-medium text-[17px]">Selesai</label>
-                    <p className="text-amber-500 font-semibold text-[17px]">24-4-2022</p>
-                  </div>
                 </div>
                 <div className="w-full md:w-1/2">
                   <div className="flex justify-center md:justify-start">
-                    <Image src={ImageOrder} width={250} mx="auto" />
+                    <Image src={dataDetailOrder.arrived_picture} width={250} mx="auto" />
                   </div>
                 </div>
               </div>

@@ -69,7 +69,13 @@ const ConfirmPayment = (props) => {
               </tr>
               <tr>
                 <td className="py-2">Jumlah Pembayaran</td>
-                <td>Rp. {dataPayment.gross_amount}</td>
+                <td>
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                  }).format(dataPayment.gross_amount)}
+                </td>
               </tr>
             </tbody>
           </Table>

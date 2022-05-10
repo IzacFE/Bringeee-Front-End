@@ -3,6 +3,8 @@ import { RadioGroup, Radio, Image, Group, Button } from "@mantine/core";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { TokenContext } from "../../App";
+import { showNotification } from "@mantine/notifications";
+import { Check, X } from "tabler-icons-react";
 
 const ChoosePayment = (props) => {
   const { tokenCtx } = useContext(TokenContext);
@@ -23,11 +25,21 @@ const ChoosePayment = (props) => {
 
     await axios(config)
       .then((ress) => {
-        console.log(ress.data);
+        showNotification({
+          title: "Berhasil",
+          message: "Transaksi berhasil dibuat",
+          icon: <Check size={18} />,
+          color: "green",
+        });
         props.reloadSoftPage();
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Transaksi gagal dibuat",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 

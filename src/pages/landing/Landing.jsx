@@ -1,6 +1,5 @@
-import { SimpleGrid, createStyles, Image, Text, Title } from "@mantine/core";
+import { createStyles } from "@mantine/core";
 import React, { useContext, useEffect } from "react";
-import LandingCard from "../../components/landingCard/LandingCard";
 import DescripHero from "../../components/landingHero/DescripHero";
 import MainHero from "../../components/landingHero/MainHero";
 

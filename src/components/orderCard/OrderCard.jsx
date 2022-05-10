@@ -27,7 +27,7 @@ function OrderCard(props) {
         <Image className="pl-2" src={props.image} height={180} width={140} />
         <div className={classes.body} onClick={props.onClick}>
           <Text transform="uppercase" color="dimmed" weight={700} size="xs">
-            dari {props.from}
+            {props.from}
             <br />
             ke {props.destination}
           </Text>

@@ -5,7 +5,8 @@ import DetailOrder from "../../components/detailOrder/DetailOrder";
 import { TokenContext } from "../../App";
 import axios from "axios";
 import { Image, Button, Group, TextInput } from "@mantine/core";
-import ImageOrder from "../../assets/package.png";
+import { showNotification } from "@mantine/notifications";
+import { Check, X } from "tabler-icons-react";
 
 const TakeOrder = () => {
   const params = useParams();
@@ -34,7 +35,12 @@ const TakeOrder = () => {
         setDataUser(ress.data.data.user);
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Gagal menampilkan data",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -50,7 +56,12 @@ const TakeOrder = () => {
         setDataDetailOrder(ress.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Gagal menampilkan data",
+          icon: <X size={18} />,
+          color: "red",
+        });
       })
       .finally(() => {
         setIsReady(true);
@@ -68,12 +79,22 @@ const TakeOrder = () => {
     };
     await axios(config)
       .then((ress) => {
-        console.log(ress);
+        showNotification({
+          title: "Berhasil",
+          message: "Order berhasil diambil",
+          icon: <Check size={18} />,
+          color: "green",
+        });
         fecthData();
         fetchDetailOrder();
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Order tidak dapat diambil",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -91,12 +112,22 @@ const TakeOrder = () => {
         },
       })
       .then((ress) => {
-        console.log(ress);
+        showNotification({
+          title: "Berhasil",
+          message: "Order telah diselesaikan",
+          icon: <Check size={18} />,
+          color: "green",
+        });
         fecthData();
         fetchDetailOrder();
       })
       .catch((err) => {
-        console.log(err);
+        showNotification({
+          title: "Gagal",
+          message: "Order tidak dapat diselesaikan",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -116,7 +147,7 @@ const TakeOrder = () => {
               </div>
               <div className="w-full md:w-1/2">
                 <div className="flex justify-center md:justify-start">
-                  <Image src={ImageOrder} width={250} mx="auto" />
+                  <Image src={dataDetailOrder.order_picture} width={250} mx="auto" />
                 </div>
               </div>
             </div>
