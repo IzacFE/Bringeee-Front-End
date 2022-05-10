@@ -89,7 +89,6 @@ function Profile() {
           color: "red",
         });
       });
-    console.log("ehh bisa");
   };
 
   const fetchCurrentOrderDriver = async () => {
