@@ -193,6 +193,7 @@ function Navbar() {
         {tokenCtx && (
           <>
             <Menu
+              id="btn_profile_menu"
               size={260}
               placement="end"
               transition="pop-top-right"
@@ -201,6 +202,7 @@ function Navbar() {
               onOpen={() => setUserMenuOpened(true)}
               control={
                 <UnstyledButton
+                  id="btn_profile_inside"
                   className={cx(classes.user, {
                     [classes.userActive]: userMenuOpened,
                   })}
@@ -225,6 +227,7 @@ function Navbar() {
               {roleCtx === "admin" && (
                 <>
                   <Menu.Item
+                    id="btn_admin_list_order"
                     icon={<ListDetails size={14} />}
                     onClick={() => {
                       navigate("/admin-orders");
@@ -233,6 +236,7 @@ function Navbar() {
                     List Order
                   </Menu.Item>
                   <Menu.Item
+                    id="btn_admin_list_user"
                     icon={<Users size={14} />}
                     onClick={() => {
                       navigate("/admin-users");
@@ -241,6 +245,7 @@ function Navbar() {
                     List User
                   </Menu.Item>
                   <Menu.Item
+                    id="btn_admin_report"
                     icon={<Report size={14} />}
                     onClick={() => {
                       navigate("/admin-report");
@@ -252,6 +257,7 @@ function Navbar() {
               )}
               {roleCtx !== "admin" && (
                 <Menu.Item
+                  id="btn_user_profile"
                   icon={<User size={14} />}
                   onClick={() => {
                     navigate("/profile");
@@ -262,6 +268,7 @@ function Navbar() {
               )}
 
               <Menu.Item
+                id="btn_switch_acc"
                 icon={<SwitchHorizontal size={14} />}
                 onClick={() => {
                   setOpenedLogin(true);
@@ -270,6 +277,7 @@ function Navbar() {
                 Ganti Akun
               </Menu.Item>
               <Menu.Item
+                id="btn_logout"
                 icon={<Logout size={14} />}
                 onClick={() => {
                   logOut();
@@ -278,16 +286,20 @@ function Navbar() {
                 Keluar
               </Menu.Item>
 
-              <Divider />
-
-              <Menu.Label>Peringatan</Menu.Label>
-              <Menu.Item
-                color="red"
-                icon={<Trash size={14} />}
-                onClick={openDeleteModal}
-              >
-                Hapus Akun
-              </Menu.Item>
+              {roleCtx === "customer" && (
+                <>
+                  <Divider />
+                  <Menu.Label>Peringatan</Menu.Label>
+                  <Menu.Item
+                    id="btn_customer_delete"
+                    color="red"
+                    icon={<Trash size={14} />}
+                    onClick={openDeleteModal}
+                  >
+                    Hapus Akun
+                  </Menu.Item>
+                </>
+              )}
             </Menu>
           </>
         )}

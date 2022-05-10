@@ -1,14 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./AdminDetailOrder.module.css";
-import { Group, Button, Image, Text, InputWrapper, Input } from "@mantine/core";
 import { TokenContext, RoleContext } from "../../App";
-// import DetailOrder from "../../components/detailOrder/DetailOrder";
 import StepHorizon from "../../components/stepper/StepHorizon";
 import ImageOrder from "../../assets/package.png";
 import TimelineVer from "../../components/timeline/TimelineVer";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import DetailOrder from "../../components/detailOrder/DetailOrder";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import AdminHomeOrder from "../../components/detailOrder/AdminHomeOrder";
 import AdminConfirmOrder from "../../components/detailOrder/AdminConfirmOrder";
@@ -82,9 +79,9 @@ function AdminDetailOrder() {
         }
       )
       .then((response) => {
-        console.log(response);
-        // navigate("/admin-orders");
-        // window.location.reload();
+        fetchData();
+        fetchOrderHistories();
+        console.log("berhasil");
       })
       .catch((err) => {
         console.log("error");
@@ -105,8 +102,9 @@ function AdminDetailOrder() {
     };
     await axios(config)
       .then((response) => {
-        console.log(response);
-        window.location.reload();
+        fetchData();
+        fetchOrderHistories();
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err.data);
