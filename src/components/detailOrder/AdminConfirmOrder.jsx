@@ -90,6 +90,7 @@ function AdminConfirmOrder(props) {
                 Rp {props.dataDetailOrder.estimated_price}
               </p>
               <Button
+                id="btn_confirm_price"
                 className="bg-amber-500 hover:bg-amber-400 my-2"
                 onClick={props.clickSetuju}
               >
@@ -108,6 +109,7 @@ function AdminConfirmOrder(props) {
                 />
               </InputWrapper>
               <Button
+                id="btn_adjust_price"
                 className="bg-amber-500 hover:bg-amber-400 my-2"
                 onClick={props.clickSesuaikan}
               >

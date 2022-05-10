@@ -23,11 +23,12 @@ function AdminOrderList(props) {
   const data = props.dataOrder;
   const key = props.check;
 
-  const rows = data.map((item, index) => (
+  const rows = data.map((item) => (
     <>
       {item && (
         <tr key={`${key}${item.status}${item.id}`}>
           <td
+            id="btn_admin_order_detail"
             onClick={() => {
               navigate(`/admin-detail-order/${item.id}`);
             }}
@@ -84,13 +85,6 @@ function AdminOrderList(props) {
           </td>
         </tr>
       )}
-      {/* {!item && (
-        <>
-          <div key={index}>
-            <p>Nothing</p>
-          </div>
-        </>
-      )} */}
     </>
   ));
 
