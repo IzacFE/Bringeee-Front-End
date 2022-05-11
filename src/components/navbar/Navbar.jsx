@@ -22,11 +22,14 @@ import {
   ListDetails,
   Users,
   Report,
+  X,
 } from "tabler-icons-react";
 import { useNavigate } from "react-router-dom";
 import ModalJoin from "../modalJoin/ModalJoin";
 import ModalLogin from "../modalLogin/ModalLogin";
+
 import { useModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
 
 import { TokenContext, RoleContext } from "../../App";
 
@@ -156,8 +159,12 @@ function Navbar() {
         redirect(response.data.data.user.role);
       })
       .catch((response) => {
-        console.log(response);
-        alert("gagal");
+        showNotification({
+          title: "Maaf",
+          message: "Login gagal",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -374,6 +381,12 @@ function Navbar() {
           <ModalJoin
             openedModal={openedJoin}
             closedModal={() => setOpenedJoin(false)}
+            regisKustomer={() => {
+              setOpenedJoin(false);
+            }}
+            daftarDriver={() => {
+              setOpenedJoin(false);
+            }}
           />
 
           <Group spacing={5} className={classes.links}>

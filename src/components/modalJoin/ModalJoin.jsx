@@ -10,7 +10,8 @@ import {
   RadioGroup,
   NativeSelect,
 } from "@mantine/core";
-import { ChevronDown } from "tabler-icons-react";
+import { showNotification } from "@mantine/notifications";
+import { ChevronDown, X } from "tabler-icons-react";
 import axios from "axios";
 import { RoleContext, TokenContext } from "../../App";
 
@@ -74,12 +75,20 @@ const ModalJoin = (props) => {
       })
       .then((response) => {
         dataSaver(response.data.data);
-        window.location.reload();
-        alert("Berhasil Register");
+        showNotification({
+          title: "Selamat datang...",
+          message: "Akun berhasil dibuat",
+          icon: <X size={18} />,
+          color: "green",
+        });
       })
       .catch((err) => {
-        console.log(err);
-        console.log("error");
+        showNotification({
+          title: "Maaf",
+          message: "Akun gagal dibuat",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -110,12 +119,21 @@ const ModalJoin = (props) => {
       })
       .then((response) => {
         dataSaver(response.data.data);
+        showNotification({
+          title: "Selamat datang...",
+          message: "Akun berhasil dibuat",
+          icon: <X size={18} />,
+          color: "green",
+        });
         window.location.reload();
-        alert("Berhasil Register");
       })
       .catch((err) => {
-        console.log(err);
-        console.log("error");
+        showNotification({
+          title: "Maaf",
+          message: "Akun gagal dibuat",
+          icon: <X size={18} />,
+          color: "red",
+        });
       });
   };
 
@@ -210,12 +228,14 @@ const ModalJoin = (props) => {
             </InputWrapper>
 
             <Group position="right" className="my-5">
-              <Button
-                className="bg-amber-500 hover:bg-amber-400 text-stone-700"
-                onClick={() => handleDaftarCos()}
-              >
-                Daftar
-              </Button>
+              <span onClick={props.regisKustomer}>
+                <Button
+                  className="bg-amber-500 hover:bg-amber-400 text-stone-700"
+                  onClick={() => handleDaftarCos()}
+                >
+                  Daftar
+                </Button>
+              </span>
             </Group>
           </Tabs.Tab>
 
@@ -374,12 +394,14 @@ const ModalJoin = (props) => {
             </InputWrapper>
 
             <Group position="right" className="my-5">
-              <Button
-                className="bg-amber-500 hover:bg-amber-400 text-stone-700"
-                onClick={() => handleDaftarDriver()}
-              >
-                Daftar
-              </Button>
+              <span onClick={props.daftarDriver}>
+                <Button
+                  className="bg-amber-500 hover:bg-amber-400 text-stone-700"
+                  onClick={() => handleDaftarDriver()}
+                >
+                  Daftar
+                </Button>
+              </span>
             </Group>
           </Tabs.Tab>
         </Tabs>
