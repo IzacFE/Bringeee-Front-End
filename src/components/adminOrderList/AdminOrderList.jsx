@@ -7,6 +7,7 @@ import {
   Text,
   ScrollArea,
   createStyles,
+  Button,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
@@ -27,17 +28,10 @@ function AdminOrderList(props) {
     <>
       {item && (
         <tr key={`${key}${item.status}${item.id}`}>
-          <td
-            id="btn_admin_order_detail"
-            onClick={() => {
-              navigate(`/admin-detail-order/${item.id}`);
-            }}
-          >
-            <Group
-              spacing="sm"
-              onClick={props.onClick}
-              className={classes.orderButton}
-            >
+          <td>{item.id}</td>
+
+          <td>
+            <Group spacing="sm" className={classes.orderButton}>
               <Avatar size={40} src={item.customer.avatar} radius={40} />
               <div>
                 <Text size="sm" weight={500}>
@@ -48,6 +42,18 @@ function AdminOrderList(props) {
                 </Text>
               </div>
             </Group>
+          </td>
+
+          <td>
+            <Button
+              className="bg-amber-500 hover:bg-amber-400"
+              id="btn_admin_order_detail"
+              onClick={() => {
+                navigate(`/admin-detail-order/${item.id}`);
+              }}
+            >
+              Detail
+            </Button>
           </td>
 
           <td>{item.destination_start_address}</td>
@@ -93,7 +99,9 @@ function AdminOrderList(props) {
       <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
         <thead>
           <tr>
+            <th>Order ID</th>
             <th>Kustomer</th>
+            <th></th>
             <th>Asal</th>
             <th>Tujuan</th>
             <th>Kendaraan</th>

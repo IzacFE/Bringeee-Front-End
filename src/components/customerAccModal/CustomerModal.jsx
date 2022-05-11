@@ -29,29 +29,29 @@ function CustomerModal(props) {
             {props.name}
           </Text>
 
-          <Text align="center" color="dimmed" size="sm">
+          <Text align="center" size="sm">
             {props.email} • Kustomer
           </Text>
 
-          <Text align="center" color="dimmed" size="sm">
+          <Text align="center" size="sm">
             {props.gender === "male" && "Laki-laki"}
             {props.gender === "laki-laki" && "Laki-laki"}
             {props.gender === "female" && "Perempuan"}
             {props.gender === "perempuan" && "Perempuan"}
           </Text>
 
-          <Text align="center" color="dimmed" size="sm">
+          <Text align="center" size="sm">
             {props.dob && props.dob.slice(0, 10)}
           </Text>
 
           <Group noWrap spacing={10} position="center" mt={5}>
             <PhoneCall size={16} color="gray" />
-            <Text align="center" color="dimmed" size="sm">
+            <Text align="center" size="sm">
               {props.phone}
             </Text>
           </Group>
 
-          <Text align="center" color="dimmed" size="sm">
+          <Text align="center" size="sm">
             id akun : {props.idAcc}
           </Text>
 
