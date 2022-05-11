@@ -15,7 +15,7 @@ const TabsProfileCustomer = (props) => {
                 return (
                   <Link to={`/confirm-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
-                      <div className="w-full md:h-full">
+                      <div className="w-full md:w-96 md:h-full">
                         <TruckDelivery size={100} className="mx-auto md:m-0" />
                       </div>
                       <div className="w-full md:h-full md:my-auto">
@@ -29,11 +29,11 @@ const TabsProfileCustomer = (props) => {
                       <div className="w-full md:h-full md:my-auto">
                         <p className="text-amber-500 text-center font-semibold text-[18px] md:text-left">
                           {orders.status === "REQUESTED"
-                            ? "PROSES KONFIRMASI"
+                            ? "PERMINTAAN ORDER"
                             : orders.status === "NEED_CUSTOMER_CONFIRM"
                             ? "PENYESUAIAN TARIF"
                             : orders.status === "CONFIRMED"
-                            ? "TELAH DIKONFIRMASI"
+                            ? "PROSES PEMBAYARAN"
                             : orders.status === "MANIFESTED"
                             ? "TELAH DIBAYAR"
                             : orders.status === "ON_PROCESS"
@@ -56,7 +56,7 @@ const TabsProfileCustomer = (props) => {
                 return (
                   <Link to={`/detail-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
-                      <div className="w-full md:h-full">
+                      <div className="w-full md:w-96 md:h-full">
                         <TruckDelivery size={100} className="mx-auto md:m-0" />
                       </div>
                       <div className="w-full md:h-full md:my-auto">
@@ -68,21 +68,7 @@ const TabsProfileCustomer = (props) => {
                         </div>
                       </div>
                       <div className="w-full md:h-full md:my-auto">
-                        <p className="text-amber-500 text-center font-semibold text-[18px] md:text-left">
-                          {orders.status === "REQUESTED"
-                            ? "PROSES KONFIRMASI"
-                            : orders.status === "NEED_CUSTOMER_CONFIRM"
-                            ? "PENYESUAIAN TARIF"
-                            : orders.status === "CONFIRMED"
-                            ? "TELAH DIKONFIRMASI"
-                            : orders.status === "MANIFESTED"
-                            ? "TELAH DIBAYAR"
-                            : orders.status === "ON_PROCESS"
-                            ? "DALAM PENGIRIMAN"
-                            : orders.status === "DELIVERED"
-                            ? "TERKIRIM"
-                            : "DIBATALKAN"}
-                        </p>
+                        <p className="text-amber-500 text-center font-semibold text-[18px] md:text-left">{orders.status === "DELIVERED" ? "TERKIRIM" : "DIBATALKAN"}</p>
                       </div>
                     </div>
                   </Link>
@@ -127,7 +113,7 @@ const TabsProfileDriver = (props) => {
       </Tabs>
       <Tabs color="yellow">
         <Tabs.Tab label="Riwayat Order">
-          <div className="bg-neutral-300 min-h-[350px] p-2">
+          <div className="bg-neutral-200 rounded-lg min-h-[350px] p-2">
             {props.dataHistoryOrder &&
               props.dataHistoryOrder.map((orders) => {
                 return (
