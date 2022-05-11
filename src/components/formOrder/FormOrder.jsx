@@ -70,7 +70,8 @@ const FormOrder = (props) => {
         if (marker != null) {
           setPositionStart(marker.getLatLng());
           console.log(marker.getLatLng());
-          console.log(marker);
+          console.log(marker.getLatLng().lat);
+          console.log(marker.getLatLng().lng);
         }
       },
     }),
