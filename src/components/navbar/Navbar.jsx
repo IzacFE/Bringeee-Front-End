@@ -357,14 +357,14 @@ function Navbar() {
               size={40}
               className={`${classes.truck} text-amber-500`}
             />
-            <Text
+            {/* <Text
               className="text-amber-500"
               weight={500}
               size="xl"
               sx={{ lineHeight: 1 }}
             >
               Bringeee
-            </Text>
+            </Text> */}
           </div>
 
           <ModalLogin

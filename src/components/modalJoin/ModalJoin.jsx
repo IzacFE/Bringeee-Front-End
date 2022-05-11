@@ -37,7 +37,7 @@ const ModalJoin = (props) => {
   const [umurDriver, setUmurDriver] = useState("");
   const [alamatDriver, setAlamatDriver] = useState("");
   const [avatarDriver, setAvatarDriver] = useState("");
-  const [jenisTruk, setJenisTruk] = useState("");
+  const [jenisTruk, setJenisTruk] = useState("1");
   const [nik, setNik] = useState("");
   const [ktp, setKtp] = useState("");
   const [sim, setSim] = useState("");
@@ -118,14 +118,12 @@ const ModalJoin = (props) => {
         },
       })
       .then((response) => {
-        dataSaver(response.data.data);
         showNotification({
-          title: "Selamat datang...",
-          message: "Akun berhasil dibuat",
+          title: "Akun Berhasil Dibuat",
+          message: "Tunggu konfirmasi driver",
           icon: <X size={18} />,
           color: "green",
         });
-        window.location.reload();
       })
       .catch((err) => {
         showNotification({
@@ -154,6 +152,12 @@ const ModalJoin = (props) => {
       >
         <Tabs color="yellow">
           <Tabs.Tab label="Kostumer">
+            <InputWrapper
+              id="emailCos"
+              required
+              label="Info : upload file dalam bentuk jpg, jpeg, png, webp, bmp"
+            />
+
             <InputWrapper id="emailCos" required label="Email">
               <Input
                 id="emailCos"
@@ -241,6 +245,12 @@ const ModalJoin = (props) => {
 
           {/* driver */}
           <Tabs.Tab label="Driver">
+            <InputWrapper
+              id="emailCos"
+              required
+              label="Info : upload file dalam bentuk jpg, jpeg, png, webp, bmp"
+            />
+
             <InputWrapper id="emailDriver" required label="Email">
               <Input
                 id="emailDriver"
