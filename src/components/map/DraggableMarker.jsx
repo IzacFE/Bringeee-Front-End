@@ -6,7 +6,8 @@ function DraggableMarker(props) {
   return (
     <Marker
       draggable={true}
-      eventHandlers={props.eventHandlers}
+      // eventHandlers={props.eventHandlers}
+      onDragend={props.onDragend}
       position={props.position}
       ref={props.markerRef}
     >
