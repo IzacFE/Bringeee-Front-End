@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Button, Group, Input, InputWrapper } from "@mantine/core";
 
 const ModalLogin = (props) => {
