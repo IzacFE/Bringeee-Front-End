@@ -56,9 +56,6 @@ const FormOrder = (props) => {
 
   const [positionStart, setPositionStart] = useState(center);
   const [positionEnd, setPositionEnd] = useState(center);
-  const mapStart = useRef();
-  const [mapEnd, setMapEnd] = useState({});
-  const [startTrigger, setStartTrigger] = useState(true);
   const markerRefStart = useRef(null);
   const markerRefEnd = useRef();
 
@@ -73,21 +70,7 @@ const FormOrder = (props) => {
         const marker = markerRefStart.current;
         if (marker != null) {
           setPositionStart(marker.getLatLng());
-          console.log(marker.getLatLng());
-          console.log(positionStart);
         }
-        // console.log(typeof check);
-        // console.log(marker.getLatLng());
-        // console.log(markerRefStart);
-        // setMapStart(check);
-
-        // setPositionStart(marker.getLatLng());
-        // setMapStart(marker.getLatLng().lat);
-        // console.log(mapStart);
-        // console.log(marker.getLatLng());
-        // console.log(marker.getLatLng().lat);
-        // console.log(marker.getLatLng().lng);
-        //
       },
     }),
     []
@@ -99,7 +82,6 @@ const FormOrder = (props) => {
         const marker = markerRefEnd.current;
         if (marker != null) {
           setPositionEnd(marker.getLatLng());
-          console.log(marker.getLatLng());
         }
       },
     }),
@@ -215,15 +197,15 @@ const FormOrder = (props) => {
     formData.append("destination_start_city", citiesStart);
     formData.append("destination_start_district", districtsStart);
     formData.append("destination_start_postal", posStart);
-    formData.append("destination_start_lat", positionStart[0]);
-    formData.append("destination_start_long", positionStart[1]);
+    formData.append("destination_start_lat", positionStart.lat);
+    formData.append("destination_start_long", positionStart.lng);
     formData.append("destination_end_address", addressEnd);
     formData.append("destination_end_province", provinceEnd);
     formData.append("destination_end_city", citiesEnd);
     formData.append("destination_end_district", districtsEnd);
     formData.append("destination_end_postal", posEnd);
-    formData.append("destination_end_lat", positionEnd[0]);
-    formData.append("destination_end_long", positionEnd[1]);
+    formData.append("destination_end_lat", positionEnd.lat);
+    formData.append("destination_end_long", positionEnd.lng);
     formData.append("description", description);
     formData.append("total_volume", volume);
     formData.append("total_weight", weight);
@@ -502,26 +484,6 @@ const FormOrder = (props) => {
             markerRef={markerRefEnd}
           />
         </MapContainer>
-        {/* <div className="w-full md:w-6/12">
-          <TextInput
-            type="text"
-            value={latEnd}
-            label="Lat"
-            placeholder=""
-            onChange={(e) => setLatEnd(e.target.value)}
-            id="form-createOrder-end-lat"
-          />
-        </div>
-        <div className="w-full md:w-6/12">
-          <TextInput
-            type="text"
-            value={longEnd}
-            label="Long"
-            placeholder=""
-            onChange={(e) => setLongEnd(e.target.value)}
-            id="form-createOrder-end-long"
-          />
-        </div> */}
       </div>
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Muatan</label>
