@@ -16,32 +16,38 @@ const TabsProfileCustomer = (props) => {
                   <Link to={`/confirm-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                       <div className="w-full md:w-96 md:h-full">
-                        <TruckDelivery size={100} className="mx-auto md:m-0" />
+                        <TruckDelivery size={100} className="text-center md:m-0" />
+                        <p className="text-stone-500 font-medium text-center text-[16px]">{orders.distance} km</p>
                       </div>
                       <div className="w-full md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
-                          <p className="text-stone-600 font-semibold text-[18px]">Tujuan</p>
-                          <p className="text-amber-500 font-semibold text-[18px]">
+                          <p className="text-gray-600 font-normal text-[16px]">#{orders.id}</p>
+                          <p className="text-stone-600 font-medium text-[16px]">Asal</p>
+                          <p className="text-amber-500 font-medium text-[16px]">
+                            {orders.destination_start_province}, {orders.destination_start_city}
+                          </p>
+                          <p className="text-stone-600 font-medium text-[16px]">Tujuan</p>
+                          <p className="text-amber-500 font-medium text-[16px]">
                             {orders.destination_end_province}, {orders.destination_end_city}
                           </p>
                         </div>
                       </div>
                       <div className="w-full md:h-full md:my-auto">
-                        <p className="text-amber-500 text-center font-semibold text-[18px] md:text-left">
-                          {orders.status === "REQUESTED"
-                            ? "PERMINTAAN ORDER"
-                            : orders.status === "NEED_CUSTOMER_CONFIRM"
-                            ? "PENYESUAIAN TARIF"
-                            : orders.status === "CONFIRMED"
-                            ? "PROSES PEMBAYARAN"
-                            : orders.status === "MANIFESTED"
-                            ? "TELAH DIBAYAR"
-                            : orders.status === "ON_PROCESS"
-                            ? "DALAM PENGIRIMAN"
-                            : orders.status === "DELIVERED"
-                            ? "TERKIRIM"
-                            : "DIBATALKAN"}
-                        </p>
+                        {orders.status === "REQUESTED" ? (
+                          <p className="text-gray-500 font-semibold text-[16px]">Konfirmasi admin</p>
+                        ) : orders.status === "NEED_CUSTOMER_CONFIRM" ? (
+                          <p className="text-gray-500 font-semibold text-[16px]">Konfirmasi customer</p>
+                        ) : orders.status === "CONFIRMED" ? (
+                          <p className="text-green-500 font-semibold text-[16px]">Menunggu pembayaran</p>
+                        ) : orders.status === "MANIFESTED" ? (
+                          <p className="text-violet-500 font-semibold text-[16px]">Diteruskan kedriver</p>
+                        ) : orders.status === "ON_PROCESS" ? (
+                          <p className="text-amber-500 font-semibold text-[16px]">Dalam pengiriman</p>
+                        ) : orders.status === "DELIVERED" ? (
+                          <p className="text-green-500 font-semibold text-[16px]">Order selesai</p>
+                        ) : (
+                          <p className="text-red-500 font-semibold text-[16px]">Dibatalkan</p>
+                        )}
                       </div>
                     </div>
                   </Link>
@@ -58,17 +64,22 @@ const TabsProfileCustomer = (props) => {
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                       <div className="w-full md:w-96 md:h-full">
                         <TruckDelivery size={100} className="mx-auto md:m-0" />
+                        <p className="text-gray-500 font-medium text-[16px]">Order id: {orders.id}</p>
                       </div>
                       <div className="w-full md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
-                          <p className="text-stone-600 font-semibold text-[18px]">Tujuan</p>
-                          <p className="text-amber-500 font-semibold text-[18px]">
+                          <p className="text-stone-600 font-medium text-[16px]">Asal</p>
+                          <p className="text-amber-500 font-medium text-[16px]">
+                            {orders.destination_start_province}, {orders.destination_start_city}
+                          </p>
+                          <p className="text-stone-600 font-medium text-[16px]">Tujuan</p>
+                          <p className="text-amber-500 font-medium text-[16px]">
                             {orders.destination_end_province}, {orders.destination_end_city}
                           </p>
                         </div>
                       </div>
                       <div className="w-full md:h-full md:my-auto">
-                        <p className="text-amber-500 text-center font-semibold text-[18px] md:text-left">{orders.status === "DELIVERED" ? "TERKIRIM" : "DIBATALKAN"}</p>
+                        {orders.status === "DELIVERED" ? <p className="text-green-500 font-semibold text-[17px]">Order selesai</p> : <p className="text-red-500 font-semibold text-[17px]">Dibatalkan</p>}
                       </div>
                     </div>
                   </Link>
@@ -93,19 +104,23 @@ const TabsProfileDriver = (props) => {
             <Link to={`/take-order/${props.dataOrderActive.id}`} key={props.dataOrderActive.id}>
               <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                 <div className="w-full md:w-96 md:h-full">
-                  <TruckDelivery size={100} className="mx-auto md:m-0" />
+                  <TruckDelivery size={100} className="text-center md:m-0" />
+                  <p className="text-stone-500 font-medium text-center text-[16px]">{props.dataOrderActive.distance} km</p>
                 </div>
                 <div className="w-full md:h-full md:my-auto">
                   <div className="text-center md:text-left md:flex md:flex-col">
-                    <p className="text-stone-600 font-semibold text-[18px]">Tujuan</p>
-                    <p className="text-amber-500 font-semibold text-[18px]">
+                    <p className="text-gray-600 font-normal text-[16px]">#{props.dataOrderActive.id}</p>
+                    <p className="text-stone-600 font-medium text-[16px]">Asal</p>
+                    <p className="text-amber-500 font-medium text-[16px]">
+                      {props.dataOrderActive.destination_start_province}, {props.dataOrderActive.destination_start_city}
+                    </p>
+                    <p className="text-stone-600 font-medium text-[16px]">Tujuan</p>
+                    <p className="text-amber-500 font-medium text-[16px]">
                       {props.dataOrderActive.destination_end_province}, {props.dataOrderActive.destination_end_city}
                     </p>
                   </div>
                 </div>
-                <div className="w-full md:h-full md:my-auto">
-                  <p className="text-amber-500 text-center font-semibold text-[18px] md:text-left">{props.dataOrderActive.status === "ON_PROCESS" && "DALAM PENGIRIMAN"}</p>
-                </div>
+                <div className="w-full md:h-full md:my-auto">{props.dataOrderActive.status === "ON_PROCESS" && <p className="text-amber-500 font-semibold text-[16px]">Dalam Pengiriman</p>}</div>
               </div>
             </Link>
           )}
@@ -120,19 +135,23 @@ const TabsProfileDriver = (props) => {
                   <Link to={`/detail-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                       <div className="w-full md:w-96 md:h-full">
-                        <TruckDelivery size={100} className="mx-auto md:m-0" />
+                        <TruckDelivery size={100} className="text-center md:m-0" />
+                        <p className="text-stone-500 font-medium text-center text-[16px]">{orders.distance} km</p>
                       </div>
                       <div className="w-full md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
-                          <p className="text-stone-600 font-semibold text-[18px]">Tujuan</p>
-                          <p className="text-amber-500 font-semibold text-[18px]">
+                          <p className="text-gray-600 font-normal text-[16px]">#{orders.id}</p>
+                          <p className="text-stone-600 font-medium text-[16px]">Asal</p>
+                          <p className="text-amber-500 font-medium text-[16px]">
+                            {orders.destination_start_province}, {orders.destination_start_city}
+                          </p>
+                          <p className="text-stone-600 font-medium text-[16px]">Tujuan</p>
+                          <p className="text-amber-500 font-medium text-[16px]">
                             {orders.destination_end_province}, {orders.destination_end_city}
                           </p>
                         </div>
                       </div>
-                      <div className="w-full md:h-full md:my-auto">
-                        <p className="text-amber-500 text-center font-semibold text-[18px] md:text-left">{orders.status === "ON_PROCESS" ? "DALAM PENGIRIMAN" : "TERKIRIM"}</p>
-                      </div>
+                      <div className="w-full md:h-full md:my-auto">{orders.status === "DELIVERED" && <p className="text-green-500 font-semibold text-[16px]">Dalam Pengiriman</p>}</div>
                     </div>
                   </Link>
                 );
