@@ -1,12 +1,10 @@
 import React from "react";
-import { Badge } from "@mantine/core";
 
 const DetailOrder = (props) => {
-  console.log(props.dataDetailOrder);
   return (
     <div>
       <div className="py-2">
-        <p className="text-grey-500 font-normal text-[17px]">{props.dataDetailOrder.id}</p>
+        <p className="text-grey-500 font-normal text-[17px]">#{props.dataDetailOrder.id}</p>
         <label className="font-medium text-[17px]">Nama Customer</label>
         <p className="text-amber-500 font-semibold text-[17px]">{props.dataDetailOrder.customer.name}</p>
       </div>
@@ -71,6 +69,10 @@ const DetailOrder = (props) => {
             minimumFractionDigits: 0,
           }).format(props.dataDetailOrder.fix_price)}
         </p>
+      </div>
+      <div className="py-2">
+        <label className="font-medium text-[17px]">Deskripsi</label>
+        <p className="text-amber-500 font-semibold text-[17px]">{props.dataDetailOrder.description}</p>
       </div>
       <div className="py-2">
         <label className="font-medium text-[17px]">Status</label>
