@@ -53,11 +53,11 @@ const DetailOrder = (props) => {
         <label className="font-medium text-[17px]">Status</label>
         <p className="text-amber-500 font-semibold text-[17px]">
           {props.dataDetailOrder.status === "REQUESTED"
-            ? "PROSES KONFIRMASI"
+            ? "PERMINTAAN ORDER"
             : props.dataDetailOrder.status === "NEED_CUSTOMER_CONFIRM"
             ? "PENYESUAIAN TARIF"
             : props.dataDetailOrder.status === "CONFIRMED"
-            ? "TELAH DIKONFIRMASI"
+            ? "PROSES PEMBAYARAN"
             : props.dataDetailOrder.status === "MANIFESTED"
             ? "TELAH DIBAYAR"
             : props.dataDetailOrder.status === "ON_PROCESS"
