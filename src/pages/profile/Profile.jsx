@@ -53,7 +53,7 @@ function Profile() {
 
   const fetchHistoryOrderCustomer = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/customers/orders?status=DELIVERED%2CCANCELLED`, {
+      .get(`https://aws.wildani.tech/api/customers/orders?status=DELIVERED%2CCANCELLED%2CON_PROCESS`, {
         headers: {
           Authorization: `Bearer ${tokenCtx}`,
         },
