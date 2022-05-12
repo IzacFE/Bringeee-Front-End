@@ -6,8 +6,6 @@ import AdminDriverDetail from "../pages/admin/AdminDriverDetail";
 import AdminListOrder from "../pages/admin/AdminListOrder";
 import AdminListUser from "../pages/admin/AdminListUser";
 import AdminReport from "../pages/admin/AdminReport";
-import Coba1 from "../pages/coba1/Coba1";
-import Coba2 from "../pages/coba2/Coba2";
 import ConfirmOrder from "../pages/confirmOrder/ConfirmOrder";
 import Detail from "../pages/detail/Detail";
 import Home from "../pages/home/Home";
@@ -29,10 +27,14 @@ function WebRoutes() {
           <Route path="/admin-orders" element={<AdminListOrder />} />
           <Route path="/admin-users" element={<AdminListUser />} />
           <Route path="/admin-report" element={<AdminReport />} />
-          <Route path="/admin-driver-detail/:id" element={<AdminDriverDetail />} />
-          <Route path="/admin-detail-order/:id" element={<AdminDetailOrder />} />
-          <Route path="/coba1" element={<Coba1 />} />
-          <Route path="/coba2" element={<Coba2 />} />
+          <Route
+            path="/admin-driver-detail/:id"
+            element={<AdminDriverDetail />}
+          />
+          <Route
+            path="/admin-detail-order/:id"
+            element={<AdminDetailOrder />}
+          />
         </Routes>
       </Layout>
     </BrowserRouter>
