@@ -6,20 +6,12 @@ import {
   Group,
   Text,
   ScrollArea,
-  createStyles,
   Button,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
-const useStyles = createStyles(() => ({
-  orderButton: {
-    cursor: "pointer",
-  },
-}));
-
 function AdminOrderList(props) {
   const navigate = useNavigate();
-  const { classes } = useStyles();
 
   const data = props.dataOrder;
   const key = props.check;
@@ -31,7 +23,7 @@ function AdminOrderList(props) {
           <td>{item.id}</td>
 
           <td>
-            <Group spacing="sm" className={classes.orderButton}>
+            <Group spacing="sm">
               <Avatar size={40} src={item.customer.avatar} radius={40} />
               <div>
                 <Text size="sm" weight={500}>

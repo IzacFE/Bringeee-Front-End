@@ -16,8 +16,8 @@ import axios from "axios";
 import { RoleContext, TokenContext } from "../../App";
 
 const ModalJoin = (props) => {
-  const { tokenCtx, setTokenCtx } = useContext(TokenContext);
-  const { roleCtx, setRoleCtx } = useContext(RoleContext);
+  const { setTokenCtx } = useContext(TokenContext);
+  const { setRoleCtx } = useContext(RoleContext);
   // stateDataCostumer
   const [emailCos, setEmailCos] = useState("");
   const [passwordCos, setPasswordCos] = useState("");
@@ -76,16 +76,25 @@ const ModalJoin = (props) => {
       .then((response) => {
         dataSaver(response.data.data);
         showNotification({
+          autoClose: 5000,
           title: "Selamat datang...",
           message: "Akun berhasil dibuat",
           icon: <X size={18} />,
           color: "green",
         });
       })
-      .catch((err) => {
+      .catch((error) => {
+        let info = error.response.data.code;
+        let result;
+        if (info === 500) {
+          result = "Email telah terpakai";
+        } else {
+          result = "Akun gagal dibuat";
+        }
         showNotification({
+          autoClose: 10000,
           title: "Maaf",
-          message: "Akun gagal dibuat",
+          message: result,
           icon: <X size={18} />,
           color: "red",
         });
@@ -119,16 +128,25 @@ const ModalJoin = (props) => {
       })
       .then((response) => {
         showNotification({
+          autoClose: 5000,
           title: "Akun Berhasil Dibuat",
           message: "Tunggu konfirmasi driver",
           icon: <X size={18} />,
           color: "green",
         });
       })
-      .catch((err) => {
+      .catch((error) => {
+        let info = error.response.data.code;
+        let result;
+        if (info === 500) {
+          result = "Email telah terpakai";
+        } else {
+          result = "Akun gagal dibuat";
+        }
         showNotification({
+          autoClose: 10000,
           title: "Maaf",
-          message: "Akun gagal dibuat",
+          message: result,
           icon: <X size={18} />,
           color: "red",
         });
@@ -151,7 +169,7 @@ const ModalJoin = (props) => {
         }}
       >
         <Tabs color="yellow">
-          <Tabs.Tab label="Kostumer">
+          <Tabs.Tab label="Kustomer">
             <InputWrapper
               id="emailCos"
               required
@@ -196,7 +214,7 @@ const ModalJoin = (props) => {
 
             <RadioGroup
               label="Jenis Kelamin"
-              color="dark"
+              color="yellow"
               onChange={setJenisKelaminCos}
               required
             >
