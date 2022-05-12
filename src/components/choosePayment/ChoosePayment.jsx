@@ -7,11 +7,13 @@ import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
 
 const ChoosePayment = (props) => {
+  const [isEnable, setIsEnable] = useState(true);
   const { tokenCtx } = useContext(TokenContext);
   const params = useParams();
   const [bank, setBank] = useState("");
 
   const createPayment = async () => {
+    setIsEnable(false);
     const { id } = params;
     var config = {
       method: "post",
@@ -32,6 +34,7 @@ const ChoosePayment = (props) => {
           color: "green",
         });
         props.reloadSoftPage();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -40,6 +43,7 @@ const ChoosePayment = (props) => {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 
@@ -53,9 +57,15 @@ const ChoosePayment = (props) => {
         </RadioGroup>
       </Group>
       <Group position="center">
-        <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => createPayment()} id="btn-choosePayment">
-          Bayar
-        </Button>
+        {isEnable ? (
+          <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => createPayment()} id="btn-choosePayment">
+            Bayar
+          </Button>
+        ) : (
+          <Button loading className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => createPayment()} id="btn-choosePayment">
+            Bayar
+          </Button>
+        )}
       </Group>
     </div>
   );
