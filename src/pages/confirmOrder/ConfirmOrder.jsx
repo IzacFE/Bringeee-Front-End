@@ -12,6 +12,7 @@ import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
 
 function ConfirmOrder() {
+  const [isEnable, setIsEnable] = useState(true);
   let navigate = useNavigate();
   const { tokenCtx } = useContext(TokenContext);
   const [status] = useState("request");
@@ -48,6 +49,7 @@ function ConfirmOrder() {
   };
 
   const handleConfirmOrder = async () => {
+    setIsEnable(false);
     const { id } = params;
     await axios
       .post(
@@ -67,6 +69,7 @@ function ConfirmOrder() {
           color: "green",
         });
         fetchDetailOrder();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -75,10 +78,12 @@ function ConfirmOrder() {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 
   const handleCancelOrder = async () => {
+    setIsEnable(false);
     const { id } = params;
     await axios
       .post(
@@ -98,6 +103,7 @@ function ConfirmOrder() {
           color: "green",
         });
         fetchDetailOrder();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -106,10 +112,12 @@ function ConfirmOrder() {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 
   const handleCancelPayment = async () => {
+    setIsEnable(false);
     const { id } = params;
     var config = {
       method: "post",
@@ -127,6 +135,7 @@ function ConfirmOrder() {
           color: "green",
         });
         fetchDetailOrder();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -135,6 +144,7 @@ function ConfirmOrder() {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 
@@ -161,12 +171,25 @@ function ConfirmOrder() {
               </div>
               {!dataDetailOrder.transaction_id && dataDetailOrder.status === "NEED_CUSTOMER_CONFIRM" && (
                 <Group position="center" className="flex flex-col md:flex-row">
-                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleConfirmOrder()} id="btn-confirmOrder-agree">
-                    Setuju
-                  </Button>
-                  <Button className="bg-red-500 hover:bg-red-400 text-stone-700 w-[250px]" onClick={() => handleCancelOrder()} id="btn-confirmOrder-cancel">
-                    Batal
-                  </Button>
+                  {isEnable ? (
+                    <>
+                      <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleConfirmOrder()} id="btn-confirmOrder-agree">
+                        Setuju
+                      </Button>
+                      <Button className="bg-red-500 hover:bg-red-400 text-stone-700 w-[250px]" onClick={() => handleCancelOrder()} id="btn-confirmOrder-cancel">
+                        Batal
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button loading className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleConfirmOrder()} id="btn-confirmOrder-agree">
+                        Setuju
+                      </Button>
+                      <Button loading className="bg-red-500 hover:bg-red-400 text-stone-700 w-[250px]" onClick={() => handleCancelOrder()} id="btn-confirmOrder-cancel">
+                        Batal
+                      </Button>
+                    </>
+                  )}
                 </Group>
               )}
             </div>
@@ -208,9 +231,15 @@ function ConfirmOrder() {
           <div className="flex flex-col justify-center md:flex-row md:gap-2 mb-3">
             <ConfirmPayment>
               <Group position="center" className="mt-10">
-                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleCancelPayment()} id="btn-cancelPayment">
-                  Ubah Metode Pembayaran
-                </Button>
+                {isEnable ? (
+                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleCancelPayment()} id="btn-cancelPayment">
+                    Ubah Metode Pembayaran
+                  </Button>
+                ) : (
+                  <Button loading className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleCancelPayment()} id="btn-cancelPayment">
+                    Ubah Metode Pembayaran
+                  </Button>
+                )}
               </Group>
             </ConfirmPayment>
           </div>
