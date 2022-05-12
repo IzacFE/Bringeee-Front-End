@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FormOrder from "../../components/formOrder/FormOrder";
 import { Tabs } from "@mantine/core";
-import { TruckDelivery } from "tabler-icons-react";
 
 const TabsProfileCustomer = (props) => {
   return (
@@ -15,13 +14,13 @@ const TabsProfileCustomer = (props) => {
                 return (
                   <Link to={`/confirm-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
-                      <div className="w-full md:w-96 md:h-full">
-                        <TruckDelivery size={100} className="text-center md:m-0" />
-                        <p className="text-stone-500 font-medium text-center text-[16px]">{orders.distance} km</p>
+                      <div className="w-full md:w-2/12 md:h-full">
+                        <img src={orders.order_picture} className="w-[150px]" alt="" />
+                        <p className="text-gray-600 font-medium text-center text-[16px]">#{orders.id}</p>
                       </div>
-                      <div className="w-full md:h-full md:my-auto">
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
-                          <p className="text-gray-600 font-normal text-[16px]">#{orders.id}</p>
+                          <p className="text-stone-500 font-normal text-[16px]">{orders.distance} km</p>
                           <p className="text-stone-600 font-medium text-[16px]">Asal</p>
                           <p className="text-amber-500 font-medium text-[16px]">
                             {orders.destination_start_province}, {orders.destination_start_city}
@@ -32,7 +31,7 @@ const TabsProfileCustomer = (props) => {
                           </p>
                         </div>
                       </div>
-                      <div className="w-full md:h-full md:my-auto">
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         {orders.status === "REQUESTED" ? (
                           <p className="text-gray-500 font-semibold text-[16px]">Konfirmasi admin</p>
                         ) : orders.status === "NEED_CUSTOMER_CONFIRM" ? (
@@ -48,6 +47,15 @@ const TabsProfileCustomer = (props) => {
                         ) : (
                           <p className="text-red-500 font-semibold text-[16px]">Dibatalkan</p>
                         )}
+                        {orders.status === "ON_PROCESS" && (
+                          <p className="text-amber-500 font-semibold text-[16px]">
+                            {orders.driver.name} - {orders.truck_type.truck_type}
+                          </p>
+                        )}
+                      </div>
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
+                        <p className="text-stone-600 font-medium text-[16px]">Deskripsi</p>
+                        <p className="text-amber-500 font-medium text-[16px]">{orders.description}</p>
                       </div>
                     </div>
                   </Link>
@@ -62,12 +70,13 @@ const TabsProfileCustomer = (props) => {
                 return (
                   <Link to={`/detail-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
-                      <div className="w-full md:w-96 md:h-full">
-                        <TruckDelivery size={100} className="mx-auto md:m-0" />
-                        <p className="text-gray-500 font-medium text-[16px]">Order id: {orders.id}</p>
+                      <div className="w-full md:w-2/12 md:h-full">
+                        <img src={orders.order_picture} className="w-[150px]" alt="" />
+                        <p className="text-gray-600 font-medium text-center text-[16px]">#{orders.id}</p>
                       </div>
-                      <div className="w-full md:h-full md:my-auto">
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
+                          <p className="text-stone-500 font-normal text-[16px]">{orders.distance} km</p>
                           <p className="text-stone-600 font-medium text-[16px]">Asal</p>
                           <p className="text-amber-500 font-medium text-[16px]">
                             {orders.destination_start_province}, {orders.destination_start_city}
@@ -78,8 +87,12 @@ const TabsProfileCustomer = (props) => {
                           </p>
                         </div>
                       </div>
-                      <div className="w-full md:h-full md:my-auto">
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         {orders.status === "DELIVERED" ? <p className="text-green-500 font-semibold text-[17px]">Order selesai</p> : <p className="text-red-500 font-semibold text-[17px]">Dibatalkan</p>}
+                      </div>
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
+                        <p className="text-stone-600 font-medium text-[16px]">Deskripsi</p>
+                        <p className="text-amber-500 font-medium text-[16px]">{orders.description}</p>
                       </div>
                     </div>
                   </Link>
@@ -103,13 +116,13 @@ const TabsProfileDriver = (props) => {
           {props.dataOrderActive && (
             <Link to={`/take-order/${props.dataOrderActive.id}`} key={props.dataOrderActive.id}>
               <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
-                <div className="w-full md:w-96 md:h-full">
-                  <TruckDelivery size={100} className="text-center md:m-0" />
-                  <p className="text-stone-500 font-medium text-center text-[16px]">{props.dataOrderActive.distance} km</p>
+                <div className="w-full md:w-2/12 md:h-full">
+                  <img src={props.dataOrderActive.order_picture} className="w-[150px]" alt="" />
+                  <p className="text-gray-600 font-medium text-center text-[16px]">#{props.dataOrderActive.id}</p>
                 </div>
-                <div className="w-full md:h-full md:my-auto">
+                <div className="w-full md:w-3/12 md:h-full md:my-auto">
                   <div className="text-center md:text-left md:flex md:flex-col">
-                    <p className="text-gray-600 font-normal text-[16px]">#{props.dataOrderActive.id}</p>
+                    <p className="text-stone-500 font-medium text-center text-[16px]">{props.dataOrderActive.distance} km</p>
                     <p className="text-stone-600 font-medium text-[16px]">Asal</p>
                     <p className="text-amber-500 font-medium text-[16px]">
                       {props.dataOrderActive.destination_start_province}, {props.dataOrderActive.destination_start_city}
@@ -120,7 +133,11 @@ const TabsProfileDriver = (props) => {
                     </p>
                   </div>
                 </div>
-                <div className="w-full md:h-full md:my-auto">{props.dataOrderActive.status === "ON_PROCESS" && <p className="text-amber-500 font-semibold text-[16px]">Dalam Pengiriman</p>}</div>
+                <div className="w-full md:w-3/12 md:h-full md:my-auto">{props.dataOrderActive.status === "ON_PROCESS" && <p className="text-amber-500 font-semibold text-[16px]">Dalam Pengiriman</p>}</div>
+                <div className="w-full md:w-3/12 md:h-full md:my-auto">
+                  <p className="text-stone-600 font-medium text-[16px]">Deskripsi</p>
+                  <p className="text-amber-500 font-medium text-[16px]">{props.dataOrderActive.description}</p>
+                </div>
               </div>
             </Link>
           )}
@@ -134,13 +151,14 @@ const TabsProfileDriver = (props) => {
                 return (
                   <Link to={`/detail-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
-                      <div className="w-full md:w-96 md:h-full">
-                        <TruckDelivery size={100} className="text-center md:m-0" />
-                        <p className="text-stone-500 font-medium text-center text-[16px]">{orders.distance} km</p>
+                      <div className="w-full md:w-2/12 md:h-full">
+                        <img src={orders.order_picture} className="w-[150px]" alt="" />
+
+                        <p className="text-gray-600 font-medium text-[16px]">#{orders.id}</p>
                       </div>
-                      <div className="w-full md:h-full md:my-auto">
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
-                          <p className="text-gray-600 font-normal text-[16px]">#{orders.id}</p>
+                          <p className="text-stone-500 font-normal text-center text-[16px]">{orders.distance} km</p>
                           <p className="text-stone-600 font-medium text-[16px]">Asal</p>
                           <p className="text-amber-500 font-medium text-[16px]">
                             {orders.destination_start_province}, {orders.destination_start_city}
@@ -151,7 +169,11 @@ const TabsProfileDriver = (props) => {
                           </p>
                         </div>
                       </div>
-                      <div className="w-full md:h-full md:my-auto">{orders.status === "DELIVERED" && <p className="text-green-500 font-semibold text-[16px]">Dalam Pengiriman</p>}</div>
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">{orders.status === "DELIVERED" && <p className="text-green-500 font-semibold text-[16px]">Order Selesai</p>}</div>
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
+                        <p className="text-stone-600 font-medium text-[16px]">Deskripsi</p>
+                        <p className="text-amber-500 font-medium text-[16px]">{props.dataOrderActive.description}</p>
+                      </div>
                     </div>
                   </Link>
                 );
