@@ -70,6 +70,7 @@ const TakeOrder = () => {
   };
 
   const handleTakeOrder = async () => {
+    setIsEnable(false);
     const { id } = params;
     var config = {
       method: "post",
@@ -88,6 +89,7 @@ const TakeOrder = () => {
         });
         fecthData();
         fetchDetailOrder();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -96,10 +98,12 @@ const TakeOrder = () => {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 
   const handleFinishOrder = async () => {
+    setIsEnable(false);
     const { id } = params;
     const formData = new FormData();
 
@@ -121,6 +125,7 @@ const TakeOrder = () => {
         });
         fecthData();
         fetchDetailOrder();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -129,6 +134,7 @@ const TakeOrder = () => {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 

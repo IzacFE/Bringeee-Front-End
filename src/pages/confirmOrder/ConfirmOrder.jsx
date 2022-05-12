@@ -144,8 +144,8 @@ function ConfirmOrder() {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
-    setIsEnable(true);
   };
 
   if ((!dataDetailOrder.transaction_id && dataDetailOrder.status === "REQUESTED") || (!dataDetailOrder.transaction_id && dataDetailOrder.status === "NEED_CUSTOMER_CONFIRM")) {
