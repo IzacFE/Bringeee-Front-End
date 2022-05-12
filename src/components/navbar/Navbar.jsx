@@ -119,7 +119,6 @@ function Navbar() {
       })
       .catch((err) => {
         console.log(err);
-        console.log("error");
       });
   };
 
@@ -158,10 +157,18 @@ function Navbar() {
         dataSaver(response.data.data);
         redirect(response.data.data.user.role);
       })
-      .catch((response) => {
+      .catch((error) => {
+        let info = error.response.data.error;
+        let status;
+        if (info === "Waiting for admin confirmation") {
+          status = "Menunggu konfirmasi akun driver dari admin";
+        } else if (info === "Invalid Credential") {
+          status = "Email salah";
+        }
         showNotification({
-          title: "Maaf",
-          message: "Login gagal",
+          autoClose: 10000,
+          title: "Login gagal",
+          message: status,
           icon: <X size={18} />,
           color: "red",
         });
