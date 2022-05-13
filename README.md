@@ -1,6 +1,7 @@
-# Bringeee Web App
+# Bringeee (3xe) Web App
 
 ![image](https://user-images.githubusercontent.com/97284723/168309585-b967e047-7a81-4340-b771-6561a1356cc3.png)
+### You need to send a huge amount of cargo but you dont want to spend effort? Here WE ARE!!! Bringeee is for you.... 
 
 ## OUR TEAM
 
