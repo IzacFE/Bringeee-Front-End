@@ -2,9 +2,9 @@
 
 ![image](https://user-images.githubusercontent.com/97284723/168309585-b967e047-7a81-4340-b771-6561a1356cc3.png)
 
-## Available Scripts
+## OUR TEAM
 
-In the project directory, you can run:
+![image](https://user-images.githubusercontent.com/97284723/168310038-016e11b2-5225-4b80-ac49-d611aca03c45.png)
 
 ### `npm start`
 
