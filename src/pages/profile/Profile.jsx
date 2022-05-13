@@ -1,7 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
-import { ProfileCustomer, ProfileDriver } from "../../components/profile/ProfileUser";
-import { TabsProfileCustomer, TabsProfileDriver } from "../../components/tabsProfile/TabsProfile";
+import {
+  ProfileCustomer,
+  ProfileDriver,
+} from "../../components/profile/ProfileUser";
+import {
+  TabsProfileCustomer,
+  TabsProfileDriver,
+} from "../../components/tabsProfile/TabsProfile";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import { TokenContext, RoleContext } from "../../App";
 import { showNotification } from "@mantine/notifications";
@@ -53,11 +59,14 @@ function Profile() {
 
   const fetchHistoryOrderCustomer = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/customers/orders?status=DELIVERED%2CCANCELLED%2CON_PROCESS`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
+      .get(
+        `https://aws.wildani.tech/api/customers/orders?status=DELIVERED%2CCANCELLED%2CON_PROCESS`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
       .then((ress) => {
         setDataHistoryOrderCustomer(ress.data.data);
       })
@@ -73,11 +82,14 @@ function Profile() {
 
   const fetchOrderActiveCustomer = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/customers/orders?status=CONFIRMED%2CMANIFESTED%2CON_PROCESS%2CREQUESTED%2CNEED_CUSTOMER_CONFIRM`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
+      .get(
+        `https://aws.wildani.tech/api/customers/orders?status=CONFIRMED%2CMANIFESTED%2CON_PROCESS%2CREQUESTED%2CNEED_CUSTOMER_CONFIRM`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
       .then((ress) => {
         setOrderActiveCustomer(ress.data.data);
       })
@@ -113,13 +125,17 @@ function Profile() {
 
   const fetchHistoryOrderDriver = async () => {
     await axios
-      .get(`https://aws.wildani.tech/api/drivers/history_orders?sortVolume=true&sortWeight=true&sortDistance=true'`, {
-        headers: {
-          Authorization: `Bearer ${tokenCtx}`,
-        },
-      })
+      .get(
+        `https://aws.wildani.tech/api/drivers/history_orders?sortVolume=true&sortWeight=true&sortDistance=true'`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
       .then((ress) => {
         setDataHistoryOrderDriver(ress.data.data);
+        console.log(ress.data.data);
       })
       .catch((err) => {
         showNotification({
@@ -137,10 +153,17 @@ function Profile() {
         <div className="container mx-auto py-[5vh] px-[5vw]">
           <div className="flex flex-col md:flex-row md:gap-2">
             <div className="w-full md:w-3/12">
-              <ProfileCustomer dataUser={dataUser} reloadSoftPage={() => fecthData()} />
+              <ProfileCustomer
+                dataUser={dataUser}
+                reloadSoftPage={() => fecthData()}
+              />
             </div>
             <div className="w-full md:w-9/12">
-              <TabsProfileCustomer dataHistoryOrder={dataHistoryOrderCustomer} dataOrderActive={dataOrderActiveCustomer} reloadSoftPage={() => fetchOrderActiveCustomer()} />
+              <TabsProfileCustomer
+                dataHistoryOrder={dataHistoryOrderCustomer}
+                dataOrderActive={dataOrderActiveCustomer}
+                reloadSoftPage={() => fetchOrderActiveCustomer()}
+              />
             </div>
           </div>
         </div>
@@ -154,10 +177,16 @@ function Profile() {
         <div className="container mx-auto py-[5vh] px-[5vh]">
           <div className="flex flex-col md:flex-row md:gap-2">
             <div className="w-full md:w-3/12">
-              <ProfileDriver dataUser={dataUser} reloadSoftPage={() => fecthData()} />
+              <ProfileDriver
+                dataUser={dataUser}
+                reloadSoftPage={() => fecthData()}
+              />
             </div>
             <div className="w-full md:w-9/12">
-              <TabsProfileDriver dataOrderActive={dataCurrentOrderDriver} dataHistoryOrder={dataHistoryOrderDriver} />
+              <TabsProfileDriver
+                dataOrderActive={dataCurrentOrderDriver}
+                dataHistoryOrder={dataHistoryOrderDriver}
+              />
             </div>
           </div>
         </div>
