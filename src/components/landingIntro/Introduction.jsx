@@ -14,11 +14,6 @@ import Indonesia from "../../assets/indonesia.png";
 import Favorite from "../../assets/favorite.png";
 
 const useStyles = createStyles((theme) => ({
-  //   wrapper: {
-  //     paddingTop: 80,
-  //     paddingBottom: 50,
-  //   },
-
   item: {
     display: "flex",
   },

@@ -2,19 +2,12 @@ import React, { useState } from "react";
 import { RadioGroup, Radio } from "@mantine/core";
 import styles from "./AdminDriverTypes.module.css";
 
-function AdminDriverTypes(props) {
+function AdminDriverTypes() {
   const [value, setValue] = useState("1");
 
   return (
     <>
-      <RadioGroup
-        value={value}
-        onChange={setValue}
-        // label="Select your favorite framework/library"
-        // description="This is anonymous"
-        color="yellow"
-        required
-      >
+      <RadioGroup value={value} onChange={setValue} color="yellow" required>
         <Radio value="1" label="Semua" />
         <Radio value="2" label="Butuh Konfirmasi" />
         <Radio value="3" label="Terkonfirmasi" />

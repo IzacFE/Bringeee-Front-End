@@ -62,9 +62,7 @@ function AdminReport() {
       .then((response) => {
         setCustomersCount(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchDrivers = async () => {
@@ -77,9 +75,7 @@ function AdminReport() {
       .then((response) => {
         setDriversCount(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchDriversIdle = async () => {
@@ -95,9 +91,7 @@ function AdminReport() {
       .then((response) => {
         setDriversIdle(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchDriversBusy = async () => {
@@ -113,9 +107,7 @@ function AdminReport() {
       .then((response) => {
         setDriversBusy(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOrdersReq = async () => {
@@ -131,9 +123,7 @@ function AdminReport() {
       .then((response) => {
         setOrdersReq(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOrdersCustReq = async () => {
@@ -149,9 +139,7 @@ function AdminReport() {
       .then((response) => {
         setOrdersCustReq(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOrdersConfirmed = async () => {
@@ -167,9 +155,7 @@ function AdminReport() {
       .then((response) => {
         setOrdersConfirmed(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOrdersManifested = async () => {
@@ -185,9 +171,7 @@ function AdminReport() {
       .then((response) => {
         setOrdersManifested(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOrdersOnProcess = async () => {
@@ -203,9 +187,7 @@ function AdminReport() {
       .then((response) => {
         setOrdersOnProcess(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOrdersDelivered = async () => {
@@ -221,9 +203,7 @@ function AdminReport() {
       .then((response) => {
         setOrdersDelivered(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOrdersCancelled = async () => {
@@ -239,9 +219,7 @@ function AdminReport() {
       .then((response) => {
         setOrdersCancelled(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchStats = async () => {
@@ -254,9 +232,7 @@ function AdminReport() {
       .then((response) => {
         setStats(response.data.data[0]);
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
@@ -275,9 +251,7 @@ function AdminReport() {
       .then((response) => {
         fileDownload(response.data, "nama.csv");
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
