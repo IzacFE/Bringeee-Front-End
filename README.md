@@ -29,7 +29,7 @@
 
 ![image](https://user-images.githubusercontent.com/97284723/168312974-943dac43-29ad-4866-894a-b33e0300be84.png)
 
-### and here is the performance of our website
+### And here is the performance of our website
 
 ![image](https://user-images.githubusercontent.com/97284723/168313097-db004f78-b162-4849-be57-05eba446351c.png)
 
