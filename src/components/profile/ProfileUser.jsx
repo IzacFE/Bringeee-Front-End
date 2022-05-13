@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Input, NativeSelect, Group, Button, Avatar } from "@mantine/core";
+import { Input, NativeSelect, Group, Button } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import { TokenContext } from "../../App";
 import axios from "axios";

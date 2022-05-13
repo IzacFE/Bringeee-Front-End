@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import TabsAdmin from "../../components/tabsAdmin/TabsAdmin";
-import { AlertCircle, History, Loader, Photo } from "tabler-icons-react";
+import { AlertCircle, History, Loader } from "tabler-icons-react";
 import AdminOrderList from "../../components/adminOrderList/AdminOrderList";
 import styles from "./AdminListOrder.module.css";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
@@ -45,11 +45,8 @@ function AdminListOrder() {
         if (response.data.data) {
           setConfirmData(response.data.data);
         }
-        console.log(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOngoing = async () => {
@@ -66,11 +63,8 @@ function AdminListOrder() {
         if (response.data.data) {
           setOngoingData(response.data.data);
         }
-        console.log(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchHistory = async () => {
@@ -84,11 +78,8 @@ function AdminListOrder() {
         if (response.data.data) {
           setHistoryData(response.data.data);
         }
-        console.log(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 

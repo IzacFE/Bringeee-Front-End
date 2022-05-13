@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group, Image, Input, InputWrapper } from "@mantine/core";
+import { Image } from "@mantine/core";
 import styles from "./AdminOngoing.module.css";
 import TimelineVer from "../timeline/TimelineVer";
 
@@ -90,7 +90,11 @@ function AdminOngoing(props) {
       <div className={styles.right}>
         <label className="font-medium text-[17px]">Gambar Order</label>
         <Image src={props.dataDetailOrder.order_picture} width={500} />
-        {props.dataHistory && <TimelineVer dataHistories={props.dataHistory} />}
+        <div className="mt-8">
+          {props.dataHistory && (
+            <TimelineVer dataHistories={props.dataHistory} />
+          )}
+        </div>
       </div>
     </div>
   );

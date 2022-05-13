@@ -6,7 +6,6 @@ import {
   Container,
   Title,
 } from "@mantine/core";
-import { Truck, Certificate, Coin } from "tabler-icons-react";
 
 import styles from "./FeaturesComp.module.css";
 import moneyBag from "../../assets/money-bag.png";

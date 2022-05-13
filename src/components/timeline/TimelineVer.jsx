@@ -1,10 +1,16 @@
 import React from "react";
 import { Timeline, Text } from "@mantine/core";
 import moment from "moment";
+import "moment/locale/id";
 
 function TimelineVer(props) {
   return (
-    <Timeline active={props.dataHistories.length} bulletSize={20} lineWidth={4} color="yellow">
+    <Timeline
+      active={props.dataHistories.length}
+      bulletSize={20}
+      lineWidth={4}
+      color="yellow"
+    >
       {props.dataHistories.map((items) => {
         return (
           <Timeline.Item title={items.log} key={items.id}>

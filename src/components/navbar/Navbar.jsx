@@ -117,9 +117,7 @@ function Navbar() {
       .then((response) => {
         setProfileData(response.data.data.user);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const dataSaver = (loginData) => {
@@ -184,14 +182,27 @@ function Navbar() {
     navigate("/");
   };
 
+  const handleDelete = async () => {
+    await axios
+      .delete(`https://aws.wildani.tech/api/customers`, {
+        headers: {
+          Authorization: `Bearer ${tokenCtx}`,
+        },
+      })
+      .then((response) => {
+        logOut();
+      })
+      .catch((err) => {});
+  };
+
   const openDeleteModal = () =>
     modals.openConfirmModal({
-      title: "Hapus Akun Driver",
+      title: "Hapus Akun Anda",
       centered: true,
       children: (
         <>
           <Text size="sm">
-            Anda akan menghapus akun driver. Tekan tombol Hapus Akun untuk
+            Anda akan menghapus akun anda. Tekan tombol Hapus Akun untuk
             mengkonfirmasi penghapusan akun dan tekan tombol batal untuk
             membatalkan penghapusan akun
           </Text>
@@ -199,8 +210,7 @@ function Navbar() {
       ),
       labels: { confirm: "Hapus Akun", cancel: "Batal Hapus" },
       confirmProps: { color: "red" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
+      onConfirm: () => handleDelete(),
     });
 
   const navMenus = () => {

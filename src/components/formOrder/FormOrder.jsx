@@ -1,11 +1,17 @@
 import React, { useEffect, useState, useContext, useMemo, useRef } from "react";
 import axios from "axios";
-import { Textarea, NativeSelect, TextInput, Group, Button } from "@mantine/core";
+import {
+  Textarea,
+  NativeSelect,
+  TextInput,
+  Group,
+  Button,
+} from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import { TokenContext } from "../../App";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
-import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import DraggableMarker from "../map/DraggableMarker";
 
 const center = {
@@ -89,9 +95,7 @@ const FormOrder = (props) => {
       .then((ress) => {
         setDataTruck(ress.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const fetchProvince = async () => {
@@ -100,9 +104,7 @@ const FormOrder = (props) => {
       .then((ress) => {
         setDataProvince(ress.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const fetchCitiesStart = async (e) => {
@@ -118,9 +120,7 @@ const FormOrder = (props) => {
       .then((ress) => {
         setDataCitiesStart(ress.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const fetchDistrictsStart = async (e) => {
@@ -129,13 +129,13 @@ const FormOrder = (props) => {
     setCitiesStart(selected);
     setDistrictsStart("");
     await axios
-      .get(`https://aws.wildani.tech/api/provinces/${idProvStart}/cities/${e.target.value}/districts`)
+      .get(
+        `https://aws.wildani.tech/api/provinces/${idProvStart}/cities/${e.target.value}/districts`
+      )
       .then((ress) => {
         setDataDistrictsStart(ress.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const chooseDistrictsStart = (e) => {
@@ -156,9 +156,7 @@ const FormOrder = (props) => {
       .then((ress) => {
         setDataCitiesEnd(ress.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const fetchDistrictsEnd = async (e) => {
@@ -167,13 +165,13 @@ const FormOrder = (props) => {
     setCitiesEnd(selected);
     setDistrictsEnd("");
     await axios
-      .get(`https://aws.wildani.tech/api/provinces/${idProvEnd}/cities/${e.target.value}/districts`)
+      .get(
+        `https://aws.wildani.tech/api/provinces/${idProvEnd}/cities/${e.target.value}/districts`
+      )
       .then((ress) => {
         setDataDistrictsEnd(ress.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const chooseDistrictsEnd = (e) => {
@@ -271,7 +269,17 @@ const FormOrder = (props) => {
         Authorization: `Bearer ${tokenCtx}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      data: "&destination_start_lat=" + latStart + "&destination_start_long=" + longStart + "&destination_end_lat=" + latEnd + "&destination_end_long=" + longEnd + "&truck_type=" + typeTruck,
+      data:
+        "&destination_start_lat=" +
+        latStart +
+        "&destination_start_long=" +
+        longStart +
+        "&destination_end_lat=" +
+        latEnd +
+        "&destination_end_long=" +
+        longEnd +
+        "&truck_type=" +
+        typeTruck,
     };
     await axios(config)
       .then((response) => {
@@ -287,7 +295,13 @@ const FormOrder = (props) => {
       <div className="flex flex-col mb-3">
         <label className="text-amber-500 font-medium text-[22px]">Asal</label>
         <div className="w-full">
-          <Textarea placeholder="" value={addressStart} label="Alamat" onChange={(e) => setAddressStart(e.target.value)} id="form-createOrder-start-address" />
+          <Textarea
+            placeholder=""
+            value={addressStart}
+            label="Alamat"
+            onChange={(e) => setAddressStart(e.target.value)}
+            id="form-createOrder-start-address"
+          />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
@@ -343,7 +357,14 @@ const FormOrder = (props) => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" value={posStart} label="Kode Pos" placeholder="" onChange={(e) => setPosStart(e.target.value)} id="form-createOrder-start-postal" />
+            <TextInput
+              type="number"
+              value={posStart}
+              label="Kode Pos"
+              placeholder=""
+              onChange={(e) => setPosStart(e.target.value)}
+              id="form-createOrder-start-postal"
+            />
           </div>
         </div>
 
@@ -368,7 +389,13 @@ const FormOrder = (props) => {
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Tujuan</label>
         <div className="w-full">
-          <Textarea placeholder="" value={addressEnd} label="Alamat" onChange={(e) => setAddressEnd(e.target.value)} id="form-createOrder-end-address" />
+          <Textarea
+            placeholder=""
+            value={addressEnd}
+            label="Alamat"
+            onChange={(e) => setAddressEnd(e.target.value)}
+            id="form-createOrder-end-address"
+          />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
@@ -424,7 +451,14 @@ const FormOrder = (props) => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" value={posEnd} label="Kode Pos" placeholder="" onChange={(e) => setPosEnd(e.target.value)} id="form-createOrder-end-postal" />
+            <TextInput
+              type="number"
+              value={posEnd}
+              label="Kode Pos"
+              placeholder=""
+              onChange={(e) => setPosEnd(e.target.value)}
+              id="form-createOrder-end-postal"
+            />
           </div>
         </div>
       </div>
@@ -449,7 +483,13 @@ const FormOrder = (props) => {
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Muatan</label>
         <div className="w-full">
-          <Textarea placeholder="" value={description} label="Deskripsi" onChange={(e) => setDescription(e.target.value)} id="form-createOrder-desc" />
+          <Textarea
+            placeholder=""
+            value={description}
+            label="Deskripsi"
+            onChange={(e) => setDescription(e.target.value)}
+            id="form-createOrder-desc"
+          />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
@@ -493,16 +533,32 @@ const FormOrder = (props) => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="file" defaultValue={imageOrder} label="Foto" placeholder="" onChange={(e) => setImageOrder(e.target.files[0])} id="form-createOrder-picture" />
+            <TextInput
+              type="file"
+              defaultValue={imageOrder}
+              label="Foto"
+              placeholder=""
+              onChange={(e) => setImageOrder(e.target.files[0])}
+              id="form-createOrder-picture"
+            />
           </div>
         </div>
         <Group position="right" className="mt-5">
           {isEnable ? (
-            <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => createOrder()} id="btn-createOrder">
+            <Button
+              className="bg-amber-500 hover:bg-amber-400 text-stone-700"
+              onClick={() => createOrder()}
+              id="btn-createOrder"
+            >
               Buat Order
             </Button>
           ) : (
-            <Button loading className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => createOrder()} id="btn-createOrder">
+            <Button
+              loading
+              className="bg-amber-500 hover:bg-amber-400 text-stone-700"
+              onClick={() => createOrder()}
+              id="btn-createOrder"
+            >
               Buat Order
             </Button>
           )}

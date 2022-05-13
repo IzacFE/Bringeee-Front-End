@@ -37,11 +37,8 @@ function AdminDriverDetail() {
       })
       .then((response) => {
         setDetail(response.data.data);
-        console.log(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
@@ -59,11 +56,8 @@ function AdminDriverDetail() {
       )
       .then((response) => {
         fetchData();
-        console.log(response);
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
@@ -78,9 +72,7 @@ function AdminDriverDetail() {
       .then((response) => {
         navigate("/admin-users");
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
