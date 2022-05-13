@@ -11,6 +11,8 @@ import AdminHomeOrder from "../../components/detailOrder/AdminHomeOrder";
 import AdminConfirmOrder from "../../components/detailOrder/AdminConfirmOrder";
 import AdminOngoing from "../../components/detailOrder/AdminOngoing";
 import AdminCancelledOrder from "../../components/detailOrder/AdminCancelledOrder";
+import { useModals } from "@mantine/modals";
+import { Text } from "@mantine/core";
 
 function AdminDetailOrder() {
   const { tokenCtx } = useContext(TokenContext);
@@ -18,6 +20,8 @@ function AdminDetailOrder() {
   const navigate = useNavigate();
   const params = useParams();
   const [isReady, setIsReady] = useState(false);
+  const modals = useModals();
+
   const [detail, setDetail] = useState({});
   const [price, setPrice] = useState(0);
   const [history, setHistory] = useState({});
@@ -40,12 +44,8 @@ function AdminDetailOrder() {
       })
       .then((response) => {
         setDetail(response.data.data);
-
-        console.log(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchOrderHistories = async () => {
@@ -58,11 +58,8 @@ function AdminDetailOrder() {
       })
       .then((ress) => {
         setHistory(ress.data.data);
-        console.log(ress.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
@@ -81,11 +78,8 @@ function AdminDetailOrder() {
       .then((response) => {
         fetchData();
         fetchOrderHistories();
-        console.log("berhasil");
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
@@ -104,13 +98,49 @@ function AdminDetailOrder() {
       .then((response) => {
         fetchData();
         fetchOrderHistories();
-        // window.location.reload();
       })
-      .catch((err) => {
-        console.log(err.data);
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
+
+  const handleCancel = async () => {
+    setIsReady(false);
+    await axios
+      .post(
+        `https://aws.wildani.tech/api/orders/${params.id}/cancel`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${tokenCtx}`,
+          },
+        }
+      )
+      .then((response) => {
+        fetchData();
+        fetchOrderHistories();
+      })
+      .catch((err) => {})
+      .finally(() => setIsReady(true));
+  };
+
+  const openCancelModal = () =>
+    modals.openConfirmModal({
+      title: `Batalkan Order`,
+      centered: true,
+      children: (
+        <>
+          <Text size="sm">
+            Anda akan membatalkan order. Tekan tombol Batalkan untuk
+            mengkonfirmasi dan tekan tombol balik untuk kembali
+          </Text>
+        </>
+      ),
+      labels: { confirm: "Batalkan", cancel: "Kembali" },
+      confirmProps: { color: "red" },
+      onConfirm: () => {
+        handleCancel();
+      },
+    });
 
   const confirm = () => {
     return (
@@ -118,15 +148,14 @@ function AdminDetailOrder() {
         dataDetailOrder={detail}
         clickSetuju={() => {
           handleConfirm();
-          console.log("setuju");
         }}
         onChange={(e) => {
           setPrice(e.target.value);
         }}
         clickSesuaikan={() => {
           handleChangePrice();
-          console.log("sesuaikan");
         }}
+        clickCancel={openCancelModal}
       />
     );
   };

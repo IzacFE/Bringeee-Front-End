@@ -1,12 +1,6 @@
 import React, { useEffect, useState, useContext, useMemo, useRef } from "react";
 import axios from "axios";
-import {
-  Textarea,
-  NativeSelect,
-  TextInput,
-  Group,
-  Button,
-} from "@mantine/core";
+import { Textarea, NativeSelect, TextInput, Group, Button } from "@mantine/core";
 import { ChevronDown } from "tabler-icons-react";
 import { TokenContext } from "../../App";
 import { showNotification } from "@mantine/notifications";
@@ -20,6 +14,7 @@ const center = {
 };
 
 const FormOrder = (props) => {
+  const [isEnable, setIsEnable] = useState(true);
   const { tokenCtx } = useContext(TokenContext);
   const [dataProvince, setDataProvince] = useState([]);
   const [dataTruck, setDataTruck] = useState([]);
@@ -134,9 +129,7 @@ const FormOrder = (props) => {
     setCitiesStart(selected);
     setDistrictsStart("");
     await axios
-      .get(
-        `https://aws.wildani.tech/api/provinces/${idProvStart}/cities/${e.target.value}/districts`
-      )
+      .get(`https://aws.wildani.tech/api/provinces/${idProvStart}/cities/${e.target.value}/districts`)
       .then((ress) => {
         setDataDistrictsStart(ress.data.data);
       })
@@ -174,9 +167,7 @@ const FormOrder = (props) => {
     setCitiesEnd(selected);
     setDistrictsEnd("");
     await axios
-      .get(
-        `https://aws.wildani.tech/api/provinces/${idProvEnd}/cities/${e.target.value}/districts`
-      )
+      .get(`https://aws.wildani.tech/api/provinces/${idProvEnd}/cities/${e.target.value}/districts`)
       .then((ress) => {
         setDataDistrictsEnd(ress.data.data);
       })
@@ -191,6 +182,7 @@ const FormOrder = (props) => {
   };
 
   const createOrder = async () => {
+    setIsEnable(false);
     const formData = new FormData();
     formData.append("destination_start_address", addressStart);
     formData.append("destination_start_province", provinceStart);
@@ -228,6 +220,7 @@ const FormOrder = (props) => {
         });
         resetForm();
         props.reloadSoftPage();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -236,6 +229,7 @@ const FormOrder = (props) => {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 
@@ -277,17 +271,7 @@ const FormOrder = (props) => {
         Authorization: `Bearer ${tokenCtx}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      data:
-        "&destination_start_lat=" +
-        latStart +
-        "&destination_start_long=" +
-        longStart +
-        "&destination_end_lat=" +
-        latEnd +
-        "&destination_end_long=" +
-        longEnd +
-        "&truck_type=" +
-        typeTruck,
+      data: "&destination_start_lat=" + latStart + "&destination_start_long=" + longStart + "&destination_end_lat=" + latEnd + "&destination_end_long=" + longEnd + "&truck_type=" + typeTruck,
     };
     await axios(config)
       .then((response) => {
@@ -303,13 +287,7 @@ const FormOrder = (props) => {
       <div className="flex flex-col mb-3">
         <label className="text-amber-500 font-medium text-[22px]">Asal</label>
         <div className="w-full">
-          <Textarea
-            placeholder=""
-            value={addressStart}
-            label="Alamat"
-            onChange={(e) => setAddressStart(e.target.value)}
-            id="form-createOrder-start-address"
-          />
+          <Textarea placeholder="" value={addressStart} label="Alamat" onChange={(e) => setAddressStart(e.target.value)} id="form-createOrder-start-address" />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
@@ -365,18 +343,12 @@ const FormOrder = (props) => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput
-              type="number"
-              value={posStart}
-              label="Kode Pos"
-              placeholder=""
-              onChange={(e) => setPosStart(e.target.value)}
-              id="form-createOrder-start-postal"
-            />
+            <TextInput type="number" value={posStart} label="Kode Pos" placeholder="" onChange={(e) => setPosStart(e.target.value)} id="form-createOrder-start-postal" />
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row md:gap-2">
+        <div className="mt-6  md:gap-2">
+          <label className="font-medium text-[14px] ">Peta Lokasi Asal</label>
           <MapContainer
             center={[-7.253496039426577, 109.20410156250001]}
             zoom={5}
@@ -396,13 +368,7 @@ const FormOrder = (props) => {
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Tujuan</label>
         <div className="w-full">
-          <Textarea
-            placeholder=""
-            value={addressEnd}
-            label="Alamat"
-            onChange={(e) => setAddressEnd(e.target.value)}
-            id="form-createOrder-end-address"
-          />
+          <Textarea placeholder="" value={addressEnd} label="Alamat" onChange={(e) => setAddressEnd(e.target.value)} id="form-createOrder-end-address" />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
@@ -458,18 +424,13 @@ const FormOrder = (props) => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput
-              type="number"
-              value={posEnd}
-              label="Kode Pos"
-              placeholder=""
-              onChange={(e) => setPosEnd(e.target.value)}
-              id="form-createOrder-end-postal"
-            />
+            <TextInput type="number" value={posEnd} label="Kode Pos" placeholder="" onChange={(e) => setPosEnd(e.target.value)} id="form-createOrder-end-postal" />
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row md:gap-2">
+
+      <div className="mt-4 md:gap-2">
+        <label className="font-medium text-[14px] ">Peta Lokasi Tujuan</label>
         <MapContainer
           center={[-7.253496039426577, 109.20410156250001]}
           zoom={5}
@@ -488,18 +449,12 @@ const FormOrder = (props) => {
       <div className="flex flex-col">
         <label className="text-amber-500 font-medium text-[22px]">Muatan</label>
         <div className="w-full">
-          <Textarea
-            placeholder=""
-            value={description}
-            label="Deskripsi"
-            onChange={(e) => setDescription(e.target.value)}
-            id="form-createOrder-desc"
-          />
+          <Textarea placeholder="" value={description} label="Deskripsi" onChange={(e) => setDescription(e.target.value)} id="form-createOrder-desc" />
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
             <NativeSelect
-              label="Tipe Truk"
+              label="Tipe Truk Pengantar"
               placeholder="Pilih Tipe Truk"
               value={typeTruck}
               onChange={(e) => setTypeTruck(e.target.value)}
@@ -515,7 +470,11 @@ const FormOrder = (props) => {
             <TextInput
               type="number"
               value={volume}
-              label="Volume"
+              label={
+                <span>
+                  Volume (m<sup>3</sup>)
+                </span>
+              }
               placeholder=""
               onChange={(e) => setVolume(e.target.value)}
               id="form-createOrder-volume"
@@ -527,31 +486,26 @@ const FormOrder = (props) => {
             <TextInput
               type="number"
               value={weight}
-              label="Berat"
+              label="Berat (kg)"
               placeholder=""
               onChange={(e) => setWeight(e.target.value)}
               id="form-createOrder-weight"
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput
-              type="file"
-              defaultValue={imageOrder}
-              label="Foto"
-              placeholder=""
-              onChange={(e) => setImageOrder(e.target.files[0])}
-              id="form-createOrder-picture"
-            />
+            <TextInput type="file" defaultValue={imageOrder} label="Foto" placeholder="" onChange={(e) => setImageOrder(e.target.files[0])} id="form-createOrder-picture" />
           </div>
         </div>
         <Group position="right" className="mt-5">
-          <Button
-            className="bg-amber-500 hover:bg-amber-400 text-stone-700"
-            onClick={() => createOrder()}
-            id="btn-createOrder"
-          >
-            Buat Order
-          </Button>
+          {isEnable ? (
+            <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => createOrder()} id="btn-createOrder">
+              Buat Order
+            </Button>
+          ) : (
+            <Button loading className="bg-amber-500 hover:bg-amber-400 text-stone-700" onClick={() => createOrder()} id="btn-createOrder">
+              Buat Order
+            </Button>
+          )}
         </Group>
       </div>
     </div>

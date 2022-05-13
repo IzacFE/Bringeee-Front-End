@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  Title,
   Text,
   Image,
   Tabs,
@@ -10,7 +9,7 @@ import {
   NativeSelect,
   Group,
 } from "@mantine/core";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./AdminDriver.module.css";
 import { useModals } from "@mantine/modals";
 import { ChevronDown } from "tabler-icons-react";
@@ -41,14 +40,6 @@ function AdminDriver(props) {
     formData.append("nik", nik);
     formData.append("vehicle_picture", vhcPict);
 
-    console.log(jenisTruk);
-    console.log(ktp);
-    console.log(stnk);
-    console.log(sim);
-    console.log(nomorKendaraan);
-    console.log(nik);
-    console.log(vhcPict);
-
     await axios
       .put(`https://aws.wildani.tech/api/drivers/${id}`, formData, {
         headers: {
@@ -56,13 +47,8 @@ function AdminDriver(props) {
           Authorization: `Bearer ${tokenCtx}`,
         },
       })
-      .then((response) => {
-        // alert("berhasil");
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("error");
-      });
+      .then((response) => {})
+      .catch((err) => {});
   };
 
   const openDeleteModal = () =>

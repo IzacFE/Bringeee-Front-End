@@ -9,6 +9,7 @@ import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
 
 const TakeOrder = () => {
+  const [isEnable, setIsEnable] = useState(true);
   const params = useParams();
   const { tokenCtx } = useContext(TokenContext);
   const [isReady, setIsReady] = useState(false);
@@ -69,6 +70,7 @@ const TakeOrder = () => {
   };
 
   const handleTakeOrder = async () => {
+    setIsEnable(false);
     const { id } = params;
     var config = {
       method: "post",
@@ -87,6 +89,7 @@ const TakeOrder = () => {
         });
         fecthData();
         fetchDetailOrder();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -95,10 +98,12 @@ const TakeOrder = () => {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 
   const handleFinishOrder = async () => {
+    setIsEnable(false);
     const { id } = params;
     const formData = new FormData();
 
@@ -120,6 +125,7 @@ const TakeOrder = () => {
         });
         fecthData();
         fetchDetailOrder();
+        setIsEnable(true);
       })
       .catch((err) => {
         showNotification({
@@ -128,6 +134,7 @@ const TakeOrder = () => {
           icon: <X size={18} />,
           color: "red",
         });
+        setIsEnable(true);
       });
   };
 
@@ -153,16 +160,28 @@ const TakeOrder = () => {
             </div>
             {dataUser.status === "IDLE" && dataDetailOrder.status === "MANIFESTED" ? (
               <Group position="center" className="flex flex-col md:flex-row">
-                <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleTakeOrder()} id="btn-takeOrder">
-                  Ambil Order
-                </Button>
+                {isEnable ? (
+                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleTakeOrder()} id="btn-takeOrder">
+                    Ambil Order
+                  </Button>
+                ) : (
+                  <Button loading className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleTakeOrder()} id="btn-takeOrder">
+                    Ambil Order
+                  </Button>
+                )}
               </Group>
             ) : (
               dataDetailOrder.status === "ON_PROCESS" && (
                 <Group position="center">
-                  <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleFinishOrder()} id="btn-finishOrder">
-                    Selesai
-                  </Button>
+                  {isEnable ? (
+                    <Button className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleFinishOrder()} id="btn-finishOrder">
+                      Selesai
+                    </Button>
+                  ) : (
+                    <Button loading className="bg-amber-500 hover:bg-amber-400 text-stone-700 w-[250px]" onClick={() => handleFinishOrder()} id="btn-finishOrder">
+                      Selesai
+                    </Button>
+                  )}
                 </Group>
               )
             )}

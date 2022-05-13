@@ -81,7 +81,7 @@ function AdminConfirmOrder(props) {
         <label className="font-medium text-[17px]">Gambar Order</label>
         <Image src={props.dataDetailOrder.order_picture} width={500} />
         {props.dataDetailOrder.status === "REQUESTED" && (
-          <Group>
+          <div>
             <div>
               <label className="font-medium text-[17px]">
                 Setujui sesuai perkiraan tarif
@@ -97,6 +97,7 @@ function AdminConfirmOrder(props) {
                 Setujui
               </Button>
             </div>
+
             <div>
               <label className="font-medium text-[17px]">Sesuaikan tarif</label>
               <InputWrapper id="emailCos" required>
@@ -116,7 +117,18 @@ function AdminConfirmOrder(props) {
                 Kirim
               </Button>
             </div>
-          </Group>
+
+            <div className="mt-4">
+              <label className="font-medium text-[17px]">Batalkan order</label>
+            </div>
+            <Button
+              id="btn_cancel_order"
+              className="bg-red-500 hover:bg-red-600 my-2"
+              onClick={props.clickCancel}
+            >
+              Batal
+            </Button>
+          </div>
         )}
 
         {props.dataDetailOrder.status === "NEED_CUSTOMER_CONFIRM" && (
