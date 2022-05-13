@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./AdminDetailOrder.module.css";
 import { TokenContext, RoleContext } from "../../App";
-import StepHorizon from "../../components/stepper/StepHorizon";
-import ImageOrder from "../../assets/package.png";
-import TimelineVer from "../../components/timeline/TimelineVer";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
@@ -13,6 +10,7 @@ import AdminOngoing from "../../components/detailOrder/AdminOngoing";
 import AdminCancelledOrder from "../../components/detailOrder/AdminCancelledOrder";
 import { useModals } from "@mantine/modals";
 import { Text } from "@mantine/core";
+import AdminFinishOrder from "../../components/detailOrder/AdminFinishOrder";
 
 function AdminDetailOrder() {
   const { tokenCtx } = useContext(TokenContext);
@@ -169,7 +167,7 @@ function AdminDetailOrder() {
   };
 
   const finish = () => {
-    return <AdminOngoing dataDetailOrder={detail} dataHistory={history} />;
+    return <AdminFinishOrder dataDetailOrder={detail} dataHistory={history} />;
   };
 
   const cancelled = () => {

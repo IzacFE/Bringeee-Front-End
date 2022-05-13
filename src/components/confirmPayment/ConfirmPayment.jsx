@@ -24,9 +24,7 @@ const ConfirmPayment = (props) => {
       .then((ress) => {
         setDataPayment(ress.data.data);
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(() => {
         setIsReady(true);
       });
@@ -37,11 +35,25 @@ const ConfirmPayment = (props) => {
       <div className="bg-neutral-50 flex flex-col min-h-[350px] drop-shadow-md md:w-1/2 p-4">
         {dataPayment ? (
           dataPayment.bank === "bni" ? (
-            <Image src={`https://seeklogo.com/images/B/bank-bni-logo-737EE0F32C-seeklogo.com.png`} width={150} className="mx-auto" />
+            <Image
+              src={`https://seeklogo.com/images/B/bank-bni-logo-737EE0F32C-seeklogo.com.png`}
+              width={150}
+              className="mx-auto"
+            />
           ) : dataPayment.bank === "bri" ? (
-            <Image src={`https://seeklogo.com/images/B/bank-bri-bank-rakyat-logo-C06D6783A8-seeklogo.com.png`} width={150} className="mx-auto" />
+            <Image
+              src={`https://seeklogo.com/images/B/bank-bri-bank-rakyat-logo-C06D6783A8-seeklogo.com.png`}
+              width={150}
+              className="mx-auto"
+            />
           ) : (
-            dataPayment.bank === "bca" && <Image src={`https://seeklogo.com/images/B/bca-bank-central-asia-logo-F7E3078D69-seeklogo.com.png`} width={150} className="mx-auto" />
+            dataPayment.bank === "bca" && (
+              <Image
+                src={`https://seeklogo.com/images/B/bca-bank-central-asia-logo-F7E3078D69-seeklogo.com.png`}
+                width={150}
+                className="mx-auto"
+              />
+            )
           )
         ) : (
           ""
@@ -60,7 +72,8 @@ const ConfirmPayment = (props) => {
                     ? "BANK TRANSFER BNI"
                     : dataPayment.payment_method === "BANK_TRANSFER_BRI"
                     ? "BANK TRANSFER BRI"
-                    : dataPayment.payment_method === "BANK_TRANSFER_BCA" && "BANK TRANSFER BCA"}
+                    : dataPayment.payment_method === "BANK_TRANSFER_BCA" &&
+                      "BANK TRANSFER BCA"}
                 </td>
               </tr>
               <tr>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Popover,
   Modal,
@@ -8,8 +8,7 @@ import {
   Paper,
   Group,
 } from "@mantine/core";
-import image from "../../assets/monke.jpg";
-import { Phone, PhoneCall, Trash } from "tabler-icons-react";
+import { PhoneCall, Trash } from "tabler-icons-react";
 import styles from "./CustomerModal.module.css";
 
 function CustomerModal(props) {

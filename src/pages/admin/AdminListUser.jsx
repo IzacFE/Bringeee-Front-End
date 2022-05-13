@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./AdminListUser.module.css";
-import { Truck, User, World } from "tabler-icons-react";
+import { Truck, User } from "tabler-icons-react";
 import TabsAdmin from "../../components/tabsAdmin/TabsAdmin";
 import UserCard from "../../components/userCard/UserCard";
 import CustomerModal from "../../components/customerAccModal/CustomerModal";
@@ -38,11 +38,8 @@ function AdminListUser() {
       })
       .then((response) => {
         setUserCostumer(response.data.data);
-        console.log(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      });
+      .catch((err) => {});
   };
 
   const fetchDriver = async () => {
@@ -55,9 +52,7 @@ function AdminListUser() {
       .then((response) => {
         setUserDriver(response.data.data);
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
@@ -135,9 +130,7 @@ function AdminListUser() {
       .then((response) => {
         fetchCustomer();
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 

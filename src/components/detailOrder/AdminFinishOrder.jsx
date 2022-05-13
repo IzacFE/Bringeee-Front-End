@@ -3,7 +3,7 @@ import { Image } from "@mantine/core";
 import styles from "./AdminOngoing.module.css";
 import TimelineVer from "../timeline/TimelineVer";
 
-function AdminCancelledOrder(props) {
+function AdminFinishOrder(props) {
   return (
     <div className={`${styles.container} bg-white rounded-md shadow-xl`}>
       <div className={styles.left}>
@@ -82,8 +82,8 @@ function AdminCancelledOrder(props) {
         </div>
         <div className="py-2">
           <label className="font-medium text-[17px]">Status</label>
-          <p className="text-red-500 font-semibold text-[17px]">
-            Order telah dibatalkan
+          <p className="text-orange-700 font-semibold text-[17px]">
+            Order telah sampai
           </p>
         </div>
       </div>
@@ -100,4 +100,4 @@ function AdminCancelledOrder(props) {
   );
 }
 
-export default AdminCancelledOrder;
+export default AdminFinishOrder;

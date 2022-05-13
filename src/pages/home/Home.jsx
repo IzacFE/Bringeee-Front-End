@@ -4,7 +4,7 @@ import { TokenContext, RoleContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 
-import { Button, Pagination } from "@mantine/core";
+import { Pagination } from "@mantine/core";
 import CategoryHome from "../../components/category/CategoryHome";
 import LoadSpin from "../../components/loadSpin/LoadSpin";
 import OrderCard from "../../components/orderCard/OrderCard";
@@ -59,11 +59,8 @@ function Home() {
           setOrderData(response.data.data);
           setPaginData(response.data.pagination);
           setPaginLink(response.data.links);
-          console.log(response.data.pagination);
         })
-        .catch((err) => {
-          console.log("error");
-        })
+        .catch((err) => {})
         .finally(() => setIsReady(true));
     } else if (roleCtx === "driver") {
       await axios
@@ -79,11 +76,8 @@ function Home() {
           setOrderData(response.data.data);
           setPaginData(response.data.pagination);
           setPaginLink(response.data.links);
-          console.log(response.data.data);
         })
-        .catch((err) => {
-          console.log("error");
-        })
+        .catch((err) => {})
         .finally(() => setIsReady(true));
     }
   };
@@ -104,9 +98,7 @@ function Home() {
         setPaginData(response.data.pagination);
         setPaginLink(response.data.links);
       })
-      .catch((err) => {
-        console.log("error");
-      })
+      .catch((err) => {})
       .finally(() => setIsReady(true));
   };
 
