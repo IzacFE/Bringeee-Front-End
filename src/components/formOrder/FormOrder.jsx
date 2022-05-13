@@ -347,10 +347,21 @@ const FormOrder = (props) => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row md:gap-2">
-          <MapContainer center={[-7.253496039426577, 109.20410156250001]} zoom={5}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
-            <DraggableMarker eventHandlers={handlerStart} position={positionStart} markerRef={markerRefStart} />
+        <div className="mt-6  md:gap-2">
+          <label className="font-medium text-[14px] ">Peta Lokasi Asal</label>
+          <MapContainer
+            center={[-7.253496039426577, 109.20410156250001]}
+            zoom={5}
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+            <DraggableMarker
+              eventHandlers={handlerStart}
+              position={positionStart}
+              markerRef={markerRefStart}
+            />
           </MapContainer>
         </div>
       </div>
@@ -417,10 +428,22 @@ const FormOrder = (props) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row md:gap-2">
-        <MapContainer center={[-7.253496039426577, 109.20410156250001]} zoom={5}>
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' />
-          <DraggableMarker eventHandlers={handlerEnd} position={positionEnd} markerRef={markerRefEnd} />
+
+      <div className="mt-4 md:gap-2">
+        <label className="font-medium text-[14px] ">Peta Lokasi Tujuan</label>
+        <MapContainer
+          center={[-7.253496039426577, 109.20410156250001]}
+          zoom={5}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <DraggableMarker
+            eventHandlers={handlerEnd}
+            position={positionEnd}
+            markerRef={markerRefEnd}
+          />
         </MapContainer>
       </div>
       <div className="flex flex-col">
@@ -431,7 +454,7 @@ const FormOrder = (props) => {
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
             <NativeSelect
-              label="Tipe Truk"
+              label="Tipe Truk Pengantar"
               placeholder="Pilih Tipe Truk"
               value={typeTruck}
               onChange={(e) => setTypeTruck(e.target.value)}
@@ -444,12 +467,30 @@ const FormOrder = (props) => {
             />
           </div>
           <div className="w-full md:w-6/12">
-            <TextInput type="number" value={volume} label="Volume" placeholder="" onChange={(e) => setVolume(e.target.value)} id="form-createOrder-volume" />
+            <TextInput
+              type="number"
+              value={volume}
+              label={
+                <span>
+                  Volume (m<sup>3</sup>)
+                </span>
+              }
+              placeholder=""
+              onChange={(e) => setVolume(e.target.value)}
+              id="form-createOrder-volume"
+            />
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
-            <TextInput type="number" value={weight} label="Berat" placeholder="" onChange={(e) => setWeight(e.target.value)} id="form-createOrder-weight" />
+            <TextInput
+              type="number"
+              value={weight}
+              label="Berat (kg)"
+              placeholder=""
+              onChange={(e) => setWeight(e.target.value)}
+              id="form-createOrder-weight"
+            />
           </div>
           <div className="w-full md:w-6/12">
             <TextInput type="file" defaultValue={imageOrder} label="Foto" placeholder="" onChange={(e) => setImageOrder(e.target.files[0])} id="form-createOrder-picture" />

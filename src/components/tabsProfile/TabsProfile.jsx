@@ -15,47 +15,80 @@ const TabsProfileCustomer = (props) => {
                   <Link to={`/confirm-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                       <div className="w-full md:w-2/12 md:h-full">
-                        <img src={orders.order_picture} className="w-[150px]" alt="" />
-                        <p className="text-gray-600 font-medium text-center text-[16px]">#{orders.id}</p>
+                        <img
+                          src={orders.order_picture}
+                          className="w-[150px]"
+                          alt=""
+                        />
+                        <p className="text-gray-600 font-medium text-center text-[16px]">
+                          #{orders.id}
+                        </p>
                       </div>
                       <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
-                          <p className="text-stone-500 font-normal text-[16px]">{orders.distance} km</p>
-                          <p className="text-stone-600 font-medium text-[16px]">Asal</p>
-                          <p className="text-amber-500 font-medium text-[16px]">
-                            {orders.destination_start_province}, {orders.destination_start_city}
+                          <p className="text-stone-500 font-normal text-[16px]">
+                            {orders.distance} km
                           </p>
-                          <p className="text-stone-600 font-medium text-[16px]">Tujuan</p>
+                          <p className="text-stone-600 font-medium text-[16px]">
+                            Asal
+                          </p>
                           <p className="text-amber-500 font-medium text-[16px]">
-                            {orders.destination_end_province}, {orders.destination_end_city}
+                            {orders.destination_start_province},{" "}
+                            {orders.destination_start_city}
+                          </p>
+                          <p className="text-stone-600 font-medium text-[16px]">
+                            Tujuan
+                          </p>
+                          <p className="text-amber-500 font-medium text-[16px]">
+                            {orders.destination_end_province},{" "}
+                            {orders.destination_end_city}
                           </p>
                         </div>
                       </div>
                       <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         {orders.status === "REQUESTED" ? (
-                          <p className="text-gray-500 font-semibold text-[16px]">Konfirmasi admin</p>
+                          <p className="text-gray-500 font-semibold text-[16px]">
+                            Konfirmasi admin
+                          </p>
                         ) : orders.status === "NEED_CUSTOMER_CONFIRM" ? (
-                          <p className="text-gray-500 font-semibold text-[16px]">Konfirmasi customer</p>
+                          <p className="text-gray-500 font-semibold text-[16px]">
+                            Konfirmasi kustomer
+                          </p>
                         ) : orders.status === "CONFIRMED" ? (
-                          <p className="text-green-500 font-semibold text-[16px]">Menunggu pembayaran</p>
+                          <p className="text-green-500 font-semibold text-[16px]">
+                            Menunggu pembayaran
+                          </p>
                         ) : orders.status === "MANIFESTED" ? (
-                          <p className="text-violet-500 font-semibold text-[16px]">Diteruskan kedriver</p>
+                          <p className="text-violet-500 font-semibold text-[16px]">
+                            Diteruskan kedriver
+                          </p>
                         ) : orders.status === "ON_PROCESS" ? (
-                          <p className="text-amber-500 font-semibold text-[16px]">Dalam pengiriman</p>
+                          <p className="text-amber-500 font-semibold text-[16px]">
+                            Dalam pengiriman
+                          </p>
                         ) : orders.status === "DELIVERED" ? (
-                          <p className="text-green-500 font-semibold text-[16px]">Order selesai</p>
+                          <p className="text-green-500 font-semibold text-[16px]">
+                            Order selesai
+                          </p>
                         ) : (
-                          <p className="text-red-500 font-semibold text-[16px]">Dibatalkan</p>
+                          <p className="text-red-500 font-semibold text-[16px]">
+                            Dibatalkan
+                          </p>
                         )}
                         {orders.status === "ON_PROCESS" && (
                           <p className="text-amber-500 font-semibold text-[16px]">
-                            {orders.driver.name} - {orders.truck_type.truck_type}
+                            {orders.driver.name} -{" "}
+                            {orders.truck_type.truck_type}
                           </p>
                         )}
                       </div>
                       <div className="w-full md:w-3/12 md:h-full md:my-auto">
-                        <p className="text-stone-600 font-medium text-[16px]">Deskripsi</p>
-                        <p className="text-amber-500 font-medium text-[16px]">{orders.description}</p>
+                        <p className="text-stone-600 font-medium text-[16px]">
+                          Deskripsi
+                        </p>
+                        <p className="text-amber-500 font-medium text-[16px]">
+                          {orders.description}
+                        </p>
                       </div>
                     </div>
                   </Link>
@@ -71,28 +104,54 @@ const TabsProfileCustomer = (props) => {
                   <Link to={`/detail-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                       <div className="w-full md:w-2/12 md:h-full">
-                        <img src={orders.order_picture} className="w-[150px]" alt="" />
-                        <p className="text-gray-600 font-medium text-center text-[16px]">#{orders.id}</p>
+                        <img
+                          src={orders.order_picture}
+                          className="w-[150px]"
+                          alt=""
+                        />
+                        <p className="text-gray-600 font-medium text-center text-[16px]">
+                          #{orders.id}
+                        </p>
                       </div>
                       <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
-                          <p className="text-stone-500 font-normal text-[16px]">{orders.distance} km</p>
-                          <p className="text-stone-600 font-medium text-[16px]">Asal</p>
-                          <p className="text-amber-500 font-medium text-[16px]">
-                            {orders.destination_start_province}, {orders.destination_start_city}
+                          <p className="text-stone-500 font-normal text-[16px]">
+                            {orders.distance} km
                           </p>
-                          <p className="text-stone-600 font-medium text-[16px]">Tujuan</p>
+                          <p className="text-stone-600 font-medium text-[16px]">
+                            Asal
+                          </p>
                           <p className="text-amber-500 font-medium text-[16px]">
-                            {orders.destination_end_province}, {orders.destination_end_city}
+                            {orders.destination_start_province},{" "}
+                            {orders.destination_start_city}
+                          </p>
+                          <p className="text-stone-600 font-medium text-[16px]">
+                            Tujuan
+                          </p>
+                          <p className="text-amber-500 font-medium text-[16px]">
+                            {orders.destination_end_province},{" "}
+                            {orders.destination_end_city}
                           </p>
                         </div>
                       </div>
                       <div className="w-full md:w-3/12 md:h-full md:my-auto">
-                        {orders.status === "DELIVERED" ? <p className="text-green-500 font-semibold text-[17px]">Order selesai</p> : <p className="text-red-500 font-semibold text-[17px]">Dibatalkan</p>}
+                        {orders.status === "DELIVERED" ? (
+                          <p className="text-green-500 font-semibold text-[17px]">
+                            Order selesai
+                          </p>
+                        ) : (
+                          <p className="text-red-500 font-semibold text-[17px]">
+                            Dibatalkan
+                          </p>
+                        )}
                       </div>
                       <div className="w-full md:w-3/12 md:h-full md:my-auto">
-                        <p className="text-stone-600 font-medium text-[16px]">Deskripsi</p>
-                        <p className="text-amber-500 font-medium text-[16px]">{orders.description}</p>
+                        <p className="text-stone-600 font-medium text-[16px]">
+                          Deskripsi
+                        </p>
+                        <p className="text-amber-500 font-medium text-[16px]">
+                          {orders.description}
+                        </p>
                       </div>
                     </div>
                   </Link>
@@ -114,29 +173,56 @@ const TabsProfileDriver = (props) => {
       <Tabs color="yellow">
         <Tabs.Tab label="Order Aktif">
           {props.dataOrderActive && (
-            <Link to={`/take-order/${props.dataOrderActive.id}`} key={props.dataOrderActive.id}>
+            <Link
+              to={`/take-order/${props.dataOrderActive.id}`}
+              key={props.dataOrderActive.id}
+            >
               <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                 <div className="w-full md:w-2/12 md:h-full">
-                  <img src={props.dataOrderActive.order_picture} className="w-[150px]" alt="" />
-                  <p className="text-gray-600 font-medium text-center text-[16px]">#{props.dataOrderActive.id}</p>
+                  <img
+                    src={props.dataOrderActive.order_picture}
+                    className="w-[150px]"
+                    alt=""
+                  />
+                  <p className="text-gray-600 font-medium text-center text-[16px]">
+                    #{props.dataOrderActive.id}
+                  </p>
                 </div>
                 <div className="w-full md:w-3/12 md:h-full md:my-auto">
                   <div className="text-center md:text-left md:flex md:flex-col">
-                    <p className="text-stone-500 font-medium text-center text-[16px]">{props.dataOrderActive.distance} km</p>
-                    <p className="text-stone-600 font-medium text-[16px]">Asal</p>
-                    <p className="text-amber-500 font-medium text-[16px]">
-                      {props.dataOrderActive.destination_start_province}, {props.dataOrderActive.destination_start_city}
+                    <p className="text-stone-500 font-medium text-center text-[16px]">
+                      {props.dataOrderActive.distance} km
                     </p>
-                    <p className="text-stone-600 font-medium text-[16px]">Tujuan</p>
+                    <p className="text-stone-600 font-medium text-[16px]">
+                      Asal
+                    </p>
                     <p className="text-amber-500 font-medium text-[16px]">
-                      {props.dataOrderActive.destination_end_province}, {props.dataOrderActive.destination_end_city}
+                      {props.dataOrderActive.destination_start_province},{" "}
+                      {props.dataOrderActive.destination_start_city}
+                    </p>
+                    <p className="text-stone-600 font-medium text-[16px]">
+                      Tujuan
+                    </p>
+                    <p className="text-amber-500 font-medium text-[16px]">
+                      {props.dataOrderActive.destination_end_province},{" "}
+                      {props.dataOrderActive.destination_end_city}
                     </p>
                   </div>
                 </div>
-                <div className="w-full md:w-3/12 md:h-full md:my-auto">{props.dataOrderActive.status === "ON_PROCESS" && <p className="text-amber-500 font-semibold text-[16px]">Dalam Pengiriman</p>}</div>
                 <div className="w-full md:w-3/12 md:h-full md:my-auto">
-                  <p className="text-stone-600 font-medium text-[16px]">Deskripsi</p>
-                  <p className="text-amber-500 font-medium text-[16px]">{props.dataOrderActive.description}</p>
+                  {props.dataOrderActive.status === "ON_PROCESS" && (
+                    <p className="text-amber-500 font-semibold text-[16px]">
+                      Dalam Pengiriman
+                    </p>
+                  )}
+                </div>
+                <div className="w-full md:w-3/12 md:h-full md:my-auto">
+                  <p className="text-stone-600 font-medium text-[16px]">
+                    Deskripsi
+                  </p>
+                  <p className="text-amber-500 font-medium text-[16px]">
+                    {props.dataOrderActive.description}
+                  </p>
                 </div>
               </div>
             </Link>
@@ -152,27 +238,51 @@ const TabsProfileDriver = (props) => {
                   <Link to={`/detail-order/${orders.id}`} key={orders.id}>
                     <div className="bg-neutral-50 drop-shadow-md rounded p-2 w-full flex flex-col gap-3 md:flex-row mb-2">
                       <div className="w-full md:w-2/12 md:h-full">
-                        <img src={orders.order_picture} className="w-[150px]" alt="" />
+                        <img
+                          src={orders.order_picture}
+                          className="w-[150px]"
+                          alt=""
+                        />
 
-                        <p className="text-gray-600 font-medium text-[16px]">#{orders.id}</p>
+                        <p className="text-gray-600 font-medium text-[16px]">
+                          #{orders.id}
+                        </p>
                       </div>
                       <div className="w-full md:w-3/12 md:h-full md:my-auto">
                         <div className="text-center md:text-left md:flex md:flex-col">
-                          <p className="text-stone-500 font-normal text-center text-[16px]">{orders.distance} km</p>
-                          <p className="text-stone-600 font-medium text-[16px]">Asal</p>
-                          <p className="text-amber-500 font-medium text-[16px]">
-                            {orders.destination_start_province}, {orders.destination_start_city}
+                          <p className="text-stone-500 font-normal text-center text-[16px]">
+                            {orders.distance} km
                           </p>
-                          <p className="text-stone-600 font-medium text-[16px]">Tujuan</p>
+                          <p className="text-stone-600 font-medium text-[16px]">
+                            Asal
+                          </p>
                           <p className="text-amber-500 font-medium text-[16px]">
-                            {orders.destination_end_province}, {orders.destination_end_city}
+                            {orders.destination_start_province},{" "}
+                            {orders.destination_start_city}
+                          </p>
+                          <p className="text-stone-600 font-medium text-[16px]">
+                            Tujuan
+                          </p>
+                          <p className="text-amber-500 font-medium text-[16px]">
+                            {orders.destination_end_province},{" "}
+                            {orders.destination_end_city}
                           </p>
                         </div>
                       </div>
-                      <div className="w-full md:w-3/12 md:h-full md:my-auto">{orders.status === "DELIVERED" && <p className="text-green-500 font-semibold text-[16px]">Order Selesai</p>}</div>
                       <div className="w-full md:w-3/12 md:h-full md:my-auto">
-                        <p className="text-stone-600 font-medium text-[16px]">Deskripsi</p>
-                        <p className="text-amber-500 font-medium text-[16px]">{props.dataOrderActive.description}</p>
+                        {orders.status === "DELIVERED" && (
+                          <p className="text-green-500 font-semibold text-[16px]">
+                            Order Selesai
+                          </p>
+                        )}
+                      </div>
+                      <div className="w-full md:w-3/12 md:h-full md:my-auto">
+                        <p className="text-stone-600 font-medium text-[16px]">
+                          Deskripsi
+                        </p>
+                        <p className="text-amber-500 font-medium text-[16px]">
+                          {props.dataOrderActive.description}
+                        </p>
                       </div>
                     </div>
                   </Link>

@@ -164,6 +164,8 @@ function Navbar() {
           status = "Menunggu konfirmasi akun driver dari admin";
         } else if (info === "Invalid Credential") {
           status = "Email salah";
+        } else if (info === "Invalid password") {
+          status = "Password salah";
         }
         showNotification({
           autoClose: 10000,
