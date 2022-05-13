@@ -376,7 +376,8 @@ const FormOrder = (props) => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row md:gap-2">
+        <div className="mt-6  md:gap-2">
+          <label className="font-medium text-[14px] ">Peta Lokasi Asal</label>
           <MapContainer
             center={[-7.253496039426577, 109.20410156250001]}
             zoom={5}
@@ -469,7 +470,8 @@ const FormOrder = (props) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row md:gap-2">
+      <div className="mt-4 md:gap-2">
+        <label className="font-medium text-[14px] ">Peta Lokasi Tujuan</label>
         <MapContainer
           center={[-7.253496039426577, 109.20410156250001]}
           zoom={5}
@@ -499,7 +501,7 @@ const FormOrder = (props) => {
         <div className="flex flex-col md:flex-row md:gap-2">
           <div className="w-full md:w-6/12">
             <NativeSelect
-              label="Tipe Truk"
+              label="Tipe Truk Pengantar"
               placeholder="Pilih Tipe Truk"
               value={typeTruck}
               onChange={(e) => setTypeTruck(e.target.value)}
@@ -515,7 +517,11 @@ const FormOrder = (props) => {
             <TextInput
               type="number"
               value={volume}
-              label="Volume"
+              label={
+                <span>
+                  Volume (m<sup>3</sup>)
+                </span>
+              }
               placeholder=""
               onChange={(e) => setVolume(e.target.value)}
               id="form-createOrder-volume"
@@ -527,7 +533,7 @@ const FormOrder = (props) => {
             <TextInput
               type="number"
               value={weight}
-              label="Berat"
+              label="Berat (kg)"
               placeholder=""
               onChange={(e) => setWeight(e.target.value)}
               id="form-createOrder-weight"
